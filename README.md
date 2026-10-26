@@ -16,6 +16,8 @@ maskBankDetails('US', r.normalised); // last 4 only, for display after saving
 isXeroSyncable('NZ');            // false, only AU is synced to Xero
 ```
 
+A static reference of every field for every country is in `docs/FIELDS.md` (readable) and `docs/fields.json` (machine readable). Regenerate both with `npm run export-fields` after changing `src/countries.ts`. At runtime, use `getBankFields(country)` instead of the files.
+
 Run `validateBankDetails` on both the client and the server. Changing country: call `getBankFields` for the new country and discard values for keys that no longer exist (confirm with the user first). Store the country code and the normalised structured fields, not a single string.
 
 ## Countries
