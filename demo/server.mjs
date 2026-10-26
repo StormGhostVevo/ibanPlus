@@ -7,8 +7,12 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   getBankFields,
+  SUPPORTED_CURRENCIES,
   getConfiguredCountries,
   getCountryConfig,
+  getCurrencyConfig,
+  maskBankDetailsForCurrency,
+  validateBankDetailsForCurrency,
   isCountrySupported,
   isXeroSyncable,
   maskBankDetails,
@@ -42,10 +46,22 @@ const server = createServer(async (req, res) => {
         name: getCountryConfig(code).name,
       }));
       countries.sort((a, b) => a.name.localeCompare(b.name));
-      return send(res, 200, countries);
+      // Currencies come first. They use the local rail layout rather than the country layout.
+      const currencies = SUPPORTED_CURRENCIES.map((code) => ({ code, name: `${code} local rail`, currency: true }));
+      return send(res, 200, [...currencies, ...countries]);
     }
 
-    const match = url.pathname.match(/^\/api\/fields\/([A-Za-z]{2})$/);
+    const match = url.pathname.match(/^\/api\/fields\/([A-Za-z]{2,3})$/);
+    if (match && match[1].length === 3) {
+      const config = getCurrencyConfig(match[1]);
+      return send(res, 200, {
+        country: config.currency,
+        name: `${config.currency} local rail (${config.rail})`,
+        supported: true,
+        xeroSyncable: config.xeroSyncable,
+        fields: config.fields.map((f) => ({ ...f, pattern: f.pattern?.source })),
+      });
+    }
     if (match) {
       const code = match[1].toUpperCase();
       const config = getCountryConfig(code);
@@ -59,7 +75,12 @@ const server = createServer(async (req, res) => {
       });
     }
 
-    const validate = url.pathname.match(/^\/api\/validate\/([A-Za-z]{2})$/);
+    const validate = url.pathname.match(/^\/api\/validate\/([A-Za-z]{2,3})$/);
+    if (validate && req.method === 'POST' && validate[1].length === 3) {
+      const code = validate[1].toUpperCase();
+      const result = validateBankDetailsForCurrency(code, await readJson(req));
+      return send(res, 200, { ...result, masked: result.valid ? maskBankDetailsForCurrency(code, result.normalised) : {} });
+    }
     if (validate && req.method === 'POST') {
       const code = validate[1].toUpperCase();
       const result = validateBankDetails(code, await readJson(req));

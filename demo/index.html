@@ -44,12 +44,12 @@
 <body>
 <main>
   <h1>Bank fields demo</h1>
-  <p class="sub">Choose a country to see the fields the library returns for it.</p>
+  <p class="sub">Choose a country, or a currency such as AUD, to see the fields the library returns for it.</p>
 
   <div class="card">
     <div class="field">
       <label for="country">Country</label>
-      <input id="country" list="countries" placeholder="Start typing, for example Australia or JP" autocomplete="off">
+      <input id="country" list="countries" placeholder="Start typing, for example Australia, JP or AUD" autocomplete="off">
       <datalist id="countries"></datalist>
       <div class="badges" id="badges"></div>
     </div>
@@ -75,9 +75,12 @@ async function init() {
 
 function resolveCode(text) {
   const t = text.trim();
-  const paren = t.match(/\(([A-Za-z]{2})\)$/);
+  const paren = t.match(/\(([A-Za-z]{2,3})\)$/);
   if (paren) return paren[1].toUpperCase();
-  if (/^[A-Za-z]{2}$/.test(t)) return t.toUpperCase();
+  if (/^[A-Za-z]{2,3}$/.test(t)) {
+    const code = t.toUpperCase();
+    return countries.some((c) => c.code === code) ? code : null;
+  }
   const byName = countries.find((c) => c.name.toLowerCase() === t.toLowerCase());
   return byName ? byName.code : null;
 }
