@@ -4,7 +4,7 @@ import { normaliseValue, validators } from './validators';
 import type { BankValues, FieldConfig, ValidationResult } from './types';
 
 export { getCountryConfig, getConfiguredCountries, FALLBACK_CONFIG } from './countries';
-export { isValidAbaRouting } from './validators';
+export { isValidAbaRouting, isValidClabe } from './validators';
 export type * from './types';
 
 /** Fields to render for a country. The form is driven entirely by this. */

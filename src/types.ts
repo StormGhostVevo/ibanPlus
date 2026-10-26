@@ -1,10 +1,10 @@
 export type InputMode = 'numeric' | 'text';
 
 /** How a value is cleaned before validation and storage. */
-export type Normaliser = 'digits' | 'digitsPad7' | 'iban' | 'bic' | 'trim' | 'none';
+export type Normaliser = 'digits' | 'digitsPad7' | 'upper' | 'iban' | 'bic' | 'trim' | 'none';
 
 /** Names of the custom validators in validators.ts. */
-export type ValidatorName = 'abaRouting' | 'iban' | 'bic';
+export type ValidatorName = 'abaRouting' | 'clabe' | 'iban' | 'bic';
 
 export interface FieldOption {
   value: string;

@@ -40,11 +40,19 @@ Validation catches typos only and cannot confirm an account exists. Rules are de
 - PH: Airwallex accepts 8 to 16 digits, so that is what is accepted, to avoid passing numbers that fail at payout. BIC is required because at least one provider requires it. No official BSP or PCHC source was found.
 - TH: ABN AMRO says there is no fixed format and Airwallex allows 7 to 12 digits for local payouts and 7 to 19 for SWIFT payouts, so 7 to 19 is accepted. Narrow it to 12 if you only pay locally. BIC is required.
 - JP, KR, ID, PH and TH formats come from payment provider and bank documentation, not the national payment authorities. Confirm against the receiving bank or your payout provider.
+- SG, MY, VN, LK, FJ, KH, GH, KE, NG, ZA: bank name, BIC (required) and account number, from Airwallex payout pages. Ranges use the widest figure across local and SWIFT payouts. Where the page gave no minimum (VN, LK, FJ, KH, GH) a minimum of 5 was assumed.
+- HK: bank code (3 digits) or BIC, plus 8 to 17 digit account number. The first 3 digits are usually the branch code, which is not checked.
+- IN: IFSC is accepted as 11 letters or numbers (Airwallex). The standard format of 4 letters, a zero, then 6 characters is not enforced, so it could be tightened.
+- BD: 9 digit routing number. No minimum account length was given, so 5 was assumed. NP: 5 character bank code (for example NP002) or a BIC.
+- MX: CLABE is 18 digits. The check digit (weights 3, 7, 1) was added from the standard CLABE algorithm and is not on the Airwallex page, so confirm with a few real CLABEs. AR: 22 digit CBU, no check digit. PE: 20 digit CCI plus account type. CL, CO: bank code, account number and type. CO ranges are per bank on Airwallex, and the overall 3 to 18 is used.
+- BR: bank code (3 digits), branch (4 to 7), account number (3 to 50, dots and dashes allowed, a minimum of 3 was assumed) and type, or an IBAN.
+- AR, CL, CO, PE, MX, BR, NP, IN and the others above: Airwallex also requires a beneficiary tax ID (CPF, CUIT, RUT and similar) for some local payouts. That is not a bank detail and is not collected here.
+- China and Taiwan: the Airwallex pages could not be read, so they are not specified.
 - Fallback and IBAN country display names use `Intl.DisplayNames` (en-AU), so names depend on the runtime's ICU data.
 
 ## Countries to add later
 
-SG, HK, IN, MY, VN (Southeast Asia priorities), ZA, MX.
+CN, TW, LA, MM, BN, PG, WS, TO, VU, BO, EC, UY.
 
 ## Development
 

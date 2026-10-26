@@ -11,8 +11,20 @@ export function isValidAbaRouting(value: string): boolean {
   return sum % 10 === 0;
 }
 
+/** Mexican CLABE: 18 digits, last digit is a check digit (weights 3, 7, 1 repeating). */
+export function isValidClabe(value: string): boolean {
+  if (!/^\d{18}$/.test(value)) return false;
+  const weights = [3, 7, 1];
+  const sum = value
+    .slice(0, 17)
+    .split('')
+    .reduce((acc, d, i) => acc + ((Number(d) * weights[i % 3]) % 10), 0);
+  return (10 - (sum % 10)) % 10 === Number(value[17]);
+}
+
 export const validators: Record<ValidatorName, (value: string) => boolean> = {
   abaRouting: isValidAbaRouting,
+  clabe: isValidClabe,
   iban: (value) => isValidIBAN(value),
   bic: (value) => isValidBIC(value),
 };
@@ -25,6 +37,8 @@ export function normaliseValue(value: string, how: Normaliser): string {
       const digits = value.replace(/[\s-]/g, '');
       return /^\d{4,6}$/.test(digits) ? digits.padStart(7, '0') : digits;
     }
+    case 'upper':
+      return value.replace(/\s/g, '').toUpperCase();
     case 'iban':
       return electronicFormatIBAN(value) ?? value.replace(/\s/g, '').toUpperCase();
     case 'bic':

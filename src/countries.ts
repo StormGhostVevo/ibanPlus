@@ -1,5 +1,5 @@
 import { getCountrySpecifications } from 'ibantools';
-import type { CountryConfig, FieldConfig } from './types';
+import type { CountryConfig, FieldConfig, FieldOption } from './types';
 
 const digitsField = (
   f: Pick<FieldConfig, 'key' | 'label' | 'helpText' | 'errorMessage' | 'maxLength'> &
@@ -210,7 +210,7 @@ const CA: CountryConfig = {
   ],
 };
 
-const bankNameField = (): FieldConfig => ({
+const bankNameField = (overrides: Partial<FieldConfig> = {}): FieldConfig => ({
   key: 'bankName',
   label: 'Bank name',
   helpText: 'The name of your bank, for example the name printed on your card.',
@@ -221,6 +221,7 @@ const bankNameField = (): FieldConfig => ({
   inputMode: 'text',
   maxLength: 100,
   sensitive: false,
+  ...overrides,
 });
 
 const JP: CountryConfig = {
@@ -390,8 +391,346 @@ const TH: CountryConfig = {
   ],
 };
 
+const accountTypeField = (options: FieldOption[], helpText: string): FieldConfig => ({
+  key: 'accountType',
+  label: 'Account type',
+  helpText,
+  required: true,
+  pattern: new RegExp(`^(${options.map((o) => o.value).join('|')})$`),
+  errorMessage: `Choose ${options.map((o) => o.value).join(', ')}.`.replace(/, ([^,]*)$/, ' or $1'),
+  normalise: 'trim',
+  inputMode: 'text',
+  maxLength: 10,
+  options,
+  sensitive: false,
+});
+
+const CHECKING_SAVINGS: FieldOption[] = [
+  { value: 'checking', label: 'Checking' },
+  { value: 'savings', label: 'Savings' },
+];
+
+interface AccountNumberOptions {
+  min: number;
+  max: number;
+  digitsOnly?: boolean;
+  helpText?: string;
+}
+
+const accountNumberField = (name: string, o: AccountNumberOptions): FieldConfig => {
+  const chars = o.digitsOnly ? '\\d' : '[A-Za-z0-9]';
+  const noun = o.digitsOnly ? 'digits' : 'letters or numbers';
+  return {
+    key: 'accountNumber',
+    label: 'Account number',
+    helpText: o.helpText ?? `${o.digitsOnly ? 'Digits only' : 'Letters and numbers only'}. Length varies by bank.`,
+    required: true,
+    pattern: new RegExp(`^${chars}{${o.min},${o.max}}$`),
+    errorMessage: `${name} account numbers are ${o.min} to ${o.max} ${noun}.`,
+    normalise: 'digits',
+    inputMode: o.digitsOnly ? 'numeric' : 'text',
+    maxLength: o.max,
+    sensitive: true,
+  };
+};
+
+const SWIFT_HELP = "Your bank's SWIFT code, 8 or 11 characters. Ask your bank if unsure.";
+
+/** Layout for countries that only need bank name, BIC and account number. */
+const accountPlusBic = (country: string, name: string, o: AccountNumberOptions): CountryConfig => ({
+  country,
+  name,
+  xeroSyncable: false,
+  fields: [
+    bankNameField(),
+    bicField({ required: true, helpText: SWIFT_HELP }),
+    accountNumberField(name, o),
+  ],
+});
+
+const SG = accountPlusBic('SG', 'Singapore', { min: 6, max: 23 });
+const MY = accountPlusBic('MY', 'Malaysia', { min: 5, max: 19, digitsOnly: true });
+const VN = accountPlusBic('VN', 'Vietnam', { min: 5, max: 20 });
+const LK = accountPlusBic('LK', 'Sri Lanka', { min: 5, max: 50 });
+const FJ = accountPlusBic('FJ', 'Fiji', { min: 5, max: 50 });
+const KH = accountPlusBic('KH', 'Cambodia', { min: 5, max: 50 });
+const GH = accountPlusBic('GH', 'Ghana', { min: 5, max: 50 });
+const KE = accountPlusBic('KE', 'Kenya', { min: 8, max: 50 });
+const NG = accountPlusBic('NG', 'Nigeria', { min: 7, max: 17 });
+
+const HK: CountryConfig = {
+  country: 'HK',
+  name: 'Hong Kong',
+  xeroSyncable: false,
+  fields: [
+    bankNameField(),
+    digitsField({
+      key: 'bankCode',
+      label: 'Bank code',
+      helpText: 'Three digits. Not needed if you enter a SWIFT code.',
+      pattern: /^\d{3}$/,
+      errorMessage: 'Hong Kong bank codes are 3 digits.',
+      maxLength: 3,
+      requiredUnless: ['bic'],
+      sensitive: false,
+    }),
+    bicField({
+      helpText: 'Use this instead of a bank code if you prefer. 8 or 11 characters.',
+      required: true,
+      requiredUnless: ['bankCode'],
+    }),
+    digitsField({
+      key: 'accountNumber',
+      label: 'Account number',
+      helpText: 'Digits only, 8 to 17 long. The first 3 digits are usually the branch code.',
+      pattern: /^\d{8,17}$/,
+      errorMessage: 'Hong Kong account numbers are 8 to 17 digits.',
+      maxLength: 17,
+    }),
+  ],
+};
+
+const IN: CountryConfig = {
+  country: 'IN',
+  name: 'India',
+  xeroSyncable: false,
+  fields: [
+    bankNameField(),
+    {
+      key: 'ifsc',
+      label: 'IFSC code',
+      helpText: 'Eleven characters that identify your bank branch, printed on your cheque book.',
+      required: true,
+      pattern: /^[A-Z0-9]{11}$/,
+      errorMessage: 'IFSC codes are 11 letters or numbers.',
+      normalise: 'upper',
+      inputMode: 'text',
+      maxLength: 11,
+      sensitive: false,
+    },
+    bicField(),
+    accountNumberField('Indian', { min: 6, max: 20 }),
+  ],
+};
+
+const BD: CountryConfig = {
+  country: 'BD',
+  name: 'Bangladesh',
+  xeroSyncable: false,
+  fields: [
+    bankNameField(),
+    digitsField({
+      key: 'routingNumber',
+      label: 'Routing number',
+      helpText: 'Nine digits that identify your bank branch.',
+      pattern: /^\d{9}$/,
+      errorMessage: 'Bangladeshi routing numbers are 9 digits.',
+      maxLength: 9,
+    }),
+    bicField(),
+    accountNumberField('Bangladeshi', { min: 5, max: 50 }),
+  ],
+};
+
+const NP: CountryConfig = {
+  country: 'NP',
+  name: 'Nepal',
+  xeroSyncable: false,
+  fields: [
+    bankNameField(),
+    {
+      key: 'bankCode',
+      label: 'Bank code',
+      helpText: 'Five characters, for example NP002. Not needed if you enter a SWIFT code.',
+      required: true,
+      requiredUnless: ['bic'],
+      pattern: /^[A-Z0-9]{5}$/,
+      errorMessage: 'Nepalese bank codes are 5 letters or numbers, for example NP002.',
+      normalise: 'upper',
+      inputMode: 'text',
+      maxLength: 5,
+      sensitive: false,
+    },
+    bicField({
+      helpText: 'Use this instead of a bank code if you prefer. 8 or 11 characters.',
+      required: true,
+      requiredUnless: ['bankCode'],
+    }),
+    accountNumberField('Nepalese', { min: 5, max: 50 }),
+  ],
+};
+
+const ZA: CountryConfig = {
+  country: 'ZA',
+  name: 'South Africa',
+  xeroSyncable: false,
+  fields: [
+    bankNameField(),
+    bicField({ required: true, helpText: SWIFT_HELP }),
+    accountNumberField('South African', { min: 7, max: 17 }),
+    accountTypeField(CHECKING_SAVINGS, 'Confirm with your bank if unsure.'),
+  ],
+};
+
+const MX: CountryConfig = {
+  country: 'MX',
+  name: 'Mexico',
+  xeroSyncable: false,
+  fields: [
+    digitsField({
+      key: 'clabe',
+      label: 'CLABE',
+      helpText: 'Eighteen digits. The first three identify your bank.',
+      validate: 'clabe',
+      pattern: /^\d{18}$/,
+      errorMessage: 'CLABE numbers are 18 digits and must pass the check digit. Check for typos.',
+      maxLength: 18,
+    }),
+  ],
+};
+
+const AR: CountryConfig = {
+  country: 'AR',
+  name: 'Argentina',
+  xeroSyncable: false,
+  fields: [
+    digitsField({
+      key: 'cbu',
+      label: 'CBU',
+      helpText: 'Twenty-two digits (Clave Bancaria Uniforme).',
+      pattern: /^\d{22}$/,
+      errorMessage: 'CBU numbers are 22 digits.',
+      maxLength: 22,
+    }),
+  ],
+};
+
+const PE: CountryConfig = {
+  country: 'PE',
+  name: 'Peru',
+  xeroSyncable: false,
+  fields: [
+    digitsField({
+      key: 'cci',
+      label: 'CCI',
+      helpText: 'Twenty digits (Código de Cuenta Interbancario). The first three identify your bank.',
+      pattern: /^\d{20}$/,
+      errorMessage: 'CCI numbers are 20 digits.',
+      maxLength: 20,
+    }),
+    accountTypeField(
+      [
+        { value: 'checking', label: 'Checking' },
+        { value: 'savings', label: 'Savings' },
+        { value: 'maestra', label: 'Maestra' },
+      ],
+      'Confirm with your bank if unsure.',
+    ),
+  ],
+};
+
+const CL: CountryConfig = {
+  country: 'CL',
+  name: 'Chile',
+  xeroSyncable: false,
+  fields: [
+    digitsField({
+      key: 'bankCode',
+      label: 'Bank code',
+      helpText: 'Up to three digits.',
+      pattern: /^\d{1,3}$/,
+      errorMessage: 'Chilean bank codes are up to 3 digits.',
+      maxLength: 3,
+      sensitive: false,
+    }),
+    accountNumberField('Chilean', { min: 5, max: 45, digitsOnly: true }),
+    accountTypeField(
+      [
+        { value: 'checking', label: 'Checking' },
+        { value: 'savings', label: 'Savings' },
+        { value: 'vista', label: 'Vista' },
+      ],
+      'Confirm with your bank if unsure.',
+    ),
+  ],
+};
+
+const CO: CountryConfig = {
+  country: 'CO',
+  name: 'Colombia',
+  xeroSyncable: false,
+  fields: [
+    digitsField({
+      key: 'bankCode',
+      label: 'Bank code',
+      helpText: 'Two or three digits, for example 007 for Bancolombia.',
+      pattern: /^\d{2,3}$/,
+      errorMessage: 'Colombian bank codes are 2 or 3 digits.',
+      maxLength: 3,
+      sensitive: false,
+    }),
+    accountNumberField('Colombian', { min: 3, max: 18, digitsOnly: true }),
+    accountTypeField(CHECKING_SAVINGS, 'Confirm with your bank if unsure.'),
+  ],
+};
+
+const BR: CountryConfig = {
+  country: 'BR',
+  name: 'Brazil',
+  xeroSyncable: false,
+  fields: [
+    digitsField({
+      key: 'bankCode',
+      label: 'Bank code',
+      helpText: 'Three digits, for example 341 for Itaú. Not needed if you enter an IBAN.',
+      pattern: /^\d{3}$/,
+      errorMessage: 'Brazilian bank codes are 3 digits.',
+      maxLength: 3,
+      requiredUnless: ['iban'],
+      sensitive: false,
+    }),
+    {
+      key: 'branch',
+      label: 'Branch (agência)',
+      helpText: 'Four to seven characters. Not needed if you enter an IBAN.',
+      required: true,
+      requiredUnless: ['iban'],
+      pattern: /^[A-Za-z0-9.-]{4,7}$/,
+      errorMessage: 'Brazilian branch numbers are 4 to 7 letters, numbers, dots or dashes.',
+      normalise: 'upper',
+      inputMode: 'text',
+      maxLength: 7,
+      sensitive: false,
+    },
+    {
+      key: 'accountNumber',
+      label: 'Account number',
+      helpText: 'Include the check digit. Dots and dashes are fine. Not needed if you enter an IBAN.',
+      required: true,
+      requiredUnless: ['iban'],
+      pattern: /^[A-Za-z0-9.-]{3,50}$/,
+      errorMessage: 'Brazilian account numbers are 3 to 50 letters, numbers, dots or dashes.',
+      normalise: 'upper',
+      inputMode: 'text',
+      maxLength: 50,
+      sensitive: true,
+    },
+    { ...accountTypeField(CHECKING_SAVINGS, 'Confirm with your bank if unsure.'), requiredUnless: ['iban'] },
+    ibanField({
+      label: 'IBAN (alternative)',
+      helpText: 'Use this instead of the bank code, branch and account number if you prefer.',
+      requiredUnless: ['bankCode', 'branch', 'accountNumber'],
+      ibanCountry: 'BR',
+    }),
+  ],
+};
+
 /** Countries with their own layout. IBAN countries and the fallback are derived below. */
-const SPECIFIC: CountryConfig[] = [AU, US, GB, NZ, CA, JP, KR, ID, PH, TH];
+const SPECIFIC: CountryConfig[] = [
+  AU, US, GB, NZ, CA, JP, KR, ID, PH, TH,
+  SG, MY, VN, HK, IN, LK, FJ, KH, BD, NP,
+  MX, BR, AR, PE, CL, CO, ZA, NG, KE, GH,
+];
 
 /** Used for any country that has no layout and does not use IBAN. */
 export const FALLBACK_CONFIG: CountryConfig = {
@@ -399,20 +738,23 @@ export const FALLBACK_CONFIG: CountryConfig = {
   name: 'Other',
   xeroSyncable: false,
   fields: [
+    bankNameField({ requiredUnless: ['iban', 'otherDetails'] }),
+    { ...accountNumberField('Account', { min: 5, max: 34 }), requiredUnless: ['iban', 'otherDetails'] },
+    bicField({ required: true, requiredUnless: ['iban', 'otherDetails'], helpText: SWIFT_HELP }),
     ibanField({
       label: 'IBAN',
-      helpText: 'If your country uses IBANs. Otherwise use the other bank details box.',
+      helpText: 'If your country uses IBANs, enter it here instead of an account number.',
       required: true,
-      requiredUnless: ['otherDetails'],
+      requiredUnless: ['accountNumber', 'otherDetails'],
     }),
-    bicField(),
     {
       key: 'otherDetails',
       label: 'Other bank details',
-      helpText: 'Account holder name, account number, bank name and any local codes.',
+      helpText:
+        'If none of the above fits, enter your account holder name, account number, bank name and any local codes.',
       required: true,
-      requiredUnless: ['iban'],
-      errorMessage: 'Enter your IBAN or your other bank details.',
+      requiredUnless: ['iban', 'accountNumber'],
+      errorMessage: 'Enter your bank details.',
       pattern: /\S/,
       normalise: 'trim',
       inputMode: 'text',

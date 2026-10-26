@@ -3,6 +3,7 @@ import {
   getBankFields,
   getConfiguredCountries,
   isValidAbaRouting,
+  isValidClabe,
   isXeroSyncable,
   maskBankDetails,
   validateBankDetails,
@@ -201,23 +202,166 @@ describe('IBAN countries', () => {
 });
 
 describe('fallback', () => {
-  it('accepts other details alone, or a valid IBAN alone', () => {
-    expect(ok('VN', { otherDetails: 'Acct 1234, Example Bank, branch 001' }).valid).toBe(true);
-    expect(ok('VN', { iban: 'DE89370400440532013000' }).valid).toBe(true);
+  it('accepts bank name, BIC and account number', () => {
+    expect(ok('TW', { bankName: 'Example Bank', bic: 'CTCBTWTP', accountNumber: '1234567890' }).valid).toBe(true);
   });
-  it('requires one of them', () => {
-    expect(ok('VN', {}).valid).toBe(false);
-    expect(ok('VN', { otherDetails: '   ' }).valid).toBe(false);
+  it('accepts an IBAN alone or other details alone', () => {
+    expect(ok('TW', { iban: 'DE89370400440532013000' }).valid).toBe(true);
+    expect(ok('TW', { otherDetails: 'Acct 1234, Example Bank, branch 001' }).valid).toBe(true);
+  });
+  it('requires a BIC and bank name with an account number', () => {
+    const r = ok('TW', { accountNumber: '1234567890' });
+    expect(Object.keys(r.errors)).toEqual(['bankName', 'bic']);
+  });
+  it('requires something, and rejects bad account numbers', () => {
+    expect(ok('TW', {}).valid).toBe(false);
+    expect(ok('TW', { otherDetails: '   ' }).valid).toBe(false);
+    expect(
+      ok('TW', { bankName: 'B', bic: 'CTCBTWTP', accountNumber: '1234' }).errors.accountNumber,
+    ).toBeDefined();
   });
   it('has the expected fields', () => {
-    expect(getBankFields('VN').map((f) => f.key)).toEqual(['iban', 'bic', 'otherDetails']);
+    expect(getBankFields('TW').map((f) => f.key)).toEqual([
+      'bankName',
+      'accountNumber',
+      'bic',
+      'iban',
+      'otherDetails',
+    ]);
+  });
+});
+
+describe('bank name, BIC and account number countries', () => {
+  const cases: [string, string, string, string][] = [
+    // country, valid account, too short, too long
+    ['SG', 'A1234567', '12345', '1'.repeat(24)],
+    ['MY', '1234567890', '1234', '1'.repeat(20)],
+    ['VN', '1234567890', '1234', '1'.repeat(21)],
+    ['LK', '1234567890', '1234', '1'.repeat(51)],
+    ['FJ', '1234567890', '1234', '1'.repeat(51)],
+    ['KH', '1234567890', '1234', '1'.repeat(51)],
+    ['GH', '1234567890', '1234', '1'.repeat(51)],
+    ['KE', '12345678', '1234567', '1'.repeat(51)],
+    ['NG', '0123456789', '123456', '1'.repeat(18)],
+    ['ZA', '1234567890', '123456', '1'.repeat(18)],
+  ];
+  it.each(cases)('%s accepts and rejects account numbers', (country, valid, short, long) => {
+    const base: Record<string, string> = { bankName: 'Example Bank', bic: 'DEUTDEFF' };
+    if (country === 'ZA') base.accountType = 'checking';
+    expect(ok(country, { ...base, accountNumber: valid }).valid).toBe(true);
+    expect(ok(country, { ...base, accountNumber: short }).errors.accountNumber).toBeDefined();
+    expect(ok(country, { ...base, accountNumber: long }).errors.accountNumber).toBeDefined();
+    expect(ok(country, { ...base, bic: '', accountNumber: valid }).errors.bic).toBeDefined();
+    expect(ok(country, { ...base, accountNumber: '' }).errors.accountNumber).toBeDefined();
+  });
+  it('MY is digits only, SG allows letters', () => {
+    const base = { bankName: 'Example Bank', bic: 'DEUTDEFF' };
+    expect(ok('MY', { ...base, accountNumber: 'AB12345' }).errors.accountNumber).toBeDefined();
+    expect(ok('SG', { ...base, accountNumber: 'AB12345' }).valid).toBe(true);
+  });
+  it('ZA needs an account type', () => {
+    const r = ok('ZA', { bankName: 'B', bic: 'DEUTDEFF', accountNumber: '1234567890' });
+    expect(r.errors.accountType).toBeDefined();
+  });
+});
+
+describe('HK', () => {
+  const base = { bankName: 'Example Bank', accountNumber: '12345678' };
+  it('accepts a bank code or a BIC', () => {
+    expect(ok('HK', { ...base, bankCode: '024' }).valid).toBe(true);
+    expect(ok('HK', { ...base, bic: 'HSBCHKHH' }).valid).toBe(true);
+  });
+  it('requires one of them and checks lengths', () => {
+    expect(ok('HK', base).valid).toBe(false);
+    expect(ok('HK', { ...base, bankCode: '24' }).errors.bankCode).toBeDefined();
+    expect(ok('HK', { ...base, bankCode: '024', accountNumber: '1234567' }).errors.accountNumber).toBeDefined();
+    expect(ok('HK', { ...base, bankCode: '024', accountNumber: '1'.repeat(18) }).errors.accountNumber).toBeDefined();
+  });
+});
+
+describe('IN', () => {
+  const valid = { bankName: 'Example Bank', ifsc: 'hdfc0001234', accountNumber: '123456789012' };
+  it('accepts valid details and uppercases the IFSC', () => {
+    const r = ok('IN', valid);
+    expect(r.valid).toBe(true);
+    expect(r.normalised.ifsc).toBe('HDFC0001234');
+  });
+  it('rejects a bad IFSC and account number', () => {
+    expect(ok('IN', { ...valid, ifsc: 'HDFC000123' }).errors.ifsc).toMatch(/11/);
+    expect(ok('IN', { ...valid, accountNumber: '12345' }).errors.accountNumber).toBeDefined();
+    expect(ok('IN', { ...valid, accountNumber: '1'.repeat(21) }).errors.accountNumber).toBeDefined();
+  });
+});
+
+describe('BD and NP', () => {
+  it('BD needs a 9 digit routing number', () => {
+    const valid = { bankName: 'Example Bank', routingNumber: '123456789', accountNumber: '1234567890' };
+    expect(ok('BD', valid).valid).toBe(true);
+    expect(ok('BD', { ...valid, routingNumber: '12345678' }).errors.routingNumber).toBeDefined();
+  });
+  it('NP accepts a bank code or a BIC', () => {
+    const base = { bankName: 'Example Bank', accountNumber: '1234567890' };
+    expect(ok('NP', { ...base, bankCode: 'np002' }).normalised.bankCode).toBe('NP002');
+    expect(ok('NP', { ...base, bankCode: 'NP002' }).valid).toBe(true);
+    expect(ok('NP', { ...base, bic: 'DEUTDEFF' }).valid).toBe(true);
+    expect(ok('NP', base).valid).toBe(false);
+    expect(ok('NP', { ...base, bankCode: 'NP02' }).errors.bankCode).toBeDefined();
+  });
+});
+
+describe('Latin America', () => {
+  it('MX checks the CLABE length and check digit', () => {
+    expect(isValidClabe('002010077777777771')).toBe(true);
+    expect(isValidClabe('002010077777777772')).toBe(false);
+    expect(ok('MX', { clabe: '002 010 077777777771' }).valid).toBe(true);
+    expect(ok('MX', { clabe: '00201007777777777' }).errors.clabe).toBeDefined();
+    expect(ok('MX', { clabe: '002010077777777772' }).errors.clabe).toMatch(/check digit/);
+  });
+  it('AR needs a 22 digit CBU', () => {
+    expect(ok('AR', { cbu: '1'.repeat(22) }).valid).toBe(true);
+    expect(ok('AR', { cbu: '1'.repeat(21) }).errors.cbu).toBeDefined();
+  });
+  it('PE needs a 20 digit CCI and a type', () => {
+    expect(ok('PE', { cci: '1'.repeat(20), accountType: 'maestra' }).valid).toBe(true);
+    expect(ok('PE', { cci: '1'.repeat(19), accountType: 'savings' }).errors.cci).toBeDefined();
+    expect(ok('PE', { cci: '1'.repeat(20), accountType: 'vista' }).errors.accountType).toBeDefined();
+  });
+  it('CL accepts vista and up to 3 digit bank codes', () => {
+    const valid = { bankCode: '12', accountNumber: '123456789', accountType: 'vista' };
+    expect(ok('CL', valid).valid).toBe(true);
+    expect(ok('CL', { ...valid, bankCode: '1234' }).errors.bankCode).toBeDefined();
+    expect(ok('CL', { ...valid, accountType: 'maestra' }).errors.accountType).toBeDefined();
+  });
+  it('CO checks bank code and account number lengths', () => {
+    const valid = { bankCode: '007', accountNumber: '12345678901', accountType: 'savings' };
+    expect(ok('CO', valid).valid).toBe(true);
+    expect(ok('CO', { ...valid, bankCode: '7' }).errors.bankCode).toBeDefined();
+    expect(ok('CO', { ...valid, accountNumber: '1'.repeat(19) }).errors.accountNumber).toBeDefined();
+  });
+});
+
+describe('BR', () => {
+  const valid = { bankCode: '341', branch: '1234', accountNumber: '12345-6', accountType: 'checking' };
+  it('accepts domestic details, with dots and dashes allowed', () => {
+    expect(ok('BR', valid).valid).toBe(true);
+    expect(ok('BR', { ...valid, branch: '1234-5' }).valid).toBe(true);
+  });
+  it('accepts an IBAN as an alternative', () => {
+    expect(ok('BR', { iban: 'BR1800360305000010009795493C1' }).valid).toBe(true);
+    expect(ok('BR', { iban: 'DE89370400440532013000' }).errors.iban).toMatch(/start with BR/);
+  });
+  it('requires one set and rejects bad values', () => {
+    expect(ok('BR', {}).valid).toBe(false);
+    expect(ok('BR', { ...valid, bankCode: '34' }).errors.bankCode).toBeDefined();
+    expect(ok('BR', { ...valid, branch: '12' }).errors.branch).toBeDefined();
+    expect(ok('BR', { ...valid, accountType: 'vista' }).errors.accountType).toBeDefined();
   });
 });
 
 describe('config and masking', () => {
   it('lists configured countries including specific and IBAN ones', () => {
     const list = getConfiguredCountries();
-    for (const c of ['AU', 'US', 'GB', 'NZ', 'CA', 'JP', 'KR', 'ID', 'PH', 'TH', 'DE', 'FR']) expect(list).toContain(c);
+    for (const c of ['AU', 'US', 'GB', 'NZ', 'CA', 'JP', 'KR', 'ID', 'PH', 'TH', 'SG', 'MX', 'BR', 'DE', 'FR']) expect(list).toContain(c);
   });
   it('drops values for fields the country does not use', () => {
     const r = ok('AU', { bsb: '123456', accountNumber: '12345678', routingNumber: '021000021' });
