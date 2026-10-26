@@ -418,6 +418,12 @@ export const FALLBACK_CONFIG: CountryConfig = {
 
 const configs = new Map<string, CountryConfig>(SPECIFIC.map((c) => [c.country, c]));
 
+/** Territories whose IBANs carry their parent country's prefix. */
+const IBAN_PREFIX: Record<string, string> = {
+  GF: 'FR', GP: 'FR', MQ: 'FR', RE: 'FR', YT: 'FR', PM: 'FR', NC: 'FR', PF: 'FR', TF: 'FR', WF: 'FR', MF: 'FR',
+  AX: 'FI',
+};
+
 const countryNames = new Intl.DisplayNames(['en-AU'], { type: 'region' });
 const specs = getCountrySpecifications();
 for (const [code, spec] of Object.entries(specs)) {
@@ -426,7 +432,7 @@ for (const [code, spec] of Object.entries(specs)) {
     country: code,
     name: countryNames.of(code) ?? code,
     xeroSyncable: false,
-    fields: [ibanField({ ibanCountry: code }), bicField()],
+    fields: [ibanField({ ibanCountry: IBAN_PREFIX[code] ?? code }), bicField()],
   });
 }
 

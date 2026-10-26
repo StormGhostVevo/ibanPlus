@@ -169,6 +169,11 @@ describe('IBAN countries', () => {
     expect(ok('FR', { iban: 'DE89370400440532013000' }).errors.iban).toMatch(/start with FR/);
     expect(ok('DE', { iban: 'DE89370400440532013000', bic: 'XX' }).errors.bic).toBeDefined();
   });
+  it('uses the parent IBAN prefix for territories', () => {
+    expect(ok('GF', { iban: 'FR1420041010050500013M02606' }).valid).toBe(true);
+    expect(ok('AX', { iban: 'FI2112345600000785' }).valid).toBe(true);
+    expect(ok('GF', { iban: 'DE89370400440532013000' }).errors.iban).toMatch(/start with FR/);
+  });
   it('normalises case and spacing', () => {
     expect(ok('de', { iban: 'de89 3704 0044 0532 0130 00' }).normalised.iban).toBe(
       'DE89370400440532013000',
