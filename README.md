@@ -85,3 +85,32 @@ npm run demo
 ```
 
 Open http://localhost:3000, type a country name or code, and the fields appear with their labels, help text and placeholders. Submitting runs `validateBankDetails` on the demo server and shows the masked result. Add `?country=JP` to the URL to open a country directly. The port can be changed with `PORT=4000 npm run demo`.
+
+## Currency local rails
+
+For Fabulate's own accounts, `getBankFieldsForCurrency(currency)` returns the local rail layout for one of USD, AUD, SGD, CAD, EUR, GBP and THB. Each layout starts with Recipient name and Bank name, then the local identifiers, then Address.
+
+| Currency | Rail | Local identifiers |
+| --- | --- | --- |
+| USD | ACH / Fedwire | ABA routing number, account number, account type (optional) |
+| AUD | BECS / NPP | BSB, account number (syncs to Xero) |
+| CAD | EFT | Institution number, transit number, account number |
+| GBP | Faster Payments / BACS | Sort code, account number (no IBAN alternative) |
+| SGD | FAST / GIRO | SWIFT code, account number 7 to 17 characters |
+| THB | PromptPay | SWIFT code, optional bank code, account number 7 to 12 digits |
+| EUR | SEPA | IBAN from a SEPA country, optional BIC |
+
+```ts
+import { getBankFieldsForCurrency, validateBankDetailsForCurrency, maskBankDetailsForCurrency } from 'bank-fields';
+
+const fields = getBankFieldsForCurrency('AUD');
+const result = validateBankDetailsForCurrency('AUD', values);
+```
+
+Unsupported currencies throw. The country functions are unchanged.
+
+Assumptions to check:
+- SGD and THB use the Airwallex FAST, GIRO and PromptPay formats, which identify the bank by SWIFT code. SGD is tighter than the country layout (RTGS allows up to 23 characters) and THB is tighter (the country layout allows up to 19 digits).
+- The SEPA country list is not checked against the EPC register.
+- Address is one free text line, as in the recipient details example. Split it into street, city, state and postcode if a provider needs structured addresses.
+- The USD account type is optional because the example recipient details do not show one.
