@@ -1,11 +1,13 @@
 import { friendlyFormatIBAN } from 'ibantools';
 import { getCountryConfig, isCountrySupported } from './countries';
+import { getCurrencyConfig } from './currencies';
 import { normaliseValue, validators } from './validators';
 import type { BankValues, FieldConfig, ValidationResult } from './types';
 
 export { getCountryConfig, getConfiguredCountries, isCountrySupported, FALLBACK_CONFIG } from './countries';
 export { isValidAbaRouting, isValidClabe, isValidIbanChecksum } from './validators';
 export type * from './types';
+export { SUPPORTED_CURRENCIES, isCurrencySupported, getCurrencyConfig, getBankFieldsForCurrency } from './currencies';
 
 /** Fields to render for a country. The form is driven entirely by this. */
 export function getBankFields(country: string): FieldConfig[] {
@@ -24,18 +26,22 @@ export function isXeroSyncable(country: string): boolean {
  */
 export function validateBankDetails(country: string, values: BankValues): ValidationResult {
   const config = getCountryConfig(country);
+  if (!isCountrySupported(country)) {
+    return { valid: false, errors: { country: 'Payouts to this country are not supported.' }, normalised: {} };
+  }
+  return validateFields(config.fields, values, config.name);
+}
+
+/** Shared by the country and currency entry points. `where` names the place in IBAN prefix errors. */
+export function validateFields(fields: FieldConfig[], values: BankValues, where: string): ValidationResult {
   const normalised: Record<string, string> = {};
   const errors: Record<string, string> = {};
 
-  if (!isCountrySupported(country)) {
-    return { valid: false, errors: { country: 'Payouts to this country are not supported.' }, normalised };
-  }
-
-  for (const field of config.fields) {
+  for (const field of fields) {
     normalised[field.key] = normaliseValue((values[field.key] ?? '').toString(), field.normalise);
   }
 
-  for (const field of config.fields) {
+  for (const field of fields) {
     const value = normalised[field.key];
 
     if (value === '') {
@@ -53,11 +59,19 @@ export function validateBankDetails(country: string, values: BankValues): Valida
     }
 
     if (field.ibanCountry && !value.startsWith(field.ibanCountry)) {
-      errors[field.key] = `IBANs for ${config.name} start with ${field.ibanCountry}.`;
+      errors[field.key] = `IBANs for ${where} start with ${field.ibanCountry}.`;
+    } else if (field.ibanCountries && !field.ibanCountries.includes(value.slice(0, 2))) {
+      errors[field.key] = `IBANs for ${where} must be from a ${where} country.`;
     }
   }
 
   return { valid: Object.keys(errors).length === 0, errors, normalised };
+}
+
+/** Validates bank details for a currency's local rail. Same behaviour as validateBankDetails. */
+export function validateBankDetailsForCurrency(currency: string, values: BankValues): ValidationResult {
+  const config = getCurrencyConfig(currency);
+  return validateFields(config.fields, values, config.country === null ? 'SEPA' : config.country);
 }
 
 /** Keeps the last 4 characters of a value, for example "•••• 5678". */
@@ -73,8 +87,12 @@ export function maskBankDetails(
   country: string,
   stored: Record<string, string>,
 ): Record<string, string> {
+  return maskFields(getCountryConfig(country).fields, stored);
+}
+
+export function maskFields(fields: FieldConfig[], stored: Record<string, string>): Record<string, string> {
   const out: Record<string, string> = {};
-  for (const field of getCountryConfig(country).fields) {
+  for (const field of fields) {
     const value = stored[field.key];
     if (!value) continue;
     out[field.key] = field.sensitive ? maskValue(value) : value;
@@ -85,4 +103,12 @@ export function maskBankDetails(
 /** Display format for an IBAN, for example "GB82 WEST 1234 5698 7654 32". */
 export function formatIbanForDisplay(iban: string): string {
   return friendlyFormatIBAN(iban) ?? iban;
+}
+
+/** Masks sensitive fields for a currency's local rail layout. */
+export function maskBankDetailsForCurrency(
+  currency: string,
+  stored: Record<string, string>,
+): Record<string, string> {
+  return maskFields(getCurrencyConfig(currency).fields, stored);
 }

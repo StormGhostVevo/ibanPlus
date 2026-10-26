@@ -1,7 +1,7 @@
 import { getCountrySpecifications } from 'ibantools';
 import type { CountryConfig, FieldConfig, FieldOption } from './types';
 
-const digitsField = (
+export const digitsField = (
   f: Pick<FieldConfig, 'key' | 'label' | 'helpText' | 'errorMessage' | 'maxLength'> &
     Partial<FieldConfig>,
 ): FieldConfig => ({
@@ -12,7 +12,7 @@ const digitsField = (
   ...f,
 });
 
-const ibanField = (overrides: Partial<FieldConfig> = {}): FieldConfig => ({
+export const ibanField = (overrides: Partial<FieldConfig> = {}): FieldConfig => ({
   key: 'iban',
   label: 'IBAN',
   helpText: 'International Bank Account Number, for example GB82 WEST 1234 5698 7654 32.',
@@ -26,7 +26,7 @@ const ibanField = (overrides: Partial<FieldConfig> = {}): FieldConfig => ({
   ...overrides,
 });
 
-const bicField = (overrides: Partial<FieldConfig> = {}): FieldConfig => ({
+export const bicField = (overrides: Partial<FieldConfig> = {}): FieldConfig => ({
   key: 'bic',
   label: 'BIC / SWIFT code',
   helpText: 'Optional. 8 or 11 characters, found on your bank statement.',
@@ -210,7 +210,7 @@ const CA: CountryConfig = {
   ],
 };
 
-const bankNameField = (overrides: Partial<FieldConfig> = {}): FieldConfig => ({
+export const bankNameField = (overrides: Partial<FieldConfig> = {}): FieldConfig => ({
   key: 'bankName',
   label: 'Bank name',
   helpText: 'The name of your bank, for example the name printed on your card.',
@@ -417,7 +417,7 @@ interface AccountNumberOptions {
   helpText?: string;
 }
 
-const accountNumberField = (name: string, o: AccountNumberOptions): FieldConfig => {
+export const accountNumberField = (name: string, o: AccountNumberOptions): FieldConfig => {
   const chars = o.digitsOnly ? '\\d' : '[A-Za-z0-9]';
   const noun = o.digitsOnly ? 'digits' : 'letters or numbers';
   return {
@@ -1044,7 +1044,7 @@ function placeholderFor(country: string, f: FieldConfig): string {
   return KEY_PLACEHOLDERS[f.key] ?? '';
 }
 
-function withPlaceholders(config: CountryConfig): CountryConfig {
+export function withPlaceholders(config: CountryConfig): CountryConfig {
   return {
     ...config,
     fields: config.fields.map((f) => ({ ...f, placeholder: f.placeholder ?? placeholderFor(config.country, f) })),

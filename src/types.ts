@@ -37,6 +37,8 @@ export interface FieldConfig {
   options?: FieldOption[];
   /** For IBAN fields: the IBAN must start with this country code. */
   ibanCountry?: string;
+  /** For IBAN fields that accept several countries (for example SEPA): allowed two-letter prefixes. */
+  ibanCountries?: string[];
   /** Sensitive fields are masked by maskBankDetails. */
   sensitive: boolean;
 }
@@ -45,6 +47,20 @@ export interface CountryConfig {
   /** ISO 3166-1 alpha-2 */
   country: string;
   name: string;
+  fields: FieldConfig[];
+  /** True when details can be synced to Xero as an AU bank account. */
+  xeroSyncable: boolean;
+}
+
+/** Currencies that have a local rail layout. */
+export type CurrencyCode = 'USD' | 'AUD' | 'SGD' | 'CAD' | 'EUR' | 'GBP' | 'THB';
+
+export interface CurrencyConfig {
+  currency: CurrencyCode;
+  /** ISO 3166-1 alpha-2 of the local rail, or null when the rail spans countries (EUR via SEPA). */
+  country: string | null;
+  /** Name of the local payment rail the fields are for. */
+  rail: string;
   fields: FieldConfig[];
   /** True when details can be synced to Xero as an AU bank account. */
   xeroSyncable: boolean;
