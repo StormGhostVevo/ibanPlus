@@ -34,11 +34,11 @@ Validation catches typos only and cannot confirm an account exists. Rules are de
 - GB: no modulus check on sort code and account number, and the sort-code-plus-account IBAN is not cross-checked.
 - US: routing checksum only, no Fedwire/ACH directory lookup. Account type is limited to checking and savings.
 - Xero: only the AU flag exists here. The exact format Xero expects for AU bank details is not implemented.
-- JP: bank code (4 digits) and branch code (3 digits) lengths could not be confirmed from the sources I found. Account types futsu, toza and chochiku are accepted, although one source lists only futsu and toza. Account numbers are usually 7 digits, 6 to 8 accepted.
-- KR: bank code (3 digits) is confirmed but optional, since international transfers use SWIFT. Account length sources conflict (11 to 16, 14, and an anecdote), so 10 to 16 is accepted. A BIC is required.
-- ID: 3-digit bank codes are consistent across sources. Account lengths differ by bank and by source, so 7 to 17 is accepted. Not checked per bank.
-- PH: provider ranges differ (8 to 16, 6 to 18, 1 to 17, up to 20), so 6 to 18 is accepted. BIC is required because at least one provider requires it. No official BSP or PCHC source was found.
-- TH: ABN AMRO says there is no fixed format and one provider allows 7 to 12 digits, which is what is accepted. BIC is required.
+- JP: bank code (4 digits) and branch code (3 digits) lengths could not be confirmed from the sources I found. Account types futsu, toza and chochiku are accepted, although one source lists only futsu and toza. Account numbers are 4 to 8 digits, with 4 to 6 digits left-padded with zeros to 7 (per bank guidance), so 7 or 8 digits are stored.
+- KR: bank code (3 digits) is confirmed but optional, since international transfers use SWIFT. Sources give 7 to 16 (Airwallex) and 11 to 16 (Worldpay), and ABN AMRO says there is no fixed format, so 7 to 16 is accepted. A BIC is required.
+- ID: 3-digit bank codes appeared in the sources I read, but a later review could not confirm them, so they stay optional and unverified. Account lengths differ by bank and by source, so 7 to 17 is accepted. Not checked per bank.
+- PH: Airwallex accepts 8 to 16 digits, so that is what is accepted, to avoid passing numbers that fail at payout. BIC is required because at least one provider requires it. No official BSP or PCHC source was found.
+- TH: ABN AMRO says there is no fixed format and Airwallex allows 7 to 12 digits for local payouts and 7 to 19 for SWIFT payouts, so 7 to 19 is accepted. Narrow it to 12 if you only pay locally. BIC is required.
 - JP, KR, ID, PH and TH formats come from payment provider and bank documentation, not the national payment authorities. Confirm against the receiving bank or your payout provider.
 - Fallback and IBAN country display names use `Intl.DisplayNames` (en-AU), so names depend on the runtime's ICU data.
 

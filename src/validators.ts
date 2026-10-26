@@ -21,6 +21,10 @@ export function normaliseValue(value: string, how: Normaliser): string {
   switch (how) {
     case 'digits':
       return value.replace(/[\s-]/g, '');
+    case 'digitsPad7': {
+      const digits = value.replace(/[\s-]/g, '');
+      return /^\d{4,6}$/.test(digits) ? digits.padStart(7, '0') : digits;
+    }
     case 'iban':
       return electronicFormatIBAN(value) ?? value.replace(/\s/g, '').toUpperCase();
     case 'bic':

@@ -95,6 +95,12 @@ describe('CA', () => {
 describe('JP', () => {
   const valid = { bankCode: '0001', branchCode: '001', accountType: 'futsu', accountNumber: '1234567' };
   it('accepts valid details', () => expect(ok('JP', valid).valid).toBe(true));
+  it('left-pads short account numbers to 7 digits', () => {
+    expect(ok('JP', { ...valid, accountNumber: '12345' }).normalised.accountNumber).toBe('0012345');
+    expect(ok('JP', { ...valid, accountNumber: '12345678' }).normalised.accountNumber).toBe('12345678');
+    expect(ok('JP', { ...valid, accountNumber: '123' }).errors.accountNumber).toBeDefined();
+    expect(ok('JP', { ...valid, accountNumber: '123456789' }).errors.accountNumber).toBeDefined();
+  });
   it('rejects wrong codes, type and account number', () => {
     const r = ok('JP', { bankCode: '001', branchCode: '01', accountType: 'current', accountNumber: '123' });
     expect(Object.keys(r.errors)).toEqual(['bankCode', 'branchCode', 'accountType', 'accountNumber']);
@@ -109,7 +115,8 @@ describe('KR', () => {
   });
   it('requires a BIC and rejects bad account and bank codes', () => {
     expect(ok('KR', { ...valid, bic: '' }).errors.bic).toBeDefined();
-    expect(ok('KR', { ...valid, accountNumber: '123456789' }).errors.accountNumber).toBeDefined();
+    expect(ok('KR', { ...valid, accountNumber: '123456' }).errors.accountNumber).toBeDefined();
+    expect(ok('KR', { ...valid, accountNumber: '1234567' }).valid).toBe(true);
     expect(ok('KR', { ...valid, bankCode: '04' }).errors.bankCode).toBeDefined();
   });
 });
@@ -133,8 +140,8 @@ describe('PH', () => {
   it('accepts valid details', () => expect(ok('PH', valid).valid).toBe(true));
   it('requires a BIC and rejects a bad account number', () => {
     expect(ok('PH', { ...valid, bic: '' }).errors.bic).toBeDefined();
-    expect(ok('PH', { ...valid, accountNumber: '12345' }).errors.accountNumber).toBeDefined();
-    expect(ok('PH', { ...valid, accountNumber: '1'.repeat(19) }).errors.accountNumber).toBeDefined();
+    expect(ok('PH', { ...valid, accountNumber: '1234567' }).errors.accountNumber).toBeDefined();
+    expect(ok('PH', { ...valid, accountNumber: '1'.repeat(17) }).errors.accountNumber).toBeDefined();
   });
 });
 
@@ -147,7 +154,8 @@ describe('TH', () => {
   it('requires a BIC and rejects bad values', () => {
     expect(ok('TH', { ...valid, bic: '' }).errors.bic).toBeDefined();
     expect(ok('TH', { ...valid, accountNumber: '123456' }).errors.accountNumber).toBeDefined();
-    expect(ok('TH', { ...valid, accountNumber: '1'.repeat(13) }).errors.accountNumber).toBeDefined();
+    expect(ok('TH', { ...valid, accountNumber: '1'.repeat(19) }).valid).toBe(true);
+    expect(ok('TH', { ...valid, accountNumber: '1'.repeat(20) }).errors.accountNumber).toBeDefined();
   });
 });
 
