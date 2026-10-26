@@ -517,3 +517,32 @@ describe('Airwallex country coverage', () => {
     expect(ok('BL', { iban: 'FR1420041010050500013M02606' }).valid).toBe(true);
   });
 });
+
+describe('placeholders', () => {
+  const all = [...getConfiguredCountries(), 'XX'];
+  it('every field of every country has a placeholder', () => {
+    const empty = all.flatMap((c) => getBankFields(c).filter((f) => !f.placeholder).map((f) => `${c}.${f.key}`));
+    expect(empty).toEqual([]);
+  });
+  it('placeholders for pattern-only fields match the pattern once cleaned', () => {
+    const bad: string[] = [];
+    for (const c of all) {
+      for (const f of getBankFields(c)) {
+        if (!f.pattern || f.validate || f.options || f.key === 'bic') continue;
+        const cleaned = f.placeholder!.replace(/[\s-]/g, '');
+        const candidate = f.normalise === 'upper' ? cleaned.toUpperCase() : cleaned;
+        if (!f.pattern.test(candidate) && !f.pattern.test(f.placeholder!)) bad.push(`${c}.${f.key}=${f.placeholder}`);
+      }
+    }
+    expect(bad).toEqual([]);
+  });
+  it('shows the expected formats', () => {
+    const p = (c: string, k: string) => getBankFields(c).find((f) => f.key === k)?.placeholder;
+    expect(p('AU', 'bsb')).toBe('123-456');
+    expect(p('GB', 'sortCode')).toBe('12-34-56');
+    expect(p('JP', 'bankCode')).toBe('1234');
+    expect(p('JP', 'branchCode')).toBe('123');
+    expect(p('MX', 'clabe')).toHaveLength(18);
+    expect(p('DE', 'iban')).toBe('DE00 1234 5678 9012 3456 78');
+  });
+});

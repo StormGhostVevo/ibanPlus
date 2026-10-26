@@ -39,1593 +39,1593 @@ Field order is the order to render. "Required" means required unless one of the 
 
 ### Any other country (fallback) (*)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | unless iban or otherDetails | text | 100 |  |
-| `accountNumber` | Account number | unless iban or otherDetails | text | 34 |  |
-| `bic` | BIC / SWIFT code | unless iban or otherDetails | text | 11 |  |
-| `iban` | IBAN | unless accountNumber or otherDetails | text | 42 |  |
-| `otherDetails` | Other bank details | unless iban or accountNumber | text | 500 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | unless iban or otherDetails | text | 100 |  |
+| `accountNumber` | Account number | 12345678 | unless iban or otherDetails | text | 34 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | unless iban or otherDetails | text | 11 |  |
+| `iban` | IBAN | AA00 1234 5678 9012 3456 | unless accountNumber or otherDetails | text | 42 |  |
+| `otherDetails` | Other bank details | Account holder name, account number, bank name and any local codes | unless iban or accountNumber | text | 500 |  |
 
 ### Andorra (AD)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | AD00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### United Arab Emirates (AE)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | AE00 1234 5678 9012 3456 789 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Antigua and Barbuda (AG)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Anguilla (AI)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Albania (AL)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | AL00 1234 5678 9012 3456 7890 1234 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Armenia (AM)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Angola (AO)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Argentina (AR)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `cbu` | CBU | yes | numeric | 22 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `cbu` | CBU | 1234567890123456789012 | yes | numeric | 22 |  |
 
 ### American Samoa (AS)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Austria (AT)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | AT00 1234 5678 9012 3456 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Australia (AU)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bsb` | BSB | yes | numeric | 7 |  |
-| `accountNumber` | Account number | yes | numeric | 10 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bsb` | BSB | 123-456 | yes | numeric | 7 |  |
+| `accountNumber` | Account number | 12345678 | yes | numeric | 10 |  |
 
 ### Aruba (AW)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Åland Islands (AX)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | FI00 1234 5678 9012 34 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Azerbaijan (AZ)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | AZ00 1234 5678 9012 3456 7890 1234 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Bosnia and Herzegovina (BA)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | BA00 1234 5678 9012 3456 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Barbados (BB)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Bangladesh (BD)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `routingNumber` | Routing number | yes | numeric | 9 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `routingNumber` | Routing number | 123456789 | yes | numeric | 9 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Belgium (BE)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | BE00 1234 5678 9012 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Burkina Faso (BF)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 24 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 123456789012345678901234 | yes | text | 24 |  |
 
 ### Bulgaria (BG)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | BG00 1234 5678 9012 3456 78 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Bahrain (BH)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | BH00 1234 5678 9012 3456 78 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Benin (BJ)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 24 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 123456789012345678901234 | yes | text | 24 |  |
 
 ### St Barthélemy (BL)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Bermuda (BM)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Brunei (BN)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Bolivia (BO)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankCode` | Bank code | yes | numeric | 2 |  |
-| `accountNumber` | Account number | yes | numeric | 15 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankCode` | Bank code | 12 | yes | numeric | 2 |  |
+| `accountNumber` | Account number | 12345678 | yes | numeric | 15 |  |
 
 ### Brazil (BR)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankCode` | Bank code | unless iban | numeric | 3 |  |
-| `branch` | Branch (agência) | unless iban | text | 7 |  |
-| `accountNumber` | Account number | unless iban | text | 50 |  |
-| `accountType` | Account type | unless iban | text | 10 | checking, savings |
-| `iban` | IBAN (alternative) | unless bankCode or branch or accountNumber | text | 42 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankCode` | Bank code | 341 | unless iban | numeric | 3 |  |
+| `branch` | Branch (agência) | 1234 | unless iban | text | 7 |  |
+| `accountNumber` | Account number | 12345-6 | unless iban | text | 50 |  |
+| `accountType` | Account type | Select account type | unless iban | text | 10 | checking, savings |
+| `iban` | IBAN (alternative) | BR00 1234 5678 9012 3456 7890 1234 5 | unless bankCode or branch or accountNumber | text | 42 |  |
 
 ### Bahamas (BS)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Bhutan (BT)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Botswana (BW)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 33 |  |
-| `bankBranch` | Branch code | optional | numeric | 6 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 33 |  |
+| `bankBranch` | Branch code | 123456 | optional | numeric | 6 |  |
 
 ### Belize (BZ)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Canada (CA)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `institutionNumber` | Institution number | yes | numeric | 3 |  |
-| `transitNumber` | Transit number | yes | numeric | 5 |  |
-| `accountNumber` | Account number | yes | numeric | 21 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `institutionNumber` | Institution number | 004 | yes | numeric | 3 |  |
+| `transitNumber` | Transit number | 12345 | yes | numeric | 5 |  |
+| `accountNumber` | Account number | 12345678 | yes | numeric | 21 |  |
 
 ### Central African Republic (CF)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 23 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678901234567890123 | yes | text | 23 |  |
 
 ### Congo - Brazzaville (CG)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 23 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678901234567890123 | yes | text | 23 |  |
 
 ### Switzerland (CH)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | CH00 1234 5678 9012 3456 7 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Cook Islands (CK)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Chile (CL)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankCode` | Bank code | yes | numeric | 3 |  |
-| `accountNumber` | Account number | yes | numeric | 45 |  |
-| `accountType` | Account type | yes | text | 10 | checking, savings, vista |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankCode` | Bank code | 123 | yes | numeric | 3 |  |
+| `accountNumber` | Account number | 12345678 | yes | numeric | 45 |  |
+| `accountType` | Account type | Select account type | yes | text | 10 | checking, savings, vista |
 
 ### Cameroon (CM)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 23 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678901234567890123 | yes | text | 23 |  |
 
 ### China (CN)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `cnaps` | CNAPS code | unless bic | numeric | 12 |  |
-| `bic` | BIC / SWIFT code | unless cnaps | text | 11 |  |
-| `accountNumber` | Account number | yes | numeric | 34 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `cnaps` | CNAPS code | 123456789012 | unless bic | numeric | 12 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | unless cnaps | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | numeric | 34 |  |
 
 ### Colombia (CO)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankCode` | Bank code | yes | numeric | 3 |  |
-| `accountNumber` | Account number | yes | numeric | 18 |  |
-| `accountType` | Account type | yes | text | 10 | checking, savings |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankCode` | Bank code | 007 | yes | numeric | 3 |  |
+| `accountNumber` | Account number | 12345678 | yes | numeric | 18 |  |
+| `accountType` | Account type | Select account type | yes | text | 10 | checking, savings |
 
 ### Costa Rica (CR)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | CR00 1234 5678 9012 3456 78 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
 
 ### Cape Verde (CV)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Curaçao (CW)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Cyprus (CY)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | CY00 1234 5678 9012 3456 7890 1234 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Czechia (CZ)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | CZ00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Germany (DE)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | DE00 1234 5678 9012 3456 78 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Djibouti (DJ)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Denmark (DK)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | DK00 1234 5678 9012 34 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Dominica (DM)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Dominican Republic (DO)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | DO00 1234 5678 9012 3456 7890 1234 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Algeria (DZ)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Ecuador (EC)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Estonia (EE)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | EE00 1234 5678 9012 3456 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Egypt (EG)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | EG00 1234 5678 9012 3456 7890 1234 5 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Spain (ES)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | ES00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Ethiopia (ET)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Finland (FI)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | FI00 1234 5678 9012 34 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Fiji (FJ)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Falkland Islands (FK)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Micronesia (FM)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Faroe Islands (FO)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | FO00 1234 5678 9012 34 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### France (FR)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Gabon (GA)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 23 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678901234567890123 | yes | text | 23 |  |
 
 ### United Kingdom (GB)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `sortCode` | Sort code | unless iban | numeric | 8 |  |
-| `accountNumber` | Account number | unless iban | numeric | 8 |  |
-| `iban` | IBAN (alternative) | unless sortCode or accountNumber | text | 42 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `sortCode` | Sort code | 12-34-56 | unless iban | numeric | 8 |  |
+| `accountNumber` | Account number | 12345678 | unless iban | numeric | 8 |  |
+| `iban` | IBAN (alternative) | GB00 1234 5678 9012 3456 78 | unless sortCode or accountNumber | text | 42 |  |
 
 ### Grenada (GD)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Georgia (GE)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | GE00 1234 5678 9012 3456 78 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### French Guiana (GF)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Guernsey (GG)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 29 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | GG00 1234 5678 9012 3456 78 | yes | text | 29 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Ghana (GH)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Gibraltar (GI)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | GI00 1234 5678 9012 3456 789 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Greenland (GL)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | GL00 1234 5678 9012 34 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Gambia (GM)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 35 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 35 |  |
 
 ### Guinea (GN)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Guadeloupe (GP)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Equatorial Guinea (GQ)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Greece (GR)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | GR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Guatemala (GT)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | GT00 1234 5678 9012 3456 7890 1234 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Guinea-Bissau (GW)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 24 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 123456789012345678901234 | yes | text | 24 |  |
 
 ### Guyana (GY)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Hong Kong (HK)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bankCode` | Bank code | unless bic | numeric | 3 |  |
-| `bic` | BIC / SWIFT code | unless bankCode | text | 11 |  |
-| `accountNumber` | Account number | yes | numeric | 17 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankCode` | Bank code | 024 | unless bic | numeric | 3 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | unless bankCode | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | numeric | 17 |  |
 
 ### Honduras (HN)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Croatia (HR)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | HR00 1234 5678 9012 3456 7 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Hungary (HU)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | HU00 1234 5678 9012 3456 7890 1234 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Canary Islands (IC)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 31 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | IC00 1234 5678 9012 3456 7890 | yes | text | 31 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Indonesia (ID)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bankCode` | Bank code | optional | numeric | 3 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | numeric | 22 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankCode` | Bank code | 014 | optional | numeric | 3 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | numeric | 22 |  |
 
 ### Ireland (IE)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | IE00 1234 5678 9012 3456 78 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Israel (IL)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | IL00 1234 5678 9012 3456 789 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Isle of Man (IM)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 29 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | IM00 1234 5678 9012 3456 78 | yes | text | 29 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### India (IN)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `ifsc` | IFSC code | yes | text | 11 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 20 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `ifsc` | IFSC code | ABCD0123456 | yes | text | 11 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 20 |  |
 
 ### Iceland (IS)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | IS00 1234 5678 9012 3456 7890 12 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Italy (IT)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | IT00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Jersey (JE)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 29 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | JE00 1234 5678 9012 3456 78 | yes | text | 29 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Jamaica (JM)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Jordan (JO)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | JO00 1234 5678 9012 3456 7890 1234 56 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Japan (JP)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankCode` | Bank code | yes | numeric | 4 |  |
-| `branchCode` | Branch code | yes | numeric | 3 |  |
-| `accountType` | Account type | yes | text | 8 | savings, checking |
-| `accountNumber` | Account number | yes | numeric | 8 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankCode` | Bank code | 1234 | yes | numeric | 4 |  |
+| `branchCode` | Branch code | 123 | yes | numeric | 3 |  |
+| `accountType` | Account type | Select account type | yes | text | 8 | savings, checking |
+| `accountNumber` | Account number | 1234567 | yes | numeric | 8 |  |
 
 ### Kenya (KE)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Kyrgyzstan (KG)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Cambodia (KH)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Kiribati (KI)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### St Kitts and Nevis (KN)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### South Korea (KR)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `bankCode` | Bank code | optional | numeric | 3 |  |
-| `accountNumber` | Account number | yes | text | 20 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `bankCode` | Bank code | 123 | optional | numeric | 3 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 20 |  |
 
 ### Kuwait (KW)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | KW00 1234 5678 9012 3456 7890 1234 56 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Cayman Islands (KY)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Kazakhstan (KZ)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | KZ00 1234 5678 9012 3456 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Laos (LA)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Lebanon (LB)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | LB00 1234 5678 9012 3456 7890 1234 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### St Lucia (LC)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | LC00 1234 5678 9012 3456 7890 1234 5678 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Liechtenstein (LI)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | LI00 1234 5678 9012 3456 7 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Sri Lanka (LK)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Liberia (LR)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Lesotho (LS)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 35 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 35 |  |
 
 ### Lithuania (LT)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | LT00 1234 5678 9012 3456 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Luxembourg (LU)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | LU00 1234 5678 9012 3456 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Latvia (LV)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | LV00 1234 5678 9012 3456 7 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Morocco (MA)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `rib` | RIB | yes | numeric | 24 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `rib` | RIB | 123456789012345678901234 | yes | numeric | 24 |  |
 
 ### Monaco (MC)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | MC00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Moldova (MD)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | MD00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Montenegro (ME)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### St Martin (MF)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Madagascar (MG)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 34 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | MG00 1234 5678 9012 3456 7890 123 | yes | text | 34 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Marshall Islands (MH)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### North Macedonia (MK)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | MK00 1234 5678 9012 345 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Mongolia (MN)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Macao SAR China (MO)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Northern Mariana Islands (MP)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Martinique (MQ)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Mauritania (MR)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | MR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Montserrat (MS)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Malta (MT)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | MT00 1234 5678 9012 3456 7890 1234 567 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Mauritius (MU)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | MU00 1234 5678 9012 3456 7890 1234 56 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Maldives (MV)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Malawi (MW)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 35 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 35 |  |
 
 ### Mexico (MX)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `clabe` | CLABE | yes | numeric | 18 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `clabe` | CLABE | 123456789012345678 | yes | numeric | 18 |  |
 
 ### Malaysia (MY)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | numeric | 19 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | numeric | 19 |  |
 
 ### Namibia (NA)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### New Caledonia (NC)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Niger (NE)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 24 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 123456789012345678901234 | yes | text | 24 |  |
 
 ### Nigeria (NG)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 17 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 17 |  |
 
 ### Nicaragua (NI)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Netherlands (NL)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | NL00 1234 5678 9012 34 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Norway (NO)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | NO00 1234 5678 901 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Nepal (NP)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bankCode` | Bank code | unless bic | text | 5 |  |
-| `bic` | BIC / SWIFT code | unless bankCode | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankCode` | Bank code | NP002 | unless bic | text | 5 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | unless bankCode | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### New Zealand (NZ)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bank` | Bank | yes | numeric | 2 |  |
-| `branch` | Branch | yes | numeric | 4 |  |
-| `accountBase` | Account base number | yes | numeric | 8 |  |
-| `suffix` | Suffix | yes | numeric | 3 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bank` | Bank | 12 | yes | numeric | 2 |  |
+| `branch` | Branch | 3456 | yes | numeric | 4 |  |
+| `accountBase` | Account base number | 1234567 | yes | numeric | 8 |  |
+| `suffix` | Suffix | 00 | yes | numeric | 3 |  |
 
 ### Oman (OM)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Panama (PA)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Peru (PE)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `cci` | CCI | yes | numeric | 20 |  |
-| `accountType` | Account type | yes | text | 10 | checking, savings, maestra |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `cci` | CCI | 12345678901234567890 | yes | numeric | 20 |  |
+| `accountType` | Account type | Select account type | yes | text | 10 | checking, savings, maestra |
 
 ### French Polynesia (PF)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Papua New Guinea (PG)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Philippines (PH)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | numeric | 16 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | numeric | 16 |  |
 
 ### Pakistan (PK)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | PK00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Poland (PL)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | PL00 1234 5678 9012 3456 7890 1234 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### St Pierre and Miquelon (PM)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Puerto Rico (PR)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Palestinian Territories (PS)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | PS00 1234 5678 9012 3456 7890 1234 5 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Portugal (PT)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | PT00 1234 5678 9012 3456 7890 1 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Palau (PW)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Paraguay (PY)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Qatar (QA)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | QA00 1234 5678 9012 3456 7890 1234 5 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Réunion (RE)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Romania (RO)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | RO00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Serbia (RS)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | RS00 1234 5678 9012 3456 78 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Rwanda (RW)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 35 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 35 |  |
 
 ### Saudi Arabia (SA)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | SA00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Solomon Islands (SB)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Seychelles (SC)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | SC00 1234 5678 9012 3456 7890 1234 567 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Sweden (SE)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | SE00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Singapore (SG)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 23 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 23 |  |
 
 ### St Helena (SH)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Slovenia (SI)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | SI00 1234 5678 9012 345 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Slovakia (SK)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | SK00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Sierra Leone (SL)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### San Marino (SM)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | SM00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Senegal (SN)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 24 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 123456789012345678901234 | yes | text | 24 |  |
 
 ### Suriname (SR)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### São Tomé and Príncipe (ST)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | ST00 1234 5678 9012 3456 7890 1 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### El Salvador (SV)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Eswatini (SZ)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Turks and Caicos Islands (TC)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Chad (TD)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 23 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678901234567890123 | yes | text | 23 |  |
 
 ### French Southern Territories (TF)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Togo (TG)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 24 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 123456789012345678901234 | yes | text | 24 |  |
 
 ### Thailand (TH)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `bankCode` | Bank code | optional | numeric | 3 |  |
-| `accountNumber` | Account number | yes | numeric | 19 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `bankCode` | Bank code | 123 | optional | numeric | 3 |  |
+| `accountNumber` | Account number | 12345678 | yes | numeric | 19 |  |
 
 ### Tajikistan (TJ)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Timor-Leste (TL)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | TL00 1234 5678 9012 3456 789 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Tunisia (TN)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | TN00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Tonga (TO)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Türkiye (TR)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | TR00 1234 5678 9012 3456 7890 12 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Trinidad and Tobago (TT)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Tuvalu (TV)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Taiwan (TW)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | numeric | 20 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | numeric | 20 |  |
 
 ### Tanzania (TZ)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Ukraine (UA)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Uganda (UG)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### United States (US)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `routingNumber` | ABA routing number | yes | numeric | 9 |  |
-| `accountNumber` | Account number | yes | numeric | 17 |  |
-| `accountType` | Account type | yes | text | 8 | checking, savings |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `routingNumber` | ABA routing number | 123456789 | yes | numeric | 9 |  |
+| `accountNumber` | Account number | 12345678 | yes | numeric | 17 |  |
+| `accountType` | Account type | Select account type | yes | text | 8 | checking, savings |
 
 ### Uruguay (UY)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankCode` | Bank code | yes | numeric | 3 |  |
-| `accountNumber` | Account number | yes | numeric | 14 |  |
-| `accountType` | Account type | yes | text | 10 | checking, savings |
-| `bankBranch` | Branch code | optional | numeric | 4 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankCode` | Bank code | 001 | yes | numeric | 3 |  |
+| `accountNumber` | Account number | 12345678 | yes | numeric | 14 |  |
+| `accountType` | Account type | Select account type | yes | text | 10 | checking, savings |
+| `bankBranch` | Branch code | 1234 | optional | numeric | 4 |  |
 
 ### Uzbekistan (UZ)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Vatican City (VA)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | VA00 1234 5678 9012 3456 78 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### St Vincent and the Grenadines (VC)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### British Virgin Islands (VG)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | VG00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Vietnam (VN)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 20 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 20 |  |
 
 ### Vanuatu (VU)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Wallis and Futuna (WF)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Samoa (WS)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Kosovo (XK)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | XK00 1234 5678 9012 3456 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### Mayotte (YT)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | optional | text | 11 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 
 ### South Africa (ZA)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 17 |  |
-| `accountType` | Account type | yes | text | 10 | checking, savings |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 17 |  |
+| `accountType` | Account type | Select account type | yes | text | 10 | checking, savings |
 
 ### Zambia (ZM)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 
 ### Zimbabwe (ZW)
 
-| Key | Label | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | yes | text | 11 |  |
-| `accountNumber` | Account number | yes | text | 50 |  |
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |

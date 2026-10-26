@@ -15,6 +15,11 @@ export interface FieldConfig {
   key: string;
   label: string;
   helpText: string;
+  /**
+   * Grey example text for the input, in the format the field expects. Always set on fields
+   * returned by getBankFields and getCountryConfig.
+   */
+  placeholder?: string;
   required: boolean;
   /**
    * If set, the field is only required when none of these other fields have a

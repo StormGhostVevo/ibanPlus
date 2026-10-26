@@ -922,7 +922,7 @@ const SPECIFIC: CountryConfig[] = [
 ];
 
 /** Used for any country that has no layout and does not use IBAN. */
-export const FALLBACK_CONFIG: CountryConfig = {
+const FALLBACK_RAW: CountryConfig = {
   country: '*',
   name: 'Other',
   xeroSyncable: false,
@@ -980,9 +980,84 @@ for (const [code, spec] of Object.entries(specs)) {
   });
 }
 
+const SAMPLE_DIGITS = '1234567890'.repeat(8);
+
+/** Example for a field of length `min` to `max`: 8 characters where allowed, else the nearest length. */
+const sampleOfLength = (min: number, max: number): string =>
+  SAMPLE_DIGITS.slice(0, Math.min(max, Math.max(min, 8)));
+
+const groupInFours = (s: string): string => s.replace(/(.{4})/g, '$1 ').trim();
+
+/** Example IBAN of the right length for a country prefix, for example "DE00 1234 5678 9012 3456 78". */
+const sampleIban = (prefix: string, length: number): string =>
+  groupInFours(`${prefix}00${SAMPLE_DIGITS.slice(0, length - 4)}`);
+
+/** Placeholders that cannot be worked out from the pattern. Key is `COUNTRY.fieldKey`. */
+const PLACEHOLDER_OVERRIDES: Record<string, string> = {
+  'AU.bsb': '123-456',
+  'GB.sortCode': '12-34-56',
+  'NZ.bank': '12',
+  'NZ.branch': '3456',
+  'NZ.accountBase': '1234567',
+  'NZ.suffix': '00',
+  'JP.accountNumber': '1234567',
+  'BR.accountNumber': '12345-6',
+  'BR.branch': '1234',
+  'BR.bankCode': '341',
+  'NP.bankCode': 'NP002',
+  'IN.ifsc': 'ABCD0123456',
+  'CO.bankCode': '007',
+  'ID.bankCode': '014',
+  'HK.bankCode': '024',
+  'US.routingNumber': '123456789',
+  'CA.institutionNumber': '004',
+  'UY.bankCode': '001',
+};
+
+/** Placeholders by field key, used when there is no override and the pattern gives no format. */
+const KEY_PLACEHOLDERS: Record<string, string> = {
+  bic: 'AAAABBCC',
+  bankName: 'Name of your bank',
+  accountType: 'Select account type',
+  otherDetails: 'Account holder name, account number, bank name and any local codes',
+  iban: 'AA00 1234 5678 9012 3456',
+};
+
+const FIXED_OR_RANGE = /^\^(?:\\d|\[A-Za-z0-9\])\{(\d+)(?:,(\d+))?\}\$$/;
+
+function placeholderFor(country: string, f: FieldConfig): string {
+  const override = PLACEHOLDER_OVERRIDES[`${country}.${f.key}`];
+  if (override) return override;
+  if (f.options) return KEY_PLACEHOLDERS.accountType;
+  if (f.validate === 'iban' || f.validate === 'ibanChecksum') {
+    const known = f.ibanCountry ? getCountrySpecifications()[f.ibanCountry]?.chars : undefined;
+    if (f.ibanCountry && known) return sampleIban(f.ibanCountry, known);
+    const like = f.pattern?.source.match(/^\^\(([A-Z]{2})[|A-Z]*\)\[A-Z0-9\]\{(\d+)\}\$$/);
+    if (like) return sampleIban(like[1], Number(like[2]) + 2);
+    return KEY_PLACEHOLDERS.iban;
+  }
+  const m = f.pattern?.source.match(FIXED_OR_RANGE);
+  if (m) {
+    const min = Number(m[1]);
+    return sampleOfLength(min, m[2] ? Number(m[2]) : min);
+  }
+  return KEY_PLACEHOLDERS[f.key] ?? '';
+}
+
+function withPlaceholders(config: CountryConfig): CountryConfig {
+  return {
+    ...config,
+    fields: config.fields.map((f) => ({ ...f, placeholder: f.placeholder ?? placeholderFor(config.country, f) })),
+  };
+}
+
+export const FALLBACK_CONFIG: CountryConfig = withPlaceholders(FALLBACK_RAW);
+
 /** Config for a country code (case-insensitive). Unknown countries get the fallback. */
 export function getCountryConfig(country: string): CountryConfig {
-  return configs.get(country.toUpperCase()) ?? { ...FALLBACK_CONFIG, country: country.toUpperCase() };
+  const code = country.toUpperCase();
+  const config = configs.get(code);
+  return config ? withPlaceholders(config) : { ...FALLBACK_CONFIG, country: code };
 }
 
 /** Country codes that have a specific layout or use IBAN. */

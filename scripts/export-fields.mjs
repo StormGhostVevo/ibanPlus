@@ -6,6 +6,7 @@ const plain = (f) => ({
   key: f.key,
   label: f.label,
   helpText: f.helpText,
+  placeholder: f.placeholder,
   required: f.required,
   requiredUnless: f.requiredUnless ?? [],
   pattern: f.pattern ? f.pattern.source : null,
@@ -53,11 +54,11 @@ md.push('', '## By country', '');
 md.push('Field order is the order to render. "Required" means required unless one of the listed alternatives is filled.', '');
 const section = (code, name, fields) => {
   md.push(`### ${name} (${code})`, '');
-  md.push('| Key | Label | Required | Input | Max | Options |', '| --- | --- | --- | --- | --- | --- |');
+  md.push('| Key | Label | Placeholder | Required | Input | Max | Options |', '| --- | --- | --- | --- | --- | --- | --- |');
   for (const f of fields) {
     const req = !f.required ? 'optional' : f.requiredUnless.length ? `unless ${f.requiredUnless.join(' or ')}` : 'yes';
     const opts = f.options ? f.options.map((o) => o.value).join(', ') : '';
-    md.push(`| \`${f.key}\` | ${f.label} | ${req} | ${f.inputMode} | ${f.maxLength} | ${opts} |`);
+    md.push(`| \`${f.key}\` | ${f.label} | ${f.placeholder} | ${req} | ${f.inputMode} | ${f.maxLength} | ${opts} |`);
   }
   md.push('');
 };
