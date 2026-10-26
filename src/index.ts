@@ -1,9 +1,9 @@
 import { friendlyFormatIBAN } from 'ibantools';
-import { getCountryConfig } from './countries';
+import { getCountryConfig, isCountrySupported } from './countries';
 import { normaliseValue, validators } from './validators';
 import type { BankValues, FieldConfig, ValidationResult } from './types';
 
-export { getCountryConfig, getConfiguredCountries, FALLBACK_CONFIG } from './countries';
+export { getCountryConfig, getConfiguredCountries, isCountrySupported, FALLBACK_CONFIG } from './countries';
 export { isValidAbaRouting, isValidClabe, isValidIbanChecksum } from './validators';
 export type * from './types';
 
@@ -26,6 +26,10 @@ export function validateBankDetails(country: string, values: BankValues): Valida
   const config = getCountryConfig(country);
   const normalised: Record<string, string> = {};
   const errors: Record<string, string> = {};
+
+  if (!isCountrySupported(country)) {
+    return { valid: false, errors: { country: 'Payouts to this country are not supported.' }, normalised };
+  }
 
   for (const field of config.fields) {
     normalised[field.key] = normaliseValue((values[field.key] ?? '').toString(), field.normalise);

@@ -3,6 +3,7 @@ import {
   getBankFields,
   getConfiguredCountries,
   isValidAbaRouting,
+  isCountrySupported,
   isValidClabe,
   isValidIbanChecksum,
   isXeroSyncable,
@@ -418,6 +419,17 @@ const withCheckDigits = (prefix: string, bban: string): string => {
   for (const d of digits) rem = (rem * 10 + Number(d)) % 97;
   return `${prefix}${String(98 - rem).padStart(2, '0')}${bban}`;
 };
+
+describe('unsupported countries', () => {
+  it('are not listed and are rejected by validation', () => {
+    for (const c of ['BY', 'IQ', 'LY', 'RU', 'SD', 'SO', 'YE']) {
+      expect(getConfiguredCountries()).not.toContain(c);
+      expect(isCountrySupported(c)).toBe(false);
+      expect(ok(c, { iban: 'DE89370400440532013000' }).errors.country).toMatch(/not supported/);
+    }
+    expect(isCountrySupported('de')).toBe(true);
+  });
+});
 
 describe('Airwallex country coverage', () => {
   it('has a layout for every country in the payout requirements', () => {

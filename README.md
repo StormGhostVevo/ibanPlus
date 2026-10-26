@@ -57,7 +57,7 @@ Validation catches typos only and cannot confirm an account exists. Rules are de
 - Beneficiary tax and ID fields (for example Albania NIPT, Azerbaijan TIN, Honduras RTN, Paraguay RUC) and Pakistan's payout reason are not bank details and are not collected here.
 - Egypt takes an IBAN only here. Airwallex also accepts an account number plus SWIFT code for non-EGP currencies.
 - Doc items still open: whether Albania's tax ID applies to all SWIFT payouts or only ALL, Montenegro's account name rule, Zambia's limit currency, and Botswana's note about Brazilian formats looking like a copy error.
-- Iraq, Libya, Sudan, Somalia, Yemen, Belarus and Russia, plus Åland, Guadeloupe and Malta, have layouts from the IBAN registry but are not in Airwallex's list. Confirm they should be offered.
+- Iraq, Libya, Sudan, Somalia, Yemen, Belarus and Russia are not in Airwallex's list and are excluded: they are left out of `getConfiguredCountries()`, `isCountrySupported()` returns false and `validateBankDetails` rejects them. Åland, Guadeloupe and Malta have IBAN registry layouts but are not in Airwallex's list. Confirm they should be offered.
 - Fallback and IBAN country display names use `Intl.DisplayNames` (en-AU), so names depend on the runtime's ICU data.
 
 ## Countries to add later

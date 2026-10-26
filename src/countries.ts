@@ -953,6 +953,13 @@ export const FALLBACK_CONFIG: CountryConfig = {
   ],
 };
 
+/** Not offered: not in Airwallex's payout list. Excluded from the country list and rejected by validation. */
+const UNSUPPORTED = new Set(['BY', 'IQ', 'LY', 'RU', 'SD', 'SO', 'YE']);
+
+export function isCountrySupported(country: string): boolean {
+  return !UNSUPPORTED.has(country.toUpperCase());
+}
+
 const configs = new Map<string, CountryConfig>(SPECIFIC.map((c) => [c.country, c]));
 
 /** Territories whose IBANs carry their parent country's prefix. */
@@ -964,7 +971,7 @@ const IBAN_PREFIX: Record<string, string> = {
 const countryNames = new Intl.DisplayNames(['en-AU'], { type: 'region' });
 const specs = getCountrySpecifications();
 for (const [code, spec] of Object.entries(specs)) {
-  if (!spec.IBANRegistry || configs.has(code)) continue;
+  if (!spec.IBANRegistry || configs.has(code) || UNSUPPORTED.has(code)) continue;
   configs.set(code, {
     country: code,
     name: countryNames.of(code) ?? code,
