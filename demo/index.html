@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bank fields demo</title>
+<style>
+  :root {
+    --bg: #f6f6f4; --card: #fff; --text: #1d1d1b; --muted: #6b6b66; --border: #d9d9d3;
+    --accent: #3b3bd1; --error: #c0262d; --ok: #1f7a46;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #141414; --card: #1f1f1e; --text: #ececea; --muted: #9a9a94; --border: #3a3a37;
+            --accent: #8f8fff; --error: #ff7a80; --ok: #5ccf8c; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 16px/1.5 system-ui, -apple-system, sans-serif; }
+  main { max-width: 640px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 24px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+  label { display: block; font-weight: 600; margin-bottom: 4px; }
+  .field { margin-bottom: 18px; }
+  input, select { width: 100%; padding: 10px 12px; font: inherit; color: var(--text);
+                  background: var(--bg); border: 1px solid var(--border); border-radius: 6px; }
+  input::placeholder { color: var(--muted); opacity: .7; }
+  input:focus, select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .help { color: var(--muted); font-size: 13px; margin-top: 4px; }
+  .err { color: var(--error); font-size: 13px; margin-top: 4px; }
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 0; }
+  .badge { font-size: 12px; padding: 2px 8px; border-radius: 99px; border: 1px solid var(--border); color: var(--muted); }
+  button { font: inherit; font-weight: 600; padding: 10px 18px; border-radius: 6px; border: 0;
+           background: var(--accent); color: #fff; cursor: pointer; }
+  @media (prefers-color-scheme: dark) { button { color: #111; } }
+  .result { margin-top: 20px; padding: 14px; border-radius: 8px; border: 1px solid var(--border);
+            font: 13px/1.5 ui-monospace, Menlo, monospace; white-space: pre-wrap; word-break: break-all; }
+  .result.ok { border-color: var(--ok); }
+  .req { color: var(--error); }
+  details { margin-top: 20px; color: var(--muted); font-size: 13px; }
+  details code { word-break: break-all; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Bank fields demo</h1>
+  <p class="sub">Choose a country to see the fields the library returns for it.</p>
+
+  <div class="card">
+    <div class="field">
+      <label for="country">Country</label>
+      <input id="country" list="countries" placeholder="Start typing, for example Australia or JP" autocomplete="off">
+      <datalist id="countries"></datalist>
+      <div class="badges" id="badges"></div>
+    </div>
+    <form id="form" novalidate></form>
+    <div id="result"></div>
+  </div>
+  <details id="spec"><summary>Field config (JSON)</summary><pre id="json"></pre></details>
+</main>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+let countries = [];
+let current = null;
+
+async function init() {
+  countries = await (await fetch('/api/countries')).json();
+  $('countries').innerHTML = countries
+    .map((c) => `<option value="${esc(c.name)} (${c.code})"></option>`).join('');
+  const first = new URLSearchParams(location.search).get('country');
+  if (first) { $('country').value = first; load(first); }
+}
+
+function resolveCode(text) {
+  const t = text.trim();
+  const paren = t.match(/\(([A-Za-z]{2})\)$/);
+  if (paren) return paren[1].toUpperCase();
+  if (/^[A-Za-z]{2}$/.test(t)) return t.toUpperCase();
+  const byName = countries.find((c) => c.name.toLowerCase() === t.toLowerCase());
+  return byName ? byName.code : null;
+}
+
+async function load(text) {
+  const code = resolveCode(text);
+  $('result').innerHTML = '';
+  if (!code) { render(null); return; }
+  const res = await fetch(`/api/fields/${code}`);
+  current = await res.json();
+  render(current);
+}
+
+function render(cfg) {
+  const form = $('form');
+  if (!cfg) { form.innerHTML = ''; $('badges').innerHTML = ''; $('json').textContent = ''; return; }
+
+  const flags = [`${cfg.name} (${cfg.country})`, cfg.xeroSyncable ? 'Syncs to Xero' : 'Not synced to Xero'];
+  if (!cfg.supported) flags.push('Payouts not supported');
+  $('badges').innerHTML = flags.map((f) => `<span class="badge">${esc(f)}</span>`).join('');
+  $('json').textContent = JSON.stringify(cfg.fields, null, 2);
+
+  if (!cfg.supported) { form.innerHTML = '<p class="err">Payouts to this country are not supported.</p>'; return; }
+
+  form.innerHTML = cfg.fields.map((f) => {
+    const control = f.options
+      ? `<select id="f_${f.key}" name="${f.key}"><option value="">${esc(f.placeholder)}</option>` +
+        f.options.map((o) => `<option value="${esc(o.value)}">${esc(o.label)}</option>`).join('') + '</select>'
+      : `<input id="f_${f.key}" name="${f.key}" placeholder="${esc(f.placeholder)}" inputmode="${f.inputMode}"` +
+        ` maxlength="${f.maxLength}" autocomplete="off" ${f.sensitive ? 'data-sensitive' : ''}>`;
+    return `<div class="field"><label for="f_${f.key}">${esc(f.label)}${f.required ? ' <span class="req">*</span>' : ''}</label>` +
+      `${control}<div class="help">${esc(f.helpText)}</div><div class="err" id="e_${f.key}"></div></div>`;
+  }).join('') + '<button type="submit">Validate</button>';
+}
+
+$('form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const values = Object.fromEntries(new FormData(e.target).entries());
+  const res = await (await fetch(`/api/validate/${current.country}`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(values),
+  })).json();
+  for (const f of current.fields) $(`e_${f.key}`).textContent = res.errors[f.key] ?? '';
+  const box = $('result');
+  box.className = 'result' + (res.valid ? ' ok' : '');
+  box.textContent = res.valid
+    ? 'Valid. Stored values (masked for display):\n' + JSON.stringify(res.masked, null, 2)
+    : 'Please fix the highlighted fields.';
+});
+
+$('country').addEventListener('input', (e) => {
+  if (resolveCode(e.target.value)) load(e.target.value);
+});
+init();
+</script>
+</body>
+</html>

@@ -21,7 +21,8 @@
     "build": "tsup src/index.ts --format esm,cjs --dts --clean",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "export-fields": "npm run build && node scripts/export-fields.mjs"
+    "export-fields": "npm run build && node scripts/export-fields.mjs",
+    "demo": "npm run build && node demo/server.mjs"
   },
   "dependencies": {
     "ibantools": "^4.5.4"

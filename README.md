@@ -75,3 +75,13 @@ npm test
 npm run typecheck
 npm run build
 ```
+
+## Local demo
+
+A small page for trying the fields by hand. It has no extra dependencies.
+
+```bash
+npm run demo
+```
+
+Open http://localhost:3000, type a country name or code, and the fields appear with their labels, help text and placeholders. Submitting runs `validateBankDetails` on the demo server and shows the masked result. Add `?country=JP` to the URL to open a country directly. The port can be changed with `PORT=4000 npm run demo`.
