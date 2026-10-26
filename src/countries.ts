@@ -210,8 +210,181 @@ const CA: CountryConfig = {
   ],
 };
 
+const bankNameField = (): FieldConfig => ({
+  key: 'bankName',
+  label: 'Bank name',
+  helpText: 'The name of your bank, for example the name printed on your card.',
+  required: true,
+  pattern: /\S/,
+  errorMessage: 'Enter the name of your bank.',
+  normalise: 'trim',
+  inputMode: 'text',
+  maxLength: 100,
+  sensitive: false,
+});
+
+const JP: CountryConfig = {
+  country: 'JP',
+  name: 'Japan',
+  xeroSyncable: false,
+  fields: [
+    digitsField({
+      key: 'bankCode',
+      label: 'Bank code',
+      helpText: 'Four digits (Zengin code).',
+      pattern: /^\d{4}$/,
+      errorMessage: 'Japanese bank codes are 4 digits.',
+      maxLength: 4,
+    }),
+    digitsField({
+      key: 'branchCode',
+      label: 'Branch code',
+      helpText: 'Three digits.',
+      pattern: /^\d{3}$/,
+      errorMessage: 'Japanese branch codes are 3 digits.',
+      maxLength: 3,
+    }),
+    {
+      key: 'accountType',
+      label: 'Account type',
+      helpText: 'Most personal accounts are ordinary (futsu).',
+      required: true,
+      pattern: /^(futsu|toza|chochiku)$/,
+      errorMessage: 'Choose ordinary, checking or savings.',
+      normalise: 'trim',
+      inputMode: 'text',
+      maxLength: 8,
+      options: [
+        { value: 'futsu', label: 'Ordinary (futsu)' },
+        { value: 'toza', label: 'Checking (toza)' },
+        { value: 'chochiku', label: 'Savings (chochiku)' },
+      ],
+      sensitive: false,
+    },
+    digitsField({
+      key: 'accountNumber',
+      label: 'Account number',
+      helpText: 'Usually 7 digits.',
+      pattern: /^\d{6,8}$/,
+      errorMessage: 'Japanese account numbers are usually 7 digits (6 to 8 accepted).',
+      maxLength: 8,
+    }),
+  ],
+};
+
+const KR: CountryConfig = {
+  country: 'KR',
+  name: 'South Korea',
+  xeroSyncable: false,
+  fields: [
+    bankNameField(),
+    bicField({
+      required: true,
+      helpText: 'Your bank\'s SWIFT code, 8 or 11 characters. Ask your bank if unsure.',
+    }),
+    digitsField({
+      key: 'bankCode',
+      label: 'Bank code',
+      helpText: 'Optional. Three digits.',
+      required: false,
+      pattern: /^\d{3}$/,
+      errorMessage: 'Korean bank codes are 3 digits.',
+      maxLength: 3,
+      sensitive: false,
+    }),
+    digitsField({
+      key: 'accountNumber',
+      label: 'Account number',
+      helpText: 'Digits only. Length varies by bank, usually 10 to 14.',
+      pattern: /^\d{10,16}$/,
+      errorMessage: 'Korean account numbers are 10 to 16 digits.',
+      maxLength: 16,
+    }),
+  ],
+};
+
+const ID: CountryConfig = {
+  country: 'ID',
+  name: 'Indonesia',
+  xeroSyncable: false,
+  fields: [
+    bankNameField(),
+    digitsField({
+      key: 'bankCode',
+      label: 'Bank code',
+      helpText: 'Optional. Three digits, for example 014 for BCA.',
+      required: false,
+      pattern: /^\d{3}$/,
+      errorMessage: 'Indonesian bank codes are 3 digits.',
+      maxLength: 3,
+      sensitive: false,
+    }),
+    bicField(),
+    digitsField({
+      key: 'accountNumber',
+      label: 'Account number',
+      helpText: 'Digits only. Length varies by bank.',
+      pattern: /^\d{7,17}$/,
+      errorMessage: 'Indonesian account numbers are 7 to 17 digits.',
+      maxLength: 17,
+    }),
+  ],
+};
+
+const PH: CountryConfig = {
+  country: 'PH',
+  name: 'Philippines',
+  xeroSyncable: false,
+  fields: [
+    bankNameField(),
+    bicField({
+      required: true,
+      helpText: 'Your bank\'s SWIFT code, 8 or 11 characters. Ask your bank if unsure.',
+    }),
+    digitsField({
+      key: 'accountNumber',
+      label: 'Account number',
+      helpText: 'Digits only. Length varies by bank.',
+      pattern: /^\d{6,18}$/,
+      errorMessage: 'Philippine account numbers are 6 to 18 digits.',
+      maxLength: 18,
+    }),
+  ],
+};
+
+const TH: CountryConfig = {
+  country: 'TH',
+  name: 'Thailand',
+  xeroSyncable: false,
+  fields: [
+    bankNameField(),
+    bicField({
+      required: true,
+      helpText: 'Your bank\'s SWIFT code, 8 or 11 characters. Ask your bank if unsure.',
+    }),
+    digitsField({
+      key: 'bankCode',
+      label: 'Bank code',
+      helpText: 'Optional. Three digits.',
+      required: false,
+      pattern: /^\d{3}$/,
+      errorMessage: 'Thai bank codes are 3 digits.',
+      maxLength: 3,
+      sensitive: false,
+    }),
+    digitsField({
+      key: 'accountNumber',
+      label: 'Account number',
+      helpText: 'Digits only, usually 10 to 12. Do not include spaces or dashes.',
+      pattern: /^\d{7,12}$/,
+      errorMessage: 'Thai account numbers are 7 to 12 digits.',
+      maxLength: 12,
+    }),
+  ],
+};
+
 /** Countries with their own layout. IBAN countries and the fallback are derived below. */
-const SPECIFIC: CountryConfig[] = [AU, US, GB, NZ, CA];
+const SPECIFIC: CountryConfig[] = [AU, US, GB, NZ, CA, JP, KR, ID, PH, TH];
 
 /** Used for any country that has no layout and does not use IBAN. */
 export const FALLBACK_CONFIG: CountryConfig = {

@@ -92,6 +92,65 @@ describe('CA', () => {
   });
 });
 
+describe('JP', () => {
+  const valid = { bankCode: '0001', branchCode: '001', accountType: 'futsu', accountNumber: '1234567' };
+  it('accepts valid details', () => expect(ok('JP', valid).valid).toBe(true));
+  it('rejects wrong codes, type and account number', () => {
+    const r = ok('JP', { bankCode: '001', branchCode: '01', accountType: 'current', accountNumber: '123' });
+    expect(Object.keys(r.errors)).toEqual(['bankCode', 'branchCode', 'accountType', 'accountNumber']);
+  });
+});
+
+describe('KR', () => {
+  const valid = { bankName: 'Example Bank', bic: 'CZNBKRSE', accountNumber: '110-123-456789' };
+  it('accepts valid details with an optional bank code', () => {
+    expect(ok('KR', valid).valid).toBe(true);
+    expect(ok('KR', { ...valid, bankCode: '004' }).valid).toBe(true);
+  });
+  it('requires a BIC and rejects bad account and bank codes', () => {
+    expect(ok('KR', { ...valid, bic: '' }).errors.bic).toBeDefined();
+    expect(ok('KR', { ...valid, accountNumber: '123456789' }).errors.accountNumber).toBeDefined();
+    expect(ok('KR', { ...valid, bankCode: '04' }).errors.bankCode).toBeDefined();
+  });
+});
+
+describe('ID', () => {
+  const valid = { bankName: 'Example Bank', accountNumber: '1234567890' };
+  it('accepts valid details, BIC and bank code optional', () => {
+    expect(ok('ID', valid).valid).toBe(true);
+    expect(ok('ID', { ...valid, bankCode: '014', bic: 'CENAIDJA' }).valid).toBe(true);
+  });
+  it('rejects bad values', () => {
+    expect(ok('ID', { ...valid, accountNumber: '123456' }).errors.accountNumber).toBeDefined();
+    expect(ok('ID', { ...valid, bankCode: '14' }).errors.bankCode).toBeDefined();
+    expect(ok('ID', { ...valid, bic: 'XX' }).errors.bic).toBeDefined();
+    expect(ok('ID', { accountNumber: valid.accountNumber }).errors.bankName).toBeDefined();
+  });
+});
+
+describe('PH', () => {
+  const valid = { bankName: 'Example Bank', bic: 'BOPIPHMM', accountNumber: '001234567890' };
+  it('accepts valid details', () => expect(ok('PH', valid).valid).toBe(true));
+  it('requires a BIC and rejects a bad account number', () => {
+    expect(ok('PH', { ...valid, bic: '' }).errors.bic).toBeDefined();
+    expect(ok('PH', { ...valid, accountNumber: '12345' }).errors.accountNumber).toBeDefined();
+    expect(ok('PH', { ...valid, accountNumber: '1'.repeat(19) }).errors.accountNumber).toBeDefined();
+  });
+});
+
+describe('TH', () => {
+  const valid = { bankName: 'Example Bank', bic: 'KASITHBK', accountNumber: '1234567890' };
+  it('accepts valid details with an optional bank code', () => {
+    expect(ok('TH', valid).valid).toBe(true);
+    expect(ok('TH', { ...valid, bankCode: '004' }).valid).toBe(true);
+  });
+  it('requires a BIC and rejects bad values', () => {
+    expect(ok('TH', { ...valid, bic: '' }).errors.bic).toBeDefined();
+    expect(ok('TH', { ...valid, accountNumber: '123456' }).errors.accountNumber).toBeDefined();
+    expect(ok('TH', { ...valid, accountNumber: '1'.repeat(13) }).errors.accountNumber).toBeDefined();
+  });
+});
+
 describe('IBAN countries', () => {
   it('accepts valid IBANs with optional BIC', () => {
     expect(ok('DE', { iban: 'DE89 3704 0044 0532 0130 00', bic: 'COBADEFF' }).valid).toBe(true);
@@ -111,22 +170,22 @@ describe('IBAN countries', () => {
 
 describe('fallback', () => {
   it('accepts other details alone, or a valid IBAN alone', () => {
-    expect(ok('JP', { otherDetails: 'Acct 1234, Example Bank, branch 001' }).valid).toBe(true);
-    expect(ok('JP', { iban: 'DE89370400440532013000' }).valid).toBe(true);
+    expect(ok('VN', { otherDetails: 'Acct 1234, Example Bank, branch 001' }).valid).toBe(true);
+    expect(ok('VN', { iban: 'DE89370400440532013000' }).valid).toBe(true);
   });
   it('requires one of them', () => {
-    expect(ok('JP', {}).valid).toBe(false);
-    expect(ok('JP', { otherDetails: '   ' }).valid).toBe(false);
+    expect(ok('VN', {}).valid).toBe(false);
+    expect(ok('VN', { otherDetails: '   ' }).valid).toBe(false);
   });
   it('has the expected fields', () => {
-    expect(getBankFields('JP').map((f) => f.key)).toEqual(['iban', 'bic', 'otherDetails']);
+    expect(getBankFields('VN').map((f) => f.key)).toEqual(['iban', 'bic', 'otherDetails']);
   });
 });
 
 describe('config and masking', () => {
   it('lists configured countries including specific and IBAN ones', () => {
     const list = getConfiguredCountries();
-    for (const c of ['AU', 'US', 'GB', 'NZ', 'CA', 'DE', 'FR']) expect(list).toContain(c);
+    for (const c of ['AU', 'US', 'GB', 'NZ', 'CA', 'JP', 'KR', 'ID', 'PH', 'TH', 'DE', 'FR']) expect(list).toContain(c);
   });
   it('drops values for fields the country does not use', () => {
     const r = ok('AU', { bsb: '123456', accountNumber: '12345678', routingNumber: '021000021' });
