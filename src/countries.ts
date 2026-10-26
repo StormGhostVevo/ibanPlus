@@ -247,17 +247,19 @@ const JP: CountryConfig = {
     {
       key: 'accountType',
       label: 'Account type',
-      helpText: 'Most personal accounts are ordinary (futsu).',
+      helpText: 'Most personal accounts are ordinary (futsu), which is the savings option.',
       required: true,
-      pattern: /^(futsu|toza|chochiku)$/,
-      errorMessage: 'Choose ordinary, checking or savings.',
+      // Matches Airwallex's bank_account_category: only Checking (toza) and Savings.
+      // In Japan "Savings" means an ordinary deposit account (futsu). Airwallex has no
+      // separate value for chochiku (postal-style deposit savings), so it is not offered.
+      pattern: /^(checking|savings)$/,
+      errorMessage: 'Choose checking or savings (ordinary).',
       normalise: 'trim',
       inputMode: 'text',
       maxLength: 8,
       options: [
-        { value: 'futsu', label: 'Ordinary (futsu)' },
-        { value: 'toza', label: 'Checking (toza)' },
-        { value: 'chochiku', label: 'Savings (chochiku)' },
+        { value: 'savings', label: 'Savings / ordinary (futsu)' },
+        { value: 'checking', label: 'Checking (toza)' },
       ],
       sensitive: false,
     },
@@ -296,9 +298,10 @@ const KR: CountryConfig = {
     digitsField({
       key: 'accountNumber',
       label: 'Account number',
-      helpText: 'Digits only. Length varies by bank.',
-      pattern: /^\d{7,20}$/,
-      errorMessage: 'Korean account numbers are 7 to 20 digits.',
+      helpText: 'Letters and numbers only. Length varies by bank.',
+      pattern: /^[A-Za-z0-9]{7,20}$/,
+      errorMessage: 'Korean account numbers are 7 to 20 letters or numbers.',
+      inputMode: 'text',
       maxLength: 20,
     }),
   ],
@@ -320,7 +323,10 @@ const ID: CountryConfig = {
       maxLength: 3,
       sensitive: false,
     }),
-    bicField(),
+    bicField({
+      required: true,
+      helpText: 'Your bank\'s SWIFT code, 8 or 11 characters. Ask your bank if unsure.',
+    }),
     digitsField({
       key: 'accountNumber',
       label: 'Account number',

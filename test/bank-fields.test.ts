@@ -100,8 +100,13 @@ describe('CA', () => {
 });
 
 describe('JP', () => {
-  const valid = { bankCode: '0001', branchCode: '001', accountType: 'futsu', accountNumber: '1234567' };
+  const valid = { bankCode: '0001', branchCode: '001', accountType: 'savings', accountNumber: '1234567' };
   it('accepts valid details', () => expect(ok('JP', valid).valid).toBe(true));
+  it('accepts checking and savings only', () => {
+    expect(ok('JP', { ...valid, accountType: 'checking' }).valid).toBe(true);
+    expect(ok('JP', { ...valid, accountType: 'chochiku' }).errors.accountType).toBeDefined();
+    expect(ok('JP', { ...valid, accountType: 'futsu' }).errors.accountType).toBeDefined();
+  });
   it('left-pads short account numbers to 7 digits', () => {
     expect(ok('JP', { ...valid, accountNumber: '12345' }).normalised.accountNumber).toBe('0012345');
     expect(ok('JP', { ...valid, accountNumber: '12345678' }).normalised.accountNumber).toBe('12345678');
@@ -125,16 +130,18 @@ describe('KR', () => {
     expect(ok('KR', { ...valid, accountNumber: '123456' }).errors.accountNumber).toBeDefined();
     expect(ok('KR', { ...valid, accountNumber: '1234567' }).valid).toBe(true);
     expect(ok('KR', { ...valid, accountNumber: '1'.repeat(20) }).valid).toBe(true);
+    expect(ok('KR', { ...valid, accountNumber: 'AB1234567' }).valid).toBe(true);
+    expect(ok('KR', { ...valid, accountNumber: '1234567!' }).errors.accountNumber).toBeDefined();
     expect(ok('KR', { ...valid, accountNumber: '1'.repeat(21) }).errors.accountNumber).toBeDefined();
     expect(ok('KR', { ...valid, bankCode: '04' }).errors.bankCode).toBeDefined();
   });
 });
 
 describe('ID', () => {
-  const valid = { bankName: 'Example Bank', accountNumber: '1234567890' };
-  it('accepts valid details, BIC and bank code optional', () => {
+  const valid = { bankName: 'Example Bank', bic: 'CENAIDJA', accountNumber: '1234567890' };
+  it('accepts valid details, bank code optional', () => {
     expect(ok('ID', valid).valid).toBe(true);
-    expect(ok('ID', { ...valid, bankCode: '014', bic: 'CENAIDJA' }).valid).toBe(true);
+    expect(ok('ID', { ...valid, bankCode: '014' }).valid).toBe(true);
   });
   it('rejects bad values', () => {
     expect(ok('ID', { ...valid, accountNumber: '123456' }).errors.accountNumber).toBeDefined();
@@ -142,7 +149,8 @@ describe('ID', () => {
     expect(ok('ID', { ...valid, accountNumber: '1'.repeat(23) }).errors.accountNumber).toBeDefined();
     expect(ok('ID', { ...valid, bankCode: '14' }).errors.bankCode).toBeDefined();
     expect(ok('ID', { ...valid, bic: 'XX' }).errors.bic).toBeDefined();
-    expect(ok('ID', { accountNumber: valid.accountNumber }).errors.bankName).toBeDefined();
+    expect(ok('ID', { ...valid, bankName: '' }).errors.bankName).toBeDefined();
+    expect(ok('ID', { ...valid, bic: '' }).errors.bic).toBeDefined();
   });
 });
 
