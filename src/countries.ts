@@ -426,7 +426,10 @@ const accountNumberField = (name: string, o: AccountNumberOptions): FieldConfig 
     helpText: o.helpText ?? `${o.digitsOnly ? 'Digits only' : 'Letters and numbers only'}. Length varies by bank.`,
     required: true,
     pattern: new RegExp(`^${chars}{${o.min},${o.max}}$`),
-    errorMessage: `${name} account numbers are ${o.min} to ${o.max} ${noun}.`,
+    errorMessage:
+      o.min === o.max
+        ? `${name} account numbers are ${o.min} ${noun}.`
+        : `${name} account numbers are ${o.min} to ${o.max} ${noun}.`,
     normalise: 'digits',
     inputMode: o.digitsOnly ? 'numeric' : 'text',
     maxLength: o.max,
@@ -459,6 +462,154 @@ const LA = accountPlusBic('LA', 'Laos', { min: 5, max: 50 });
 const GH = accountPlusBic('GH', 'Ghana', { min: 5, max: 50 });
 const KE = accountPlusBic('KE', 'Kenya', { min: 8, max: 50 });
 const NG = accountPlusBic('NG', 'Nigeria', { min: 7, max: 17 });
+
+const regionNames = new Intl.DisplayNames(['en-AU'], { type: 'region' });
+const regionName = (code: string) => regionNames.of(code) ?? code;
+
+/**
+ * Countries where Airwallex takes an account number plus SWIFT code, with no other
+ * identifiers: [country, min, max, digitsOnly]. "Up to N" pages give no minimum, so 5 is assumed.
+ */
+const ACCOUNT_PLUS_BIC: [string, number, number, boolean?][] = [
+  // Up to 50 letters or numbers
+  ...['DZ', 'AS', 'AO', 'AI', 'AG', 'AM', 'AW', 'BS', 'GD', 'BB', 'BZ', 'BM', 'BT', 'BN', 'CV', 'KY', 'CK',
+    'CW', 'DJ', 'DM', 'EC', 'ET', 'FK', 'PF', 'GQ', 'GN', 'GY', 'HN', 'JM', 'KI', 'KG', 'LR', 'MO',
+    'MV', 'MH', 'FM', 'MS', 'MP', 'PW', 'PA', 'PG', 'PR', 'SH', 'KN', 'VC', 'WS', 'SL', 'SB', 'SR',
+    'TJ', 'TZ', 'TO', 'TT', 'TC', 'TV', 'UG', 'UZ', 'VU', 'ZW', 'ZM', 'PY', 'SZ',
+    // Registry IBAN countries that Airwallex takes as account number plus SWIFT code
+    'OM', 'MN', 'NI', 'SV', 'UA', 'ME'].map((c): [string, number, number] => [c, 5, 50]),
+  // Up to 35 letters or numbers
+  ...['LS', 'MW', 'RW', 'GM'].map((c): [string, number, number] => [c, 5, 35]),
+  ['NA', 8, 50],
+  // Fixed length, letters or numbers (West and Central Africa)
+  ...['BJ', 'BF', 'GW', 'NE', 'SN', 'TG'].map((c): [string, number, number] => [c, 24, 24]),
+  ...['CM', 'CF', 'TD', 'GA', 'CG'].map((c): [string, number, number] => [c, 23, 23]),
+];
+
+const BW: CountryConfig = {
+  country: 'BW',
+  name: 'Botswana',
+  xeroSyncable: false,
+  fields: [
+    bankNameField(),
+    bicField({ required: true, helpText: SWIFT_HELP }),
+    accountNumberField('Botswana', { min: 7, max: 33 }),
+    digitsField({
+      key: 'bankBranch',
+      label: 'Branch code',
+      helpText: 'Optional. Six digits.',
+      required: false,
+      pattern: /^\d{6}$/,
+      errorMessage: 'Botswana branch codes are 6 digits.',
+      maxLength: 6,
+      sensitive: false,
+    }),
+  ],
+};
+
+const BO: CountryConfig = {
+  country: 'BO',
+  name: 'Bolivia',
+  xeroSyncable: false,
+  fields: [
+    digitsField({
+      key: 'bankCode',
+      label: 'Bank code',
+      helpText: 'One or two digits, for example 1 for Banco Mercantil.',
+      pattern: /^\d{1,2}$/,
+      errorMessage: 'Bolivian bank codes are 1 or 2 digits.',
+      maxLength: 2,
+      sensitive: false,
+    }),
+    accountNumberField('Bolivian', {
+      min: 5,
+      max: 15,
+      digitsOnly: true,
+      helpText: 'Digits only. Usually 10 digits, or 14 for Banco Unión.',
+    }),
+  ],
+};
+
+const UY: CountryConfig = {
+  country: 'UY',
+  name: 'Uruguay',
+  xeroSyncable: false,
+  fields: [
+    digitsField({
+      key: 'bankCode',
+      label: 'Bank code',
+      helpText: 'Three digits, for example 001 for BROU.',
+      pattern: /^\d{3}$/,
+      errorMessage: 'Uruguayan bank codes are 3 digits.',
+      maxLength: 3,
+      sensitive: false,
+    }),
+    accountNumberField('Uruguayan', { min: 4, max: 14, digitsOnly: true }),
+    accountTypeField(CHECKING_SAVINGS, 'Confirm with your bank if unsure.'),
+    digitsField({
+      key: 'bankBranch',
+      label: 'Branch code',
+      helpText: 'Santander (bank code 137) only. Up to four digits.',
+      required: false,
+      pattern: /^\d{1,4}$/,
+      errorMessage: 'Uruguayan branch codes are up to 4 digits.',
+      maxLength: 4,
+      sensitive: false,
+    }),
+  ],
+};
+
+const MA: CountryConfig = {
+  country: 'MA',
+  name: 'Morocco',
+  xeroSyncable: false,
+  fields: [
+    digitsField({
+      key: 'rib',
+      label: 'RIB',
+      helpText: 'Twenty-four digits (Relevé d\'Identité Bancaire). The first three identify your bank.',
+      pattern: /^\d{24}$/,
+      errorMessage: 'Moroccan RIB numbers are 24 digits.',
+      maxLength: 24,
+    }),
+  ],
+};
+
+const CR: CountryConfig = {
+  country: 'CR',
+  name: 'Costa Rica',
+  xeroSyncable: false,
+  fields: [
+    ibanField({ ibanCountry: 'CR' }),
+    bicField({ required: true, helpText: SWIFT_HELP }),
+  ],
+};
+
+/** IBAN-style numbers that ibantools has no registry entry for, checked by pattern and mod 97. */
+const ibanLikeField = (prefixes: string[], length: number): FieldConfig =>
+  ibanField({
+    validate: 'ibanChecksum',
+    pattern: new RegExp(`^(${prefixes.join('|')})[A-Z0-9]{${length - 2}}$`),
+    errorMessage: `IBANs for this country are ${length} characters and start with ${prefixes.join(' or ')}.`,
+    maxLength: length + 7,
+  });
+
+const ibanLikeCountry = (country: string, prefixes: string[], length: number): CountryConfig => ({
+  country,
+  name: regionName(country),
+  xeroSyncable: false,
+  fields: [ibanLikeField(prefixes, length), bicField()],
+});
+
+const IBAN_LIKE: CountryConfig[] = [
+  ibanLikeCountry('MG', ['MG'], 27),
+  ibanLikeCountry('GG', ['GG', 'GB'], 22),
+  ibanLikeCountry('JE', ['JE', 'GB'], 22),
+  ibanLikeCountry('IM', ['IM', 'GB'], 22),
+  ibanLikeCountry('IC', ['IC', 'ES'], 24),
+  // French IBANs are accepted for Saint Barthélemy
+  { country: 'BL', name: regionName('BL'), xeroSyncable: false, fields: [ibanField({ ibanCountry: 'FR' }), bicField()] },
+];
 
 const HK: CountryConfig = {
   country: 'HK',
@@ -764,6 +915,10 @@ const SPECIFIC: CountryConfig[] = [
   AU, US, GB, NZ, CA, JP, KR, ID, PH, TH,
   SG, MY, VN, HK, IN, LK, FJ, KH, BD, NP, CN, TW, LA,
   MX, BR, AR, PE, CL, CO, ZA, NG, KE, GH,
+  BW, BO, UY, MA, CR, ...IBAN_LIKE,
+  ...ACCOUNT_PLUS_BIC.filter(([c]) => !['NP'].includes(c)).map(([c, min, max, digitsOnly]) =>
+    accountPlusBic(c, regionName(c), { min, max, digitsOnly }),
+  ),
 ];
 
 /** Used for any country that has no layout and does not use IBAN. */

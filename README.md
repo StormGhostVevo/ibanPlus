@@ -22,7 +22,9 @@ Run `validateBankDetails` on both the client and the server. Changing country: c
 
 AU, US, GB (sort code and account number, or IBAN), NZ, CA, JP, KR, ID, PH, TH, SG, MY, VN, TW, LA, HK, CN, IN, LK, FJ, KH, BD, NP, MX, BR (domestic details or IBAN), AR, PE, CL, CO, ZA, NG, KE, GH, every other IBAN registry country (IBAN plus optional BIC, with a country prefix check), and a fallback for anything else.
 
-The fallback accepts bank name, BIC and account number (5 to 34 letters or numbers), or an IBAN, or free-text other details. At least one of those routes must be completed, so no creator is blocked. Myanmar, Brunei, the Pacific islands other than Fiji, Bolivia, Ecuador and Uruguay use it until a layout is added.
+The fallback accepts bank name, BIC and account number (5 to 34 letters or numbers), or an IBAN, or free-text other details. At least one of those routes must be completed, so no creator is blocked. Every one of the 205 countries in Airwallex's payout requirements has a layout, so only countries outside that list (for example Myanmar) use the fallback.
+
+Layouts that follow Airwallex's account number plus SWIFT code pages are generated from a table in `src/countries.ts` (`ACCOUNT_PLUS_BIC`). Where a page says "up to 50" with no minimum, a minimum of 5 characters is assumed. Fixed-length West and Central African accounts (BJ, BF, GW, NE, SN, TG at 24, CM, CF, TD, GA, CG at 23) are exact. Oman, Mongolia, Nicaragua, El Salvador, Ukraine and Montenegro are IBAN registry countries, but Airwallex takes them as account number plus SWIFT code, so they follow Airwallex. Costa Rica needs an IBAN and a BIC. Bolivia, Uruguay, Morocco (24 digit RIB) and Botswana (optional branch code) have their own layouts. Madagascar, the Channel Islands, the Isle of Man and the Canary Islands use IBAN-style numbers that ibantools has no registry entry for, so they are checked by pattern and a mod 97 check. Saint Barthélemy accepts French IBANs.
 
 ## Scope and caveats
 
@@ -50,6 +52,12 @@ Validation catches typos only and cannot confirm an account exists. Rules are de
 - BR: bank code (3 digits), branch (4 to 7), account number (3 to 50, dots and dashes allowed, a minimum of 3 was assumed) and type, or an IBAN.
 - AR, CL, CO, PE, MX, BR, NP, IN and the others above: Airwallex also requires a beneficiary tax ID (CPF, CUIT, RUT and similar) for some local payouts. That is not a bank detail and is not collected here.
 - CN: 12-digit CNAPS code or a BIC, plus an 8 to 34 digit account number (Airwallex local CNY and SWIFT details). Airwallex's local CNY transfers also need declarant and order information and a Chinese-character account holder name, none of which is collected here. TW: 8 to 20 digits (SWIFT only). LA: up to 50 letters or numbers (SWIFT only).
+- Per-bank account formats (Bolivia, Colombia, Sweden, Uruguay) are not enforced. Bolivia accepts 5 to 15 digits, Uruguay 4 to 14.
+- Sweden, Denmark and Norway local (non-IBAN) payout fields are not collected. They use IBAN.
+- Beneficiary tax and ID fields (for example Albania NIPT, Azerbaijan TIN, Honduras RTN, Paraguay RUC) and Pakistan's payout reason are not bank details and are not collected here.
+- Egypt takes an IBAN only here. Airwallex also accepts an account number plus SWIFT code for non-EGP currencies.
+- Doc items still open: whether Albania's tax ID applies to all SWIFT payouts or only ALL, Montenegro's account name rule, Zambia's limit currency, and Botswana's note about Brazilian formats looking like a copy error.
+- Iraq, Libya, Sudan, Somalia, Yemen, Belarus and Russia, plus Åland, Guadeloupe and Malta, have layouts from the IBAN registry but are not in Airwallex's list. Confirm they should be offered.
 - Fallback and IBAN country display names use `Intl.DisplayNames` (en-AU), so names depend on the runtime's ICU data.
 
 ## Countries to add later

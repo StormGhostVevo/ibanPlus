@@ -4,6 +4,7 @@ import {
   getConfiguredCountries,
   isValidAbaRouting,
   isValidClabe,
+  isValidIbanChecksum,
   isXeroSyncable,
   maskBankDetails,
   validateBankDetails,
@@ -388,5 +389,119 @@ describe('config and masking', () => {
     expect(
       maskBankDetails('US', { routingNumber: '021000021', accountNumber: '123456789', accountType: 'savings' }),
     ).toEqual({ routingNumber: '•••• 0021', accountNumber: '•••• 6789', accountType: 'savings' });
+  });
+});
+
+const DOC_COUNTRIES = [
+  'AL', 'DZ', 'AS', 'AD', 'AO', 'AI', 'AG', 'AR', 'AM', 'AW', 'AU', 'AT', 'AZ', 'BS', 'BH',
+  'BD', 'BB', 'BE', 'BZ', 'BJ', 'BM', 'BT', 'BO', 'BA', 'BW', 'BR', 'BN', 'BG', 'BF', 'CV',
+  'KH', 'CM', 'CA', 'IC', 'KY', 'CF', 'TD', 'CL', 'CN', 'CO', 'CK', 'CR', 'HR', 'CW', 'CY',
+  'CZ', 'DK', 'DJ', 'DM', 'DO', 'EC', 'EG', 'SV', 'GQ', 'EE', 'SZ', 'ET', 'FK', 'FO', 'FJ',
+  'FI', 'FR', 'GF', 'PF', 'TF', 'GA', 'GM', 'GE', 'DE', 'GH', 'GI', 'GR', 'GL', 'GD', 'GT',
+  'GG', 'GN', 'GW', 'GY', 'VA', 'HN', 'HK', 'HU', 'IS', 'IN', 'ID', 'IE', 'IM', 'IL', 'IT',
+  'JM', 'JP', 'JE', 'JO', 'KZ', 'KE', 'KI', 'KR', 'XK', 'KW', 'KG', 'LA', 'LV', 'LB', 'LS',
+  'LR', 'LI', 'LT', 'LU', 'MK', 'MO', 'MG', 'MW', 'MY', 'MV', 'MH', 'MQ', 'MR', 'MU', 'YT',
+  'MX', 'FM', 'MD', 'MC', 'MN', 'ME', 'MS', 'MA', 'NA', 'NP', 'NL', 'NC', 'NZ', 'NI', 'NE',
+  'NG', 'MP', 'NO', 'OM', 'PK', 'PW', 'PS', 'PA', 'PG', 'PY', 'PE', 'PH', 'PL', 'PT', 'PR',
+  'QA', 'CG', 'RE', 'RO', 'RW', 'BL', 'SH', 'KN', 'LC', 'MF', 'PM', 'VC', 'WS', 'SM', 'ST',
+  'SA', 'SN', 'RS', 'SC', 'SL', 'SG', 'SK', 'SI', 'SB', 'ZA', 'ES', 'LK', 'SR', 'SE', 'CH',
+  'TW', 'TJ', 'TZ', 'TH', 'TL', 'TG', 'TO', 'TT', 'TN', 'TR', 'TC', 'TV', 'UG', 'UA', 'AE',
+  'GB', 'US', 'UY', 'UZ', 'VU', 'VN', 'VG', 'WF', 'ZM', 'ZW',
+];
+
+const withCheckDigits = (prefix: string, bban: string): string => {
+  const digits = (bban + prefix + '00')
+    .split('')
+    .map((ch) => (/\d/.test(ch) ? ch : String(ch.charCodeAt(0) - 55)))
+    .join('');
+  let rem = 0;
+  for (const d of digits) rem = (rem * 10 + Number(d)) % 97;
+  return `${prefix}${String(98 - rem).padStart(2, '0')}${bban}`;
+};
+
+describe('Airwallex country coverage', () => {
+  it('has a layout for every country in the payout requirements', () => {
+    const configured = new Set(getConfiguredCountries());
+    expect(DOC_COUNTRIES.filter((c) => !configured.has(c))).toEqual([]);
+  });
+
+  const accountOnly: [string, string, string, string][] = [
+    // country, valid account, too short, too long
+    ['DZ', 'A1234567', '1234', '1'.repeat(51)],
+    ['PA', '1234567890', '1234', '1'.repeat(51)],
+    ['ZM', '1234567890', '1234', '1'.repeat(51)],
+    ['OM', 'OM12345678', '1234', '1'.repeat(51)],
+    ['LS', '1234567890', '1234', '1'.repeat(36)],
+    ['RW', '1234567890', '1234', '1'.repeat(36)],
+    ['NA', '12345678', '1234567', '1'.repeat(51)],
+    ['BJ', 'BJ1234567890123456789012'.slice(0, 24), '1'.repeat(23), '1'.repeat(25)],
+    ['CM', '1'.repeat(23), '1'.repeat(22), '1'.repeat(24)],
+  ];
+  it.each(accountOnly)('%s account number rules', (country, valid, short, long) => {
+    const base = { bankName: 'Example Bank', bic: 'DEUTDEFF' };
+    expect(ok(country, { ...base, accountNumber: valid }).valid).toBe(true);
+    expect(ok(country, { ...base, accountNumber: short }).errors.accountNumber).toBeDefined();
+    expect(ok(country, { ...base, accountNumber: long }).errors.accountNumber).toBeDefined();
+    expect(ok(country, { ...base, bic: '', accountNumber: valid }).errors.bic).toBeDefined();
+  });
+
+  it('registry IBAN countries Airwallex takes as account plus SWIFT no longer ask for an IBAN', () => {
+    for (const c of ['OM', 'MN', 'NI', 'SV', 'UA', 'ME']) {
+      expect(getBankFields(c).map((f) => f.key)).toEqual(['bankName', 'bic', 'accountNumber']);
+    }
+  });
+
+  it('BW has an optional 6 digit branch code', () => {
+    const base = { bankName: 'B', bic: 'DEUTDEFF', accountNumber: '1234567' };
+    expect(ok('BW', base).valid).toBe(true);
+    expect(ok('BW', { ...base, bankBranch: '123456' }).valid).toBe(true);
+    expect(ok('BW', { ...base, bankBranch: '12345' }).errors.bankBranch).toBeDefined();
+  });
+
+  it('BO needs a bank code and a 5 to 15 digit account number', () => {
+    expect(ok('BO', { bankCode: '1', accountNumber: '1234567890' }).valid).toBe(true);
+    expect(ok('BO', { bankCode: '123', accountNumber: '1234567890' }).errors.bankCode).toBeDefined();
+    expect(ok('BO', { bankCode: '6', accountNumber: '1'.repeat(16) }).errors.accountNumber).toBeDefined();
+  });
+
+  it('UY checks bank code, account, type and optional branch', () => {
+    const valid = { bankCode: '137', accountNumber: '123456789012', accountType: 'savings', bankBranch: '123' };
+    expect(ok('UY', valid).valid).toBe(true);
+    expect(ok('UY', { ...valid, bankBranch: '' }).valid).toBe(true);
+    expect(ok('UY', { ...valid, bankCode: '13' }).errors.bankCode).toBeDefined();
+    expect(ok('UY', { ...valid, accountNumber: '123' }).errors.accountNumber).toBeDefined();
+    expect(ok('UY', { ...valid, bankBranch: '12345' }).errors.bankBranch).toBeDefined();
+  });
+
+  it('MA needs a 24 digit RIB', () => {
+    expect(ok('MA', { rib: '1'.repeat(24) }).valid).toBe(true);
+    expect(ok('MA', { rib: '1'.repeat(23) }).errors.rib).toBeDefined();
+  });
+
+  it('CR needs an IBAN and a BIC', () => {
+    const iban = 'CR05015202001026284066';
+    expect(ok('CR', { iban, bic: 'BNCRCRSJ' }).valid).toBe(true);
+    expect(ok('CR', { iban }).errors.bic).toBeDefined();
+  });
+
+  it('IBAN-like territories use a mod 97 check', () => {
+    const mg = withCheckDigits('MG', '1'.repeat(23));
+    expect(isValidIbanChecksum(mg)).toBe(true);
+    expect(ok('MG', { iban: mg }).valid).toBe(true);
+    expect(ok('MG', { iban: mg.slice(0, 2) + '00' + mg.slice(4) }).errors.iban).toBeDefined();
+    expect(ok('MG', { iban: 'GB82WEST12345698765432' }).errors.iban).toMatch(/start with MG/);
+    const ic = withCheckDigits('IC', '1'.repeat(20));
+    expect(ok('IC', { iban: ic }).valid).toBe(true);
+  });
+
+  it('Channel Islands and the Isle of Man accept GB IBANs', () => {
+    for (const c of ['GG', 'JE', 'IM']) {
+      expect(ok(c, { iban: 'GB82 WEST 1234 5698 7654 32' }).valid).toBe(true);
+      expect(ok(c, { iban: 'DE89370400440532013000' }).errors.iban).toBeDefined();
+    }
+  });
+
+  it('BL accepts French IBANs', () => {
+    expect(ok('BL', { iban: 'FR1420041010050500013M02606' }).valid).toBe(true);
   });
 });

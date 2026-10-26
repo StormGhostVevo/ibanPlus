@@ -22,9 +22,25 @@ export function isValidClabe(value: string): boolean {
   return (10 - (sum % 10)) % 10 === Number(value[17]);
 }
 
+/**
+ * ISO 7064 mod 97 check for IBAN-style numbers that ibantools has no registry entry for
+ * (for example Madagascar and the Channel Islands). Structure is checked by the field pattern.
+ */
+export function isValidIbanChecksum(value: string): boolean {
+  if (!/^[A-Z]{2}\d{2}[A-Z0-9]+$/.test(value)) return false;
+  const digits = (value.slice(4) + value.slice(0, 4))
+    .split('')
+    .map((ch) => (/\d/.test(ch) ? ch : String(ch.charCodeAt(0) - 55)))
+    .join('');
+  let rem = 0;
+  for (const d of digits) rem = (rem * 10 + Number(d)) % 97;
+  return rem === 1;
+}
+
 export const validators: Record<ValidatorName, (value: string) => boolean> = {
   abaRouting: isValidAbaRouting,
   clabe: isValidClabe,
+  ibanChecksum: isValidIbanChecksum,
   iban: (value) => isValidIBAN(value),
   bic: (value) => isValidBIC(value),
 };

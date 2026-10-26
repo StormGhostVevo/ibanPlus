@@ -4,7 +4,7 @@ export type InputMode = 'numeric' | 'text';
 export type Normaliser = 'digits' | 'digitsPad7' | 'upper' | 'iban' | 'bic' | 'trim' | 'none';
 
 /** Names of the custom validators in validators.ts. */
-export type ValidatorName = 'abaRouting' | 'clabe' | 'iban' | 'bic';
+export type ValidatorName = 'abaRouting' | 'clabe' | 'iban' | 'ibanChecksum' | 'bic';
 
 export interface FieldOption {
   value: string;
