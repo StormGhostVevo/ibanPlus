@@ -29,7 +29,7 @@ describe('AU', () => {
   it('rejects a short BSB and account number', () => {
     const r = ok('AU', { bsb: '12345', accountNumber: '123' });
     expect(r.errors.bsb).toBe('BSBs are 6 digits.');
-    expect(r.errors.accountNumber).toMatch(/6 to 10 digits/);
+    expect(r.errors.accountNumber).toMatch(/4 to 10 digits/);
   });
   it('requires both fields', () => {
     expect(Object.keys(ok('AU', {}).errors)).toEqual(['bsb', 'accountNumber']);
@@ -77,6 +77,9 @@ describe('NZ', () => {
     expect(ok('NZ', valid).valid).toBe(true);
     expect(ok('NZ', { ...valid, suffix: '000' }).valid).toBe(true);
   });
+  it('accepts an 8 digit base number', () => {
+    expect(ok('NZ', { ...valid, accountBase: '12345678' }).valid).toBe(true);
+  });
   it('rejects wrong lengths', () => {
     const r = ok('NZ', { bank: '1', branch: '345', accountBase: '123456', suffix: '0' });
     expect(Object.keys(r.errors)).toEqual(['bank', 'branch', 'accountBase', 'suffix']);
@@ -86,6 +89,10 @@ describe('NZ', () => {
 describe('CA', () => {
   const valid = { institutionNumber: '004', transitNumber: '12345', accountNumber: '1234567' };
   it('accepts valid details', () => expect(ok('CA', valid).valid).toBe(true));
+  it('accepts long account numbers up to 21 digits', () => {
+    expect(ok('CA', { ...valid, accountNumber: '1'.repeat(21) }).valid).toBe(true);
+    expect(ok('CA', { ...valid, accountNumber: '1'.repeat(22) }).errors.accountNumber).toBeDefined();
+  });
   it('rejects wrong lengths', () => {
     const r = ok('CA', { institutionNumber: '04', transitNumber: '1234', accountNumber: '123456' });
     expect(Object.keys(r.errors)).toEqual(['institutionNumber', 'transitNumber', 'accountNumber']);
@@ -117,6 +124,8 @@ describe('KR', () => {
     expect(ok('KR', { ...valid, bic: '' }).errors.bic).toBeDefined();
     expect(ok('KR', { ...valid, accountNumber: '123456' }).errors.accountNumber).toBeDefined();
     expect(ok('KR', { ...valid, accountNumber: '1234567' }).valid).toBe(true);
+    expect(ok('KR', { ...valid, accountNumber: '1'.repeat(20) }).valid).toBe(true);
+    expect(ok('KR', { ...valid, accountNumber: '1'.repeat(21) }).errors.accountNumber).toBeDefined();
     expect(ok('KR', { ...valid, bankCode: '04' }).errors.bankCode).toBeDefined();
   });
 });
@@ -129,6 +138,8 @@ describe('ID', () => {
   });
   it('rejects bad values', () => {
     expect(ok('ID', { ...valid, accountNumber: '123456' }).errors.accountNumber).toBeDefined();
+    expect(ok('ID', { ...valid, accountNumber: '1'.repeat(22) }).valid).toBe(true);
+    expect(ok('ID', { ...valid, accountNumber: '1'.repeat(23) }).errors.accountNumber).toBeDefined();
     expect(ok('ID', { ...valid, bankCode: '14' }).errors.bankCode).toBeDefined();
     expect(ok('ID', { ...valid, bic: 'XX' }).errors.bic).toBeDefined();
     expect(ok('ID', { accountNumber: valid.accountNumber }).errors.bankName).toBeDefined();
