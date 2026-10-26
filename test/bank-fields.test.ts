@@ -203,25 +203,25 @@ describe('IBAN countries', () => {
 
 describe('fallback', () => {
   it('accepts bank name, BIC and account number', () => {
-    expect(ok('TW', { bankName: 'Example Bank', bic: 'CTCBTWTP', accountNumber: '1234567890' }).valid).toBe(true);
+    expect(ok('MM', { bankName: 'Example Bank', bic: 'CTCBTWTP', accountNumber: '1234567890' }).valid).toBe(true);
   });
   it('accepts an IBAN alone or other details alone', () => {
-    expect(ok('TW', { iban: 'DE89370400440532013000' }).valid).toBe(true);
-    expect(ok('TW', { otherDetails: 'Acct 1234, Example Bank, branch 001' }).valid).toBe(true);
+    expect(ok('MM', { iban: 'DE89370400440532013000' }).valid).toBe(true);
+    expect(ok('MM', { otherDetails: 'Acct 1234, Example Bank, branch 001' }).valid).toBe(true);
   });
   it('requires a BIC and bank name with an account number', () => {
-    const r = ok('TW', { accountNumber: '1234567890' });
+    const r = ok('MM', { accountNumber: '1234567890' });
     expect(Object.keys(r.errors)).toEqual(['bankName', 'bic']);
   });
   it('requires something, and rejects bad account numbers', () => {
-    expect(ok('TW', {}).valid).toBe(false);
-    expect(ok('TW', { otherDetails: '   ' }).valid).toBe(false);
+    expect(ok('MM', {}).valid).toBe(false);
+    expect(ok('MM', { otherDetails: '   ' }).valid).toBe(false);
     expect(
-      ok('TW', { bankName: 'B', bic: 'CTCBTWTP', accountNumber: '1234' }).errors.accountNumber,
+      ok('MM', { bankName: 'B', bic: 'CTCBTWTP', accountNumber: '1234' }).errors.accountNumber,
     ).toBeDefined();
   });
   it('has the expected fields', () => {
-    expect(getBankFields('TW').map((f) => f.key)).toEqual([
+    expect(getBankFields('MM').map((f) => f.key)).toEqual([
       'bankName',
       'accountNumber',
       'bic',
@@ -244,6 +244,8 @@ describe('bank name, BIC and account number countries', () => {
     ['KE', '12345678', '1234567', '1'.repeat(51)],
     ['NG', '0123456789', '123456', '1'.repeat(18)],
     ['ZA', '1234567890', '123456', '1'.repeat(18)],
+    ['TW', '12345678', '1234567', '1'.repeat(21)],
+    ['LA', '1234567890', '1234', '1'.repeat(51)],
   ];
   it.each(cases)('%s accepts and rejects account numbers', (country, valid, short, long) => {
     const base: Record<string, string> = { bankName: 'Example Bank', bic: 'DEUTDEFF' };
@@ -276,6 +278,21 @@ describe('HK', () => {
     expect(ok('HK', { ...base, bankCode: '24' }).errors.bankCode).toBeDefined();
     expect(ok('HK', { ...base, bankCode: '024', accountNumber: '1234567' }).errors.accountNumber).toBeDefined();
     expect(ok('HK', { ...base, bankCode: '024', accountNumber: '1'.repeat(18) }).errors.accountNumber).toBeDefined();
+  });
+});
+
+describe('CN', () => {
+  const base = { bankName: 'Example Bank', accountNumber: '12345678' };
+  it('accepts a CNAPS code or a BIC', () => {
+    expect(ok('CN', { ...base, cnaps: '102100099996' }).valid).toBe(true);
+    expect(ok('CN', { ...base, bic: 'ICBKCNBJ' }).valid).toBe(true);
+  });
+  it('requires one of them and checks lengths', () => {
+    expect(ok('CN', base).valid).toBe(false);
+    expect(ok('CN', { ...base, cnaps: '10210009999' }).errors.cnaps).toMatch(/12 digits/);
+    expect(ok('CN', { ...base, cnaps: '102100099996', accountNumber: '1234567' }).errors.accountNumber).toBeDefined();
+    expect(ok('CN', { ...base, cnaps: '102100099996', accountNumber: '1'.repeat(35) }).errors.accountNumber).toBeDefined();
+    expect(ok('CN', { ...base, cnaps: '102100099996', accountNumber: '1'.repeat(34) }).valid).toBe(true);
   });
 });
 
@@ -361,7 +378,7 @@ describe('BR', () => {
 describe('config and masking', () => {
   it('lists configured countries including specific and IBAN ones', () => {
     const list = getConfiguredCountries();
-    for (const c of ['AU', 'US', 'GB', 'NZ', 'CA', 'JP', 'KR', 'ID', 'PH', 'TH', 'SG', 'MX', 'BR', 'DE', 'FR']) expect(list).toContain(c);
+    for (const c of ['AU', 'US', 'GB', 'NZ', 'CA', 'JP', 'KR', 'ID', 'PH', 'TH', 'SG', 'CN', 'TW', 'LA', 'MX', 'BR', 'DE', 'FR']) expect(list).toContain(c);
   });
   it('drops values for fields the country does not use', () => {
     const r = ok('AU', { bsb: '123456', accountNumber: '12345678', routingNumber: '021000021' });

@@ -454,6 +454,8 @@ const VN = accountPlusBic('VN', 'Vietnam', { min: 5, max: 20 });
 const LK = accountPlusBic('LK', 'Sri Lanka', { min: 5, max: 50 });
 const FJ = accountPlusBic('FJ', 'Fiji', { min: 5, max: 50 });
 const KH = accountPlusBic('KH', 'Cambodia', { min: 5, max: 50 });
+const TW = accountPlusBic('TW', 'Taiwan', { min: 8, max: 20, digitsOnly: true });
+const LA = accountPlusBic('LA', 'Laos', { min: 5, max: 50 });
 const GH = accountPlusBic('GH', 'Ghana', { min: 5, max: 50 });
 const KE = accountPlusBic('KE', 'Kenya', { min: 8, max: 50 });
 const NG = accountPlusBic('NG', 'Nigeria', { min: 7, max: 17 });
@@ -486,6 +488,38 @@ const HK: CountryConfig = {
       pattern: /^\d{8,17}$/,
       errorMessage: 'Hong Kong account numbers are 8 to 17 digits.',
       maxLength: 17,
+    }),
+  ],
+};
+
+const CN: CountryConfig = {
+  country: 'CN',
+  name: 'China',
+  xeroSyncable: false,
+  fields: [
+    bankNameField(),
+    digitsField({
+      key: 'cnaps',
+      label: 'CNAPS code',
+      helpText: 'Twelve digits that identify your bank branch. Not needed if you enter a SWIFT code.',
+      pattern: /^\d{12}$/,
+      errorMessage: 'CNAPS codes are 12 digits.',
+      maxLength: 12,
+      requiredUnless: ['bic'],
+      sensitive: false,
+    }),
+    bicField({
+      helpText: 'Use this instead of a CNAPS code if you prefer. 8 or 11 characters.',
+      required: true,
+      requiredUnless: ['cnaps'],
+    }),
+    digitsField({
+      key: 'accountNumber',
+      label: 'Account number',
+      helpText: 'Digits only, 8 to 34 long.',
+      pattern: /^\d{8,34}$/,
+      errorMessage: 'Chinese account numbers are 8 to 34 digits.',
+      maxLength: 34,
     }),
   ],
 };
@@ -728,7 +762,7 @@ const BR: CountryConfig = {
 /** Countries with their own layout. IBAN countries and the fallback are derived below. */
 const SPECIFIC: CountryConfig[] = [
   AU, US, GB, NZ, CA, JP, KR, ID, PH, TH,
-  SG, MY, VN, HK, IN, LK, FJ, KH, BD, NP,
+  SG, MY, VN, HK, IN, LK, FJ, KH, BD, NP, CN, TW, LA,
   MX, BR, AR, PE, CL, CO, ZA, NG, KE, GH,
 ];
 
