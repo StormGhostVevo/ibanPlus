@@ -1,4 +1,6 @@
 import { getCountrySpecifications } from 'ibantools';
+import { addressField, bankAddressField, emailField, phoneField, recipientNameField } from './common';
+import { isLocalRailCountry } from './rails';
 import type { CountryConfig, FieldConfig, FieldOption } from './types';
 
 export const digitsField = (
@@ -38,6 +40,74 @@ export const bicField = (overrides: Partial<FieldConfig> = {}): FieldConfig => (
   maxLength: 11,
   sensitive: false,
   ...overrides,
+});
+
+const INDIVIDUAL_BUSINESS: FieldOption[] = [
+  { value: 'individual', label: 'Individual' },
+  { value: 'business', label: 'Business' },
+];
+
+/** Account holder type. Some rails ask for different ID details, or only pay individuals. */
+const holderTypeField = (individualOnly = false): FieldConfig => ({
+  key: 'holderType',
+  label: 'Account holder type',
+  helpText: individualOnly ? 'Local payouts here are for individuals only.' : 'Choose individual or business.',
+  required: true,
+  pattern: individualOnly ? /^individual$/ : /^(individual|business)$/,
+  errorMessage: individualOnly
+    ? 'Local payouts to this country are for individuals only.'
+    : 'Choose individual or business.',
+  normalise: 'trim',
+  inputMode: 'text',
+  maxLength: 10,
+  options: INDIVIDUAL_BUSINESS,
+  sensitive: false,
+});
+
+interface IdType {
+  value: string;
+  label: string;
+  pattern: RegExp;
+  hint: string;
+  example: string;
+}
+
+/** ID type dropdown plus an ID number whose format follows the chosen type. */
+const idFields = (types: IdType[]): FieldConfig[] => [
+  {
+    key: 'idType',
+    label: 'ID type',
+    helpText: 'Businesses use their tax registration number.',
+    required: true,
+    pattern: new RegExp(`^(${types.map((t) => t.value).join('|')})$`),
+    errorMessage: 'Choose an ID type.',
+    normalise: 'trim',
+    inputMode: 'text',
+    maxLength: 12,
+    options: types.map((t) => ({ value: t.value, label: t.label })),
+    sensitive: false,
+  },
+  {
+    key: 'idNumber',
+    label: 'ID number',
+    helpText: `${types.map((t) => `${t.label}: ${t.hint}`).join('. ')}.`,
+    placeholder: types[0].example,
+    required: true,
+    patternWhen: { field: 'idType', patterns: Object.fromEntries(types.map((t) => [t.value, t.pattern])) },
+    errorMessage: 'Enter an ID number in the format for the chosen ID type.',
+    normalise: 'alnum',
+    inputMode: 'text',
+    maxLength: 100,
+    sensitive: true,
+  },
+];
+
+const taxIdField = (o: Pick<FieldConfig, 'key' | 'label' | 'helpText' | 'placeholder' | 'pattern' | 'errorMessage' | 'maxLength'> & Partial<FieldConfig>): FieldConfig => ({
+  required: true,
+  normalise: 'alnum',
+  inputMode: 'text',
+  sensitive: true,
+  ...o,
 });
 
 const AU: CountryConfig = {
@@ -282,15 +352,10 @@ const KR: CountryConfig = {
   xeroSyncable: false,
   fields: [
     bankNameField(),
-    bicField({
-      required: true,
-      helpText: 'Your bank\'s SWIFT code, 8 or 11 characters. Ask your bank if unsure.',
-    }),
     digitsField({
       key: 'bankCode',
       label: 'Bank code',
-      helpText: 'Optional. Three digits.',
-      required: false,
+      helpText: 'Three digits.',
       pattern: /^\d{3}$/,
       errorMessage: 'Korean bank codes are 3 digits.',
       maxLength: 3,
@@ -300,10 +365,10 @@ const KR: CountryConfig = {
       key: 'accountNumber',
       label: 'Account number',
       helpText: 'Letters and numbers only. Length varies by bank.',
-      pattern: /^[A-Za-z0-9]{7,20}$/,
-      errorMessage: 'Korean account numbers are 7 to 20 letters or numbers.',
+      pattern: /^[A-Za-z0-9]{7,16}$/,
+      errorMessage: 'Korean account numbers are 7 to 16 letters or numbers.',
       inputMode: 'text',
-      maxLength: 20,
+      maxLength: 16,
     }),
   ],
 };
@@ -527,6 +592,11 @@ const BO: CountryConfig = {
       digitsOnly: true,
       helpText: 'Digits only. Usually 10 digits, or 14 for Banco Unión.',
     }),
+    ...idFields([
+      { value: 'ci', label: 'CI (national ID)', pattern: /^\d{1,8}$/, hint: 'up to 8 digits', example: '1234567' },
+      { value: 'ce', label: 'CE (foreign ID)', pattern: /^E\d{1,8}$/, hint: 'E- plus up to 8 digits', example: 'E-1234567' },
+      { value: 'nit', label: 'NIT (tax ID)', pattern: /^\d{1,15}$/, hint: 'up to 15 digits', example: '123456789' },
+    ]),
   ],
 };
 
@@ -556,6 +626,12 @@ const UY: CountryConfig = {
       maxLength: 4,
       sensitive: false,
     }),
+    ...idFields([
+      { value: 'ci', label: 'CI (national ID)', pattern: /^\d{8}$/, hint: '8 digits', example: '12345678' },
+      { value: 'de', label: 'DE (foreign ID)', pattern: /^\d{1,100}$/, hint: 'digits only', example: '12345678' },
+      { value: 'passport', label: 'Passport', pattern: /^[A-Z0-9]{1,100}$/, hint: 'letters and numbers', example: 'A1234567' },
+      { value: 'rut', label: 'RUT (tax ID)', pattern: /^\d{12}$/, hint: '12 digits', example: '123456789012' },
+    ]),
   ],
 };
 
@@ -620,17 +696,11 @@ const HK: CountryConfig = {
     digitsField({
       key: 'bankCode',
       label: 'Bank code',
-      helpText: 'Three digits. Not needed if you enter a SWIFT code.',
+      helpText: 'Three digits.',
       pattern: /^\d{3}$/,
       errorMessage: 'Hong Kong bank codes are 3 digits.',
       maxLength: 3,
-      requiredUnless: ['bic'],
       sensitive: false,
-    }),
-    bicField({
-      helpText: 'Use this instead of a bank code if you prefer. 8 or 11 characters.',
-      required: true,
-      requiredUnless: ['bankCode'],
     }),
     digitsField({
       key: 'accountNumber',
@@ -648,29 +718,69 @@ const CN: CountryConfig = {
   name: 'China',
   xeroSyncable: false,
   fields: [
+    holderTypeField(),
     bankNameField(),
     digitsField({
       key: 'cnaps',
       label: 'CNAPS code',
-      helpText: 'Twelve digits that identify your bank branch. Not needed if you enter a SWIFT code.',
+      helpText: 'Twelve digits that identify your bank branch.',
       pattern: /^\d{12}$/,
       errorMessage: 'CNAPS codes are 12 digits.',
       maxLength: 12,
-      requiredUnless: ['bic'],
       sensitive: false,
-    }),
-    bicField({
-      helpText: 'Use this instead of a CNAPS code if you prefer. 8 or 11 characters.',
-      required: true,
-      requiredUnless: ['cnaps'],
     }),
     digitsField({
       key: 'accountNumber',
       label: 'Account number',
-      helpText: 'Digits only, 8 to 34 long.',
+      helpText: 'Digits only, 8 to 34 long. The account name must be in Chinese characters.',
       pattern: /^\d{8,34}$/,
       errorMessage: 'Chinese account numbers are 8 to 34 digits.',
       maxLength: 34,
+    }),
+    taxIdField({
+      key: 'idNumber',
+      label: 'Chinese national ID number',
+      helpText: '15 or 18 characters.',
+      placeholder: '110101199003078888',
+      pattern: /^([A-Z0-9]{15}|[A-Z0-9]{18})$/,
+      errorMessage: 'Chinese national ID numbers are 15 or 18 letters or numbers.',
+      maxLength: 18,
+      appliesWhen: { field: 'holderType', in: ['individual'] },
+    }),
+    taxIdField({
+      key: 'businessRegistrationNumber',
+      label: 'Business registration number',
+      helpText: 'Up to 30 characters.',
+      placeholder: '91110000MA01ABCD12',
+      pattern: /^[A-Z0-9]{1,30}$/,
+      errorMessage: 'Business registration numbers are up to 30 letters or numbers.',
+      maxLength: 30,
+      sensitive: false,
+      appliesWhen: { field: 'holderType', in: ['business'] },
+    }),
+    ...(['legalRepFirstName', 'legalRepLastName'] as const).map((key) =>
+      taxIdField({
+        key,
+        label: key === 'legalRepFirstName' ? 'Legal representative first name (Chinese)' : 'Legal representative last name (Chinese)',
+        helpText: 'In Chinese characters, up to 15.',
+        placeholder: key === 'legalRepFirstName' ? '明' : '王',
+        pattern: /^\p{Script=Han}{1,15}$/u,
+        errorMessage: 'Enter the name in Chinese characters, up to 15.',
+        normalise: 'trim',
+        maxLength: 15,
+        sensitive: false,
+        appliesWhen: { field: 'holderType', in: ['business'] },
+      }),
+    ),
+    taxIdField({
+      key: 'legalRepId',
+      label: 'Legal representative ID number',
+      helpText: '15 or 18 characters.',
+      placeholder: '110101199003078888',
+      pattern: /^([A-Z0-9]{15}|[A-Z0-9]{18})$/,
+      errorMessage: 'ID numbers are 15 or 18 letters or numbers.',
+      maxLength: 18,
+      appliesWhen: { field: 'holderType', in: ['business'] },
     }),
   ],
 };
@@ -693,7 +803,6 @@ const IN: CountryConfig = {
       maxLength: 11,
       sensitive: false,
     },
-    bicField(),
     accountNumberField('Indian', { min: 6, max: 20 }),
   ],
 };
@@ -703,6 +812,7 @@ const BD: CountryConfig = {
   name: 'Bangladesh',
   xeroSyncable: false,
   fields: [
+    holderTypeField(true),
     bankNameField(),
     digitsField({
       key: 'routingNumber',
@@ -712,7 +822,6 @@ const BD: CountryConfig = {
       errorMessage: 'Bangladeshi routing numbers are 9 digits.',
       maxLength: 9,
     }),
-    bicField(),
     accountNumberField('Bangladeshi', { min: 5, max: 50 }),
   ],
 };
@@ -726,9 +835,8 @@ const NP: CountryConfig = {
     {
       key: 'bankCode',
       label: 'Bank code',
-      helpText: 'Five characters, for example NP002. Not needed if you enter a SWIFT code.',
+      helpText: 'Five characters, for example NP002.',
       required: true,
-      requiredUnless: ['bic'],
       pattern: /^[A-Z0-9]{5}$/,
       errorMessage: 'Nepalese bank codes are 5 letters or numbers, for example NP002.',
       normalise: 'upper',
@@ -736,11 +844,6 @@ const NP: CountryConfig = {
       maxLength: 5,
       sensitive: false,
     },
-    bicField({
-      helpText: 'Use this instead of a bank code if you prefer. 8 or 11 characters.',
-      required: true,
-      requiredUnless: ['bankCode'],
-    }),
     accountNumberField('Nepalese', { min: 5, max: 50 }),
   ],
 };
@@ -787,6 +890,15 @@ const AR: CountryConfig = {
       errorMessage: 'CBU numbers are 22 digits.',
       maxLength: 22,
     }),
+    taxIdField({
+      key: 'taxId',
+      label: 'CUIT or CUIL',
+      helpText: 'Eleven digits. Dashes are fine.',
+      placeholder: '20123456789',
+      pattern: /^\d{11}$/,
+      errorMessage: 'CUIT and CUIL numbers are 11 digits.',
+      maxLength: 13,
+    }),
   ],
 };
 
@@ -811,6 +923,12 @@ const PE: CountryConfig = {
       ],
       'Confirm with your bank if unsure.',
     ),
+    ...idFields([
+      { value: 'dni', label: 'DNI (national ID)', pattern: /^(\d{8}|[A-Z0-9]{9})$/, hint: '8 digits, or 9 letters or numbers', example: '12345678' },
+      { value: 'ce', label: 'CE (foreign ID)', pattern: /^[A-Z0-9]{4,12}$/, hint: '4 to 12 letters or numbers', example: 'A12345678' },
+      { value: 'passport', label: 'Passport', pattern: /^[A-Z0-9]{4,100}$/, hint: 'letters and numbers', example: 'A1234567' },
+      { value: 'ruc', label: 'RUC (tax ID)', pattern: /^\d{11}$/, hint: '11 digits', example: '12345678901' },
+    ]),
   ],
 };
 
@@ -837,6 +955,15 @@ const CL: CountryConfig = {
       ],
       'Confirm with your bank if unsure.',
     ),
+    taxIdField({
+      key: 'taxId',
+      label: 'RUT',
+      helpText: '8 or 9 letters or numbers. Dots and dashes are fine.',
+      placeholder: '12345678K',
+      pattern: /^[A-Z0-9]{8,9}$/,
+      errorMessage: 'Chilean RUT numbers are 8 or 9 letters or numbers.',
+      maxLength: 12,
+    }),
   ],
 };
 
@@ -856,6 +983,21 @@ const CO: CountryConfig = {
     }),
     accountNumberField('Colombian', { min: 3, max: 18, digitsOnly: true }),
     accountTypeField(CHECKING_SAVINGS, 'Confirm with your bank if unsure.'),
+    holderTypeField(),
+    ...idFields([
+      { value: 'cc', label: 'CC (national ID)', pattern: /^\d{6,10}$/, hint: '6 to 10 digits', example: '1234567890' },
+      { value: 'ce', label: 'CE (foreign ID)', pattern: /^[A-Z0-9]{1,12}$/, hint: 'up to 12 letters or numbers', example: 'A12345678' },
+      { value: 'nit', label: 'NIT (tax ID)', pattern: /^\d{10,11}$/, hint: '10 or 11 digits', example: '1234567890' },
+      { value: 'passport', label: 'Passport', pattern: /^[A-Z0-9]{1,12}$/, hint: 'up to 12 letters or numbers', example: 'A1234567' },
+    ]),
+    emailField({ appliesWhen: { field: 'holderType', in: ['individual'] } }),
+    phoneField({
+      label: 'Mobile number or business phone',
+      helpText: 'Mobile number for individuals, business phone for companies. Include the country code.',
+      placeholder: '+57 300 000 0000',
+      required: true,
+      errorMessage: 'Enter a phone number with the country code, using digits, spaces, dashes or brackets.',
+    }),
   ],
 };
 
@@ -867,20 +1009,18 @@ const BR: CountryConfig = {
     digitsField({
       key: 'bankCode',
       label: 'Bank code',
-      helpText: 'Three digits, for example 341 for Itaú. Not needed if you enter an IBAN.',
+      helpText: 'Three digits, for example 341 for Itaú.',
       pattern: /^\d{3}$/,
       errorMessage: 'Brazilian bank codes are 3 digits.',
       maxLength: 3,
-      requiredUnless: ['iban'],
-      sensitive: false,
+            sensitive: false,
     }),
     {
       key: 'branch',
       label: 'Branch (agência)',
-      helpText: 'Four to seven characters. Not needed if you enter an IBAN.',
+      helpText: 'Four to seven characters.',
       required: true,
-      requiredUnless: ['iban'],
-      pattern: /^[A-Za-z0-9.-]{4,7}$/,
+            pattern: /^[A-Za-z0-9.-]{4,7}$/,
       errorMessage: 'Brazilian branch numbers are 4 to 7 letters, numbers, dots or dashes.',
       normalise: 'upper',
       inputMode: 'text',
@@ -890,23 +1030,53 @@ const BR: CountryConfig = {
     {
       key: 'accountNumber',
       label: 'Account number',
-      helpText: 'Include the check digit. Dots and dashes are fine. Not needed if you enter an IBAN.',
+      helpText: 'Include the check digit. Dots and dashes are fine.',
       required: true,
-      requiredUnless: ['iban'],
-      pattern: /^[A-Za-z0-9.-]{3,50}$/,
+            pattern: /^[A-Za-z0-9.-]{3,50}$/,
       errorMessage: 'Brazilian account numbers are 3 to 50 letters, numbers, dots or dashes.',
       normalise: 'upper',
       inputMode: 'text',
       maxLength: 50,
       sensitive: true,
     },
-    { ...accountTypeField(CHECKING_SAVINGS, 'Confirm with your bank if unsure.'), requiredUnless: ['iban'] },
-    ibanField({
-      label: 'IBAN (alternative)',
-      helpText: 'Use this instead of the bank code, branch and account number if you prefer.',
-      requiredUnless: ['bankCode', 'branch', 'accountNumber'],
-      ibanCountry: 'BR',
+    accountTypeField(CHECKING_SAVINGS, 'Confirm with your bank if unsure.'),
+    holderTypeField(),
+    taxIdField({
+      key: 'taxId',
+      label: 'CPF or CNPJ',
+      helpText: 'CPF (11 digits) for individuals, CNPJ (14 digits) for businesses. Dots, dashes and slashes are fine.',
+      placeholder: '12345678909',
+      patternWhen: { field: 'holderType', patterns: { individual: /^\d{11}$/, business: /^\d{14}$/ } },
+      errorMessage: 'CPF numbers are 11 digits and CNPJ numbers are 14 digits.',
+      maxLength: 18,
     }),
+  ],
+};
+
+const PK: CountryConfig = {
+  country: 'PK',
+  name: 'Pakistan',
+  xeroSyncable: false,
+  fields: [
+    holderTypeField(true),
+    ibanField({ ibanCountry: 'PK' }),
+    {
+      key: 'paymentReason',
+      label: 'Payment reason',
+      helpText: 'Why the payment is being made.',
+      required: true,
+      pattern: /^(technical_services|other_services|pension)$/,
+      errorMessage: 'Choose a payment reason.',
+      normalise: 'trim',
+      inputMode: 'text',
+      maxLength: 20,
+      options: [
+        { value: 'technical_services', label: 'Technical services (freelance computer and information services)' },
+        { value: 'other_services', label: 'Other services' },
+        { value: 'pension', label: 'Pension' },
+      ],
+      sensitive: false,
+    },
   ],
 };
 
@@ -915,7 +1085,7 @@ const SPECIFIC: CountryConfig[] = [
   AU, US, GB, NZ, CA, JP, KR, ID, PH, TH,
   SG, MY, VN, HK, IN, LK, FJ, KH, BD, NP, CN, TW, LA,
   MX, BR, AR, PE, CL, CO, ZA, NG, KE, GH,
-  BW, BO, UY, MA, CR, ...IBAN_LIKE,
+  BW, BO, UY, MA, CR, PK, ...IBAN_LIKE,
   ...ACCOUNT_PLUS_BIC.filter(([c]) => !['NP'].includes(c)).map(([c, min, max, digitsOnly]) =>
     accountPlusBic(c, regionName(c), { min, max, digitsOnly }),
   ),
@@ -956,8 +1126,18 @@ const FALLBACK_RAW: CountryConfig = {
 /** Not offered: not in Airwallex's payout list. Excluded from the country list and rejected by validation. */
 const UNSUPPORTED = new Set(['BY', 'IQ', 'LY', 'RU', 'SD', 'SO', 'YE']);
 
+/** True when the country can be paid over a local rail. SWIFT-only countries are not supported. */
 export function isCountrySupported(country: string): boolean {
-  return !UNSUPPORTED.has(country.toUpperCase());
+  const code = country.toUpperCase();
+  return !UNSUPPORTED.has(code) && isLocalRailCountry(code);
+}
+
+/** Why a country is not supported, or null when it is. */
+export function getUnsupportedReason(country: string): string | null {
+  if (isCountrySupported(country)) return null;
+  return UNSUPPORTED.has(country.toUpperCase())
+    ? 'Payouts to this country are not supported.'
+    : 'This country can only be paid by international (SWIFT) transfer, which is not supported.';
 }
 
 const configs = new Map<string, CountryConfig>(SPECIFIC.map((c) => [c.country, c]));
@@ -976,7 +1156,7 @@ for (const [code, spec] of Object.entries(specs)) {
     country: code,
     name: countryNames.of(code) ?? code,
     xeroSyncable: false,
-    fields: [ibanField({ ibanCountry: IBAN_PREFIX[code] ?? code }), bicField()],
+    fields: [ibanField({ ibanCountry: IBAN_PREFIX[code] ?? code })],
   });
 }
 
@@ -1053,14 +1233,45 @@ export function withPlaceholders(config: CountryConfig): CountryConfig {
 
 export const FALLBACK_CONFIG: CountryConfig = withPlaceholders(FALLBACK_RAW);
 
-/** Config for a country code (case-insensitive). Unknown countries get the fallback. */
+/** Recipient name and bank name first, then the rail fields, then address and phone. */
+function withCommonFields(config: CountryConfig): CountryConfig {
+  const bankName = config.fields.find((f) => f.key === 'bankName') ?? bankNameField();
+  const rest = config.fields.filter((f) => f.key !== 'bankName');
+  const holder = rest.filter((f) => f.key === 'holderType');
+  const rail = rest.filter((f) => f.key !== 'holderType');
+  const hasPhone = rail.some((f) => f.key === 'phone');
+  return {
+    ...config,
+    fields: [
+      recipientNameField(),
+      ...holder,
+      bankName,
+      bankAddressField(),
+      ...rail,
+      addressField(),
+      ...(hasPhone ? [] : [phoneField()]),
+    ],
+  };
+}
+
+/** Config for a country code (case-insensitive). Unsupported and unknown countries get the fallback. */
 export function getCountryConfig(country: string): CountryConfig {
   const code = country.toUpperCase();
   const config = configs.get(code);
-  return config ? withPlaceholders(config) : { ...FALLBACK_CONFIG, country: code };
+  if (!config || !isCountrySupported(code)) return { ...FALLBACK_CONFIG, country: code };
+  return withPlaceholders(withCommonFields(config));
 }
 
-/** Country codes that have a specific layout or use IBAN. */
+/**
+ * Just the local rail fields of a country (no name, bank name, address or phone), for layers that
+ * add their own. Empty for countries without a layout.
+ */
+export function getRailFields(country: string): FieldConfig[] {
+  const config = configs.get(country.toUpperCase());
+  return config ? withPlaceholders(config).fields.filter((f) => f.key !== 'bankName') : [];
+}
+
+/** Supported country codes: local rail countries that have a specific layout or use IBAN. */
 export function getConfiguredCountries(): string[] {
-  return [...configs.keys()].sort();
+  return [...configs.keys()].filter(isCountrySupported).sort();
 }

@@ -1,10 +1,10 @@
 import { friendlyFormatIBAN } from 'ibantools';
-import { getCountryConfig, isCountrySupported } from './countries';
+import { getCountryConfig, getUnsupportedReason, isCountrySupported } from './countries';
 import { getCurrencyConfig } from './currencies';
 import { normaliseValue, validators } from './validators';
 import type { BankValues, FieldConfig, ValidationResult } from './types';
 
-export { getCountryConfig, getConfiguredCountries, isCountrySupported, FALLBACK_CONFIG } from './countries';
+export { getCountryConfig, getConfiguredCountries, getUnsupportedReason, isCountrySupported, FALLBACK_CONFIG } from './countries';
 export { isValidAbaRouting, isValidClabe, isValidIbanChecksum } from './validators';
 export type * from './types';
 export { SUPPORTED_CURRENCIES, isCurrencySupported, getCurrencyConfig, getBankFieldsForCurrency } from './currencies';
@@ -27,7 +27,7 @@ export function isXeroSyncable(country: string): boolean {
 export function validateBankDetails(country: string, values: BankValues): ValidationResult {
   const config = getCountryConfig(country);
   if (!isCountrySupported(country)) {
-    return { valid: false, errors: { country: 'Payouts to this country are not supported.' }, normalised: {} };
+    return { valid: false, errors: { country: getUnsupportedReason(country) ?? '' }, normalised: {} };
   }
   return validateFields(config.fields, values, config.name);
 }

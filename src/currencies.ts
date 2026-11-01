@@ -1,4 +1,5 @@
-import { accountNumberField, bankNameField, bicField, digitsField, getCountryConfig, ibanField, withPlaceholders } from './countries';
+import { addressField, bankAddressField, phoneField, recipientNameField } from './common';
+import { accountNumberField, bankNameField, bicField, digitsField, getRailFields, ibanField, withPlaceholders } from './countries';
 import type { CountryConfig, CurrencyCode, CurrencyConfig, FieldConfig } from './types';
 
 export const SUPPORTED_CURRENCIES: CurrencyCode[] = ['USD', 'AUD', 'SGD', 'CAD', 'EUR', 'GBP', 'THB'];
@@ -7,45 +8,18 @@ export function isCurrencySupported(currency: string): boolean {
   return (SUPPORTED_CURRENCIES as string[]).includes(currency.toUpperCase());
 }
 
-const recipientNameField = (): FieldConfig => ({
-  key: 'recipientName',
-  label: 'Recipient name',
-  helpText: 'The account holder, exactly as it appears on the bank account.',
-  placeholder: 'Full name or company name',
-  required: true,
-  pattern: /\S/,
-  errorMessage: 'Enter the name of the account holder.',
-  normalise: 'trim',
-  inputMode: 'text',
-  maxLength: 140,
-  sensitive: false,
-});
-
-const addressField = (): FieldConfig => ({
-  key: 'address',
-  label: 'Address',
-  helpText: 'Recipient address: street, city, state or region, postcode and country.',
-  placeholder: 'Unit 1, 123 Example Street, City, State, 1234, Country',
-  required: true,
-  pattern: /\S/,
-  errorMessage: 'Enter the recipient address.',
-  normalise: 'trim',
-  inputMode: 'text',
-  maxLength: 200,
-  sensitive: false,
-});
-
-/** Recipient name first, bank name next, the local rail identifiers, then the address. */
+/** Recipient name first, bank name next, the local rail identifiers, then the address and phone. */
 const withCommonFields = (rail: FieldConfig[]): FieldConfig[] => [
   recipientNameField(),
   bankNameField(),
+  bankAddressField(),
   ...rail,
   addressField(),
+  phoneField(),
 ];
 
-/** Local rail fields of a country config, leaving out its own bank name and any IBAN alternative. */
-const railFieldsOf = (country: string): FieldConfig[] =>
-  getCountryConfig(country).fields.filter((f) => f.key !== 'bankName' && f.key !== 'iban');
+/** Local rail fields of a country, leaving out any IBAN alternative. */
+const railFieldsOf = (country: string): FieldConfig[] => getRailFields(country).filter((f) => f.key !== 'iban');
 
 /**
  * SEPA credit transfer countries. EU, EEA, Switzerland, UK, Monaco, San Marino, Vatican City and Andorra.
