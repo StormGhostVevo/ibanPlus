@@ -9,28 +9,42 @@ Every key a form or database column may need. `*` is the fallback layout.
 | Key | Label(s) | Input | Used by |
 | --- | --- | --- | --- |
 | `accountBase` | Account base number | numeric | NZ |
-| `accountNumber` | Account number | text / numeric | 117 countries |
-| `accountType` | Account type | text | BR, CL, CO, JP, PE, US, UY, ZA |
+| `accountNumber` | Account number | numeric / text | 24 countries |
+| `accountType` | Account type | text | BR, CL, CO, JP, PE, US, UY |
+| `address` | Address | text | 68 countries |
 | `bank` | Bank | numeric | NZ |
-| `bankBranch` | Branch code | numeric | BW, UY |
+| `bankAddress` | Bank address | text | 68 countries |
+| `bankBranch` | Branch code | numeric | UY |
 | `bankCode` | Bank code | numeric / text | BO, BR, CL, CO, HK, ID, JP, KR, NP, TH, UY |
-| `bankName` | Bank name | text | 107 countries |
-| `bic` | BIC / SWIFT code | text | 194 countries |
+| `bankName` | Bank name | text | 69 countries |
+| `bic` | BIC / SWIFT code | text | ID, LK, MY, PH, SG, TH, VN, * |
 | `branch` | Branch (agência) / Branch | text / numeric | BR, NZ |
 | `branchCode` | Branch code | numeric | JP |
 | `bsb` | BSB | numeric | AU |
+| `businessRegistrationNumber` | Business registration number | text | CN |
 | `cbu` | CBU | numeric | AR |
 | `cci` | CCI | numeric | PE |
 | `clabe` | CLABE | numeric | MX |
 | `cnaps` | CNAPS code | numeric | CN |
-| `iban` | IBAN / IBAN (alternative) | text | 90 countries |
+| `email` | Email | text | CO |
+| `holderType` | Account holder type | text | BD, BR, CN, CO, PK |
+| `iban` | IBAN / IBAN (alternative) | text | 42 countries |
+| `idNumber` | ID number / Chinese national ID number | text | BO, CN, CO, PE, UY |
+| `idType` | ID type | text | BO, CO, PE, UY |
 | `ifsc` | IFSC code | text | IN |
 | `institutionNumber` | Institution number | numeric | CA |
+| `legalRepFirstName` | Legal representative first name (Chinese) | text | CN |
+| `legalRepId` | Legal representative ID number | text | CN |
+| `legalRepLastName` | Legal representative last name (Chinese) | text | CN |
 | `otherDetails` | Other bank details | text | * |
+| `paymentReason` | Payment reason | text | PK |
+| `phone` | Phone number / Mobile number or business phone | text | 68 countries |
+| `recipientName` | Recipient name | text | 68 countries |
 | `rib` | RIB | numeric | MA |
 | `routingNumber` | Routing number / ABA routing number | numeric | BD, US |
 | `sortCode` | Sort code | numeric | GB |
 | `suffix` | Suffix | numeric | NZ |
+| `taxId` | CUIT or CUIL / CPF or CNPJ / RUT | text | AR, BR, CL |
 | `transitNumber` | Transit number | numeric | CA |
 
 ## By country
@@ -47,1585 +61,813 @@ Field order is the order to render. "Required" means required unless one of the 
 | `iban` | IBAN | AA00 1234 5678 9012 3456 | unless accountNumber or otherDetails | text | 42 |  |
 | `otherDetails` | Other bank details | Account holder name, account number, bank name and any local codes | unless iban or accountNumber | text | 500 |  |
 
-### Andorra (AD)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | AD00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
 ### United Arab Emirates (AE)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | AE00 1234 5678 9012 3456 789 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Antigua and Barbuda (AG)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Anguilla (AI)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Albania (AL)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | AL00 1234 5678 9012 3456 7890 1234 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Armenia (AM)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Angola (AO)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Argentina (AR)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
-| `cbu` | CBU | 1234567890123456789012 | yes | numeric | 22 |  |
-
-### American Samoa (AS)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
 | `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `cbu` | CBU | 1234567890123456789012 | yes | numeric | 22 |  |
+| `taxId` | CUIT or CUIL | 20123456789 | yes | text | 13 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Austria (AT)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | AT00 1234 5678 9012 3456 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Australia (AU)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `bsb` | BSB | 123-456 | yes | numeric | 7 |  |
 | `accountNumber` | Account number | 12345678 | yes | numeric | 10 |  |
-
-### Aruba (AW)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Åland Islands (AX)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | FI00 1234 5678 9012 34 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Azerbaijan (AZ)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | AZ00 1234 5678 9012 3456 7890 1234 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Bosnia and Herzegovina (BA)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | BA00 1234 5678 9012 3456 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Barbados (BB)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Bangladesh (BD)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `holderType` | Account holder type | Select account type | yes | text | 10 | individual, business |
 | `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `routingNumber` | Routing number | 123456789 | yes | numeric | 9 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 | `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Belgium (BE)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | BE00 1234 5678 9012 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Burkina Faso (BF)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
 | `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 123456789012345678901234 | yes | text | 24 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `iban` | IBAN | BE00 1234 5678 9012 | yes | text | 42 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Bulgaria (BG)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | BG00 1234 5678 9012 3456 78 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Bahrain (BH)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | BH00 1234 5678 9012 3456 78 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Benin (BJ)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 123456789012345678901234 | yes | text | 24 |  |
-
-### St Barthélemy (BL)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Bermuda (BM)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Brunei (BN)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Bolivia (BO)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `bankCode` | Bank code | 12 | yes | numeric | 2 |  |
 | `accountNumber` | Account number | 12345678 | yes | numeric | 15 |  |
+| `idType` | ID type | Select account type | yes | text | 12 | ci, ce, nit |
+| `idNumber` | ID number | 1234567 | yes | text | 100 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Brazil (BR)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
-| `bankCode` | Bank code | 341 | unless iban | numeric | 3 |  |
-| `branch` | Branch (agência) | 1234 | unless iban | text | 7 |  |
-| `accountNumber` | Account number | 12345-6 | unless iban | text | 50 |  |
-| `accountType` | Account type | Select account type | unless iban | text | 10 | checking, savings |
-| `iban` | IBAN (alternative) | BR00 1234 5678 9012 3456 7890 1234 5 | unless bankCode or branch or accountNumber | text | 42 |  |
-
-### Bahamas (BS)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `holderType` | Account holder type | Select account type | yes | text | 10 | individual, business |
 | `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Bhutan (BT)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Botswana (BW)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 33 |  |
-| `bankBranch` | Branch code | 123456 | optional | numeric | 6 |  |
-
-### Belize (BZ)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `bankCode` | Bank code | 341 | yes | numeric | 3 |  |
+| `branch` | Branch (agência) | 1234 | yes | text | 7 |  |
+| `accountNumber` | Account number | 12345-6 | yes | text | 50 |  |
+| `accountType` | Account type | Select account type | yes | text | 10 | checking, savings |
+| `taxId` | CPF or CNPJ | 12345678909 | yes | text | 18 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Canada (CA)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `institutionNumber` | Institution number | 004 | yes | numeric | 3 |  |
 | `transitNumber` | Transit number | 12345 | yes | numeric | 5 |  |
 | `accountNumber` | Account number | 12345678 | yes | numeric | 21 |  |
-
-### Central African Republic (CF)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678901234567890123 | yes | text | 23 |  |
-
-### Congo - Brazzaville (CG)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678901234567890123 | yes | text | 23 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Switzerland (CH)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | CH00 1234 5678 9012 3456 7 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Cook Islands (CK)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
 | `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `iban` | IBAN | CH00 1234 5678 9012 3456 7 | yes | text | 42 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Chile (CL)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `bankCode` | Bank code | 123 | yes | numeric | 3 |  |
 | `accountNumber` | Account number | 12345678 | yes | numeric | 45 |  |
 | `accountType` | Account type | Select account type | yes | text | 10 | checking, savings, vista |
-
-### Cameroon (CM)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678901234567890123 | yes | text | 23 |  |
+| `taxId` | RUT | 12345678K | yes | text | 12 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### China (CN)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `holderType` | Account holder type | Select account type | yes | text | 10 | individual, business |
 | `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `cnaps` | CNAPS code | 123456789012 | unless bic | numeric | 12 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | unless cnaps | text | 11 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `cnaps` | CNAPS code | 123456789012 | yes | numeric | 12 |  |
 | `accountNumber` | Account number | 12345678 | yes | numeric | 34 |  |
+| `idNumber` | Chinese national ID number | 110101199003078888 | yes | text | 18 |  |
+| `businessRegistrationNumber` | Business registration number | 91110000MA01ABCD12 | yes | text | 30 |  |
+| `legalRepFirstName` | Legal representative first name (Chinese) | 明 | yes | text | 15 |  |
+| `legalRepLastName` | Legal representative last name (Chinese) | 王 | yes | text | 15 |  |
+| `legalRepId` | Legal representative ID number | 110101199003078888 | yes | text | 18 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Colombia (CO)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `holderType` | Account holder type | Select account type | yes | text | 10 | individual, business |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `bankCode` | Bank code | 007 | yes | numeric | 3 |  |
 | `accountNumber` | Account number | 12345678 | yes | numeric | 18 |  |
 | `accountType` | Account type | Select account type | yes | text | 10 | checking, savings |
-
-### Costa Rica (CR)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | CR00 1234 5678 9012 3456 78 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-
-### Cape Verde (CV)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Curaçao (CW)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
+| `idType` | ID type | Select account type | yes | text | 12 | cc, ce, nit, passport |
+| `idNumber` | ID number | 1234567890 | yes | text | 100 |  |
+| `email` | Email | name@example.com | yes | text | 100 |  |
+| `phone` | Mobile number or business phone | +57 300 000 0000 | yes | text | 25 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
 
 ### Cyprus (CY)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | CY00 1234 5678 9012 3456 7890 1234 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Czechia (CZ)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | CZ00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Germany (DE)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | DE00 1234 5678 9012 3456 78 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Djibouti (DJ)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
 | `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `iban` | IBAN | DE00 1234 5678 9012 3456 78 | yes | text | 42 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Denmark (DK)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | DK00 1234 5678 9012 34 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Dominica (DM)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Dominican Republic (DO)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | DO00 1234 5678 9012 3456 7890 1234 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Algeria (DZ)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Ecuador (EC)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Estonia (EE)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | EE00 1234 5678 9012 3456 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Egypt (EG)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | EG00 1234 5678 9012 3456 7890 1234 5 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Spain (ES)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | ES00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Ethiopia (ET)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
 | `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `iban` | IBAN | ES00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Finland (FI)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | FI00 1234 5678 9012 34 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Fiji (FJ)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Falkland Islands (FK)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Micronesia (FM)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Faroe Islands (FO)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | FO00 1234 5678 9012 34 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### France (FR)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Gabon (GA)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
 | `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678901234567890123 | yes | text | 23 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### United Kingdom (GB)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `sortCode` | Sort code | 12-34-56 | unless iban | numeric | 8 |  |
 | `accountNumber` | Account number | 12345678 | unless iban | numeric | 8 |  |
 | `iban` | IBAN (alternative) | GB00 1234 5678 9012 3456 78 | unless sortCode or accountNumber | text | 42 |  |
-
-### Grenada (GD)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Georgia (GE)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | GE00 1234 5678 9012 3456 78 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### French Guiana (GF)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Guernsey (GG)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | GG00 1234 5678 9012 3456 78 | yes | text | 29 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Ghana (GH)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Gibraltar (GI)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | GI00 1234 5678 9012 3456 789 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Greenland (GL)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | GL00 1234 5678 9012 34 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Gambia (GM)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 35 |  |
-
-### Guinea (GN)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Guadeloupe (GP)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Equatorial Guinea (GQ)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Greece (GR)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | GR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Guatemala (GT)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | GT00 1234 5678 9012 3456 7890 1234 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Guinea-Bissau (GW)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 123456789012345678901234 | yes | text | 24 |  |
-
-### Guyana (GY)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Hong Kong (HK)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
 | `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bankCode` | Bank code | 024 | unless bic | numeric | 3 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | unless bankCode | text | 11 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `bankCode` | Bank code | 024 | yes | numeric | 3 |  |
 | `accountNumber` | Account number | 12345678 | yes | numeric | 17 |  |
-
-### Honduras (HN)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Croatia (HR)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | HR00 1234 5678 9012 3456 7 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Hungary (HU)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | HU00 1234 5678 9012 3456 7890 1234 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Canary Islands (IC)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | IC00 1234 5678 9012 3456 7890 | yes | text | 31 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Indonesia (ID)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
 | `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `bankCode` | Bank code | 014 | optional | numeric | 3 |  |
 | `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
 | `accountNumber` | Account number | 12345678 | yes | numeric | 22 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Ireland (IE)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | IE00 1234 5678 9012 3456 78 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Israel (IL)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | IL00 1234 5678 9012 3456 789 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Isle of Man (IM)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | IM00 1234 5678 9012 3456 78 | yes | text | 29 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### India (IN)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
 | `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `ifsc` | IFSC code | ABCD0123456 | yes | text | 11 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
 | `accountNumber` | Account number | 12345678 | yes | text | 20 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Iceland (IS)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | IS00 1234 5678 9012 3456 7890 12 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Italy (IT)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | IT00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Jersey (JE)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | JE00 1234 5678 9012 3456 78 | yes | text | 29 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Jamaica (JM)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
 | `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Jordan (JO)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | JO00 1234 5678 9012 3456 7890 1234 56 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `iban` | IBAN | IT00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Japan (JP)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `bankCode` | Bank code | 1234 | yes | numeric | 4 |  |
 | `branchCode` | Branch code | 123 | yes | numeric | 3 |  |
 | `accountType` | Account type | Select account type | yes | text | 8 | savings, checking |
 | `accountNumber` | Account number | 1234567 | yes | numeric | 8 |  |
-
-### Kenya (KE)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Kyrgyzstan (KG)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Cambodia (KH)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Kiribati (KI)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### St Kitts and Nevis (KN)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### South Korea (KR)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
 | `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `bankCode` | Bank code | 123 | optional | numeric | 3 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 20 |  |
-
-### Kuwait (KW)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | KW00 1234 5678 9012 3456 7890 1234 56 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Cayman Islands (KY)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Kazakhstan (KZ)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | KZ00 1234 5678 9012 3456 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Laos (LA)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Lebanon (LB)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | LB00 1234 5678 9012 3456 7890 1234 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### St Lucia (LC)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | LC00 1234 5678 9012 3456 7890 1234 5678 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `bankCode` | Bank code | 123 | yes | numeric | 3 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 16 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Liechtenstein (LI)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | LI00 1234 5678 9012 3456 7 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Sri Lanka (LK)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
 | `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
 | `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Liberia (LR)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Lesotho (LS)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 35 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Lithuania (LT)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | LT00 1234 5678 9012 3456 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Luxembourg (LU)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | LU00 1234 5678 9012 3456 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Latvia (LV)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | LV00 1234 5678 9012 3456 7 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Morocco (MA)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `rib` | RIB | 123456789012345678901234 | yes | numeric | 24 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Monaco (MC)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | MC00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Moldova (MD)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | MD00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Montenegro (ME)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### St Martin (MF)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Madagascar (MG)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | MG00 1234 5678 9012 3456 7890 123 | yes | text | 34 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Marshall Islands (MH)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### North Macedonia (MK)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | MK00 1234 5678 9012 345 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Mongolia (MN)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Macao SAR China (MO)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Northern Mariana Islands (MP)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Martinique (MQ)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Mauritania (MR)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | MR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Montserrat (MS)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Malta (MT)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | MT00 1234 5678 9012 3456 7890 1234 567 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Mauritius (MU)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | MU00 1234 5678 9012 3456 7890 1234 56 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Maldives (MV)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Malawi (MW)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 35 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Mexico (MX)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `clabe` | CLABE | 123456789012345678 | yes | numeric | 18 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Malaysia (MY)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
 | `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
 | `accountNumber` | Account number | 12345678 | yes | numeric | 19 |  |
-
-### Namibia (NA)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### New Caledonia (NC)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Niger (NE)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 123456789012345678901234 | yes | text | 24 |  |
-
-### Nigeria (NG)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 17 |  |
-
-### Nicaragua (NI)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Netherlands (NL)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | NL00 1234 5678 9012 34 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Norway (NO)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | NO00 1234 5678 901 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Nepal (NP)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
 | `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bankCode` | Bank code | NP002 | unless bic | text | 5 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | unless bankCode | text | 11 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `bankCode` | Bank code | NP002 | yes | text | 5 |  |
 | `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### New Zealand (NZ)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `bank` | Bank | 12 | yes | numeric | 2 |  |
 | `branch` | Branch | 3456 | yes | numeric | 4 |  |
 | `accountBase` | Account base number | 1234567 | yes | numeric | 8 |  |
 | `suffix` | Suffix | 00 | yes | numeric | 3 |  |
-
-### Oman (OM)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Panama (PA)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Peru (PE)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `cci` | CCI | 12345678901234567890 | yes | numeric | 20 |  |
 | `accountType` | Account type | Select account type | yes | text | 10 | checking, savings, maestra |
-
-### French Polynesia (PF)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Papua New Guinea (PG)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
+| `idType` | ID type | Select account type | yes | text | 12 | dni, ce, passport, ruc |
+| `idNumber` | ID number | 12345678 | yes | text | 100 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Philippines (PH)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
 | `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
 | `accountNumber` | Account number | 12345678 | yes | numeric | 16 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Pakistan (PK)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `holderType` | Account holder type | Select account type | yes | text | 10 | individual, business |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | PK00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `paymentReason` | Payment reason | Select account type | yes | text | 20 | technical_services, other_services, pension |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Poland (PL)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | PL00 1234 5678 9012 3456 7890 1234 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### St Pierre and Miquelon (PM)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Puerto Rico (PR)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
 | `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Palestinian Territories (PS)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | PS00 1234 5678 9012 3456 7890 1234 5 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Portugal (PT)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | PT00 1234 5678 9012 3456 7890 1 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Palau (PW)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Paraguay (PY)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Qatar (QA)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | QA00 1234 5678 9012 3456 7890 1234 5 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Réunion (RE)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Romania (RO)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | RO00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Serbia (RS)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | RS00 1234 5678 9012 3456 78 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Rwanda (RW)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 35 |  |
-
-### Saudi Arabia (SA)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | SA00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Solomon Islands (SB)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Seychelles (SC)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | SC00 1234 5678 9012 3456 7890 1234 567 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Sweden (SE)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | SE00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Singapore (SG)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
 | `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
 | `accountNumber` | Account number | 12345678 | yes | text | 23 |  |
-
-### St Helena (SH)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Slovenia (SI)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | SI00 1234 5678 9012 345 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Slovakia (SK)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | SK00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Sierra Leone (SL)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
 | `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `iban` | IBAN | SK00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### San Marino (SM)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | SM00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Senegal (SN)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 123456789012345678901234 | yes | text | 24 |  |
-
-### Suriname (SR)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### São Tomé and Príncipe (ST)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | ST00 1234 5678 9012 3456 7890 1 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### El Salvador (SV)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Eswatini (SZ)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Turks and Caicos Islands (TC)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Chad (TD)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678901234567890123 | yes | text | 23 |  |
-
-### French Southern Territories (TF)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Togo (TG)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 123456789012345678901234 | yes | text | 24 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Thailand (TH)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
 | `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
 | `bankCode` | Bank code | 123 | optional | numeric | 3 |  |
 | `accountNumber` | Account number | 12345678 | yes | numeric | 19 |  |
-
-### Tajikistan (TJ)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Timor-Leste (TL)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | TL00 1234 5678 9012 3456 789 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Tunisia (TN)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | TN00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Tonga (TO)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Türkiye (TR)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | TR00 1234 5678 9012 3456 7890 12 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Trinidad and Tobago (TT)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Tuvalu (TV)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Taiwan (TW)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | numeric | 20 |  |
-
-### Tanzania (TZ)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Ukraine (UA)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Uganda (UG)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### United States (US)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `routingNumber` | ABA routing number | 123456789 | yes | numeric | 9 |  |
 | `accountNumber` | Account number | 12345678 | yes | numeric | 17 |  |
 | `accountType` | Account type | Select account type | yes | text | 8 | checking, savings |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Uruguay (UY)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `bankCode` | Bank code | 001 | yes | numeric | 3 |  |
 | `accountNumber` | Account number | 12345678 | yes | numeric | 14 |  |
 | `accountType` | Account type | Select account type | yes | text | 10 | checking, savings |
 | `bankBranch` | Branch code | 1234 | optional | numeric | 4 |  |
-
-### Uzbekistan (UZ)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Vatican City (VA)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | VA00 1234 5678 9012 3456 78 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### St Vincent and the Grenadines (VC)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### British Virgin Islands (VG)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | VG00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `idType` | ID type | Select account type | yes | text | 12 | ci, de, passport, rut |
+| `idNumber` | ID number | 12345678 | yes | text | 100 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Vietnam (VN)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
 | `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
 | `accountNumber` | Account number | 12345678 | yes | text | 20 |  |
-
-### Vanuatu (VU)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Wallis and Futuna (WF)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### Samoa (WS)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Kosovo (XK)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `iban` | IBAN | XK00 1234 5678 9012 3456 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Mayotte (YT)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
 | --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | optional | text | 11 |  |
-
-### South Africa (ZA)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 17 |  |
-| `accountType` | Account type | Select account type | yes | text | 10 | checking, savings |
-
-### Zambia (ZM)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
-
-### Zimbabwe (ZW)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
-| `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |

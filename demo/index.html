@@ -79,7 +79,7 @@ function resolveCode(text) {
   if (paren) return paren[1].toUpperCase();
   if (/^[A-Za-z]{2,3}$/.test(t)) {
     const code = t.toUpperCase();
-    return countries.some((c) => c.code === code) ? code : null;
+    return code;
   }
   const byName = countries.find((c) => c.name.toLowerCase() === t.toLowerCase());
   return byName ? byName.code : null;
@@ -103,7 +103,7 @@ function render(cfg) {
   $('badges').innerHTML = flags.map((f) => `<span class="badge">${esc(f)}</span>`).join('');
   $('json').textContent = JSON.stringify(cfg.fields, null, 2);
 
-  if (!cfg.supported) { form.innerHTML = '<p class="err">Payouts to this country are not supported.</p>'; return; }
+  if (!cfg.supported) { form.innerHTML = `<p class="err">${esc(cfg.reason)}</p>`; return; }
 
   form.innerHTML = cfg.fields.map((f) => {
     const control = f.options
@@ -111,18 +111,33 @@ function render(cfg) {
         f.options.map((o) => `<option value="${esc(o.value)}">${esc(o.label)}</option>`).join('') + '</select>'
       : `<input id="f_${f.key}" name="${f.key}" placeholder="${esc(f.placeholder)}" inputmode="${f.inputMode}"` +
         ` maxlength="${f.maxLength}" autocomplete="off" ${f.sensitive ? 'data-sensitive' : ''}>`;
-    return `<div class="field"><label for="f_${f.key}">${esc(f.label)}${f.required ? ' <span class="req">*</span>' : ''}</label>` +
+    const when = f.appliesWhen ? ` data-when-field="${f.appliesWhen.field}" data-when-in="${esc(f.appliesWhen.in.join(','))}"` : '';
+    return `<div class="field"${when}><label for="f_${f.key}">${esc(f.label)}${f.required ? ' <span class="req">*</span>' : ''}</label>` +
       `${control}<div class="help">${esc(f.helpText)}</div><div class="err" id="e_${f.key}"></div></div>`;
   }).join('') + '<button type="submit">Validate</button>';
+  applyVisibility();
 }
+
+// Fields that only apply for some values of another field (for example business ID details).
+function applyVisibility() {
+  document.querySelectorAll('#form [data-when-field]').forEach((el) => {
+    const other = document.querySelector(`#form [name="${el.dataset.whenField}"]`);
+    el.hidden = !(other && el.dataset.whenIn.split(',').includes(other.value));
+  });
+}
+$('form').addEventListener('change', applyVisibility);
 
 $('form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const values = Object.fromEntries(new FormData(e.target).entries());
+  for (const key of Object.keys(values)) {
+    if (e.target.querySelector(`[name="${key}"]`).closest('.field').hidden) delete values[key];
+  }
   const res = await (await fetch(`/api/validate/${current.country}`, {
     method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(values),
   })).json();
   for (const f of current.fields) $(`e_${f.key}`).textContent = res.errors[f.key] ?? '';
+  if (res.errors.country) { $('result').className = 'result'; $('result').textContent = res.errors.country; return; }
   const box = $('result');
   box.className = 'result' + (res.valid ? ' ok' : '');
   box.textContent = res.valid

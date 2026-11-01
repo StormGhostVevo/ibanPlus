@@ -2,7 +2,7 @@
 
 Country-specific bank detail fields, validation and normalisation, built on [ibantools](https://github.com/Simplify/ibantools). Free to run: no paid APIs, no payment provider.
 
-A form renders from `getBankFields(country)`, so adding a country means editing `src/countries.ts` only.
+A form renders from `getBankFields(country)`, so adding a country means editing `src/countries.ts` and listing it in `src/rails.ts`.
 
 ```ts
 import { getBankFields, validateBankDetails, maskBankDetails, isXeroSyncable } from 'bank-fields';
@@ -24,11 +24,32 @@ Run `validateBankDetails` on both the client and the server. Changing country: c
 
 ## Countries
 
-AU, US, GB (sort code and account number, or IBAN), NZ, CA, JP, KR, ID, PH, TH, SG, MY, VN, TW, LA, HK, CN, IN, LK, FJ, KH, BD, NP, MX, BR (domestic details or IBAN), AR, PE, CL, CO, ZA, NG, KE, GH, every other IBAN registry country (IBAN plus optional BIC, with a country prefix check), and a fallback for anything else.
+Only countries that can be paid over a local rail are supported: 68 of the 205 countries in Airwallex's payout requirements (doc dated 26/10/2026). The other 137 can only be paid by international SWIFT transfer, so the library does not offer them. `getConfiguredCountries()` leaves them out, `isCountrySupported()` returns false and `validateBankDetails` rejects them with "This country can only be paid by international (SWIFT) transfer, which is not supported." The full list is in `docs/SWIFT_ONLY.md`. A country counts as local when the doc lists at least one real local scheme. Rows with scheme "n/a" (local currency paid over SWIFT, such as XOF, XAF, KES, NGN and ZAR) do not count.
 
-The fallback accepts bank name, BIC and account number (5 to 34 letters or numbers), or an IBAN, or free-text other details. At least one of those routes must be completed, so no creator is blocked. Every one of the 205 countries in Airwallex's payout requirements has a layout, so only countries outside that list (for example Myanmar) use the fallback.
+Supported, with no SWIFT code asked for: AE, AR, AT, AU, BD, BE, BG, BH, BO, BR, CA, CH, CL, CN, CO, CY, CZ, DE, DK, EE, ES, FI, FR, GB, GR, HK, HR, HU, IE, IL, IN, IS, IT, JP, KR, LI, LT, LU, LV, MA, MC, MQ, MX, NL, NO, NP, NZ, PE, PK, PL, PM, PT, RO, SE, SI, SK, SM, TR, US, UY, YT. The SEPA and other IBAN countries ask for an IBAN only.
 
-Layouts that follow Airwallex's account number plus SWIFT code pages are generated from a table in `src/countries.ts` (`ACCOUNT_PLUS_BIC`). Where a page says "up to 50" with no minimum, a minimum of 5 characters is assumed. Fixed-length West and Central African accounts (BJ, BF, GW, NE, SN, TG at 24, CM, CF, TD, GA, CG at 23) are exact. Oman, Mongolia, Nicaragua, El Salvador, Ukraine and Montenegro are IBAN registry countries, but Airwallex takes them as account number plus SWIFT code, so they follow Airwallex. Costa Rica needs an IBAN and a BIC. Bolivia, Uruguay, Morocco (24 digit RIB) and Botswana (optional branch code) have their own layouts. Madagascar, the Channel Islands, the Isle of Man and the Canary Islands use IBAN-style numbers that ibantools has no registry entry for, so they are checked by pattern and a mod 97 check. Saint Barthélemy accepts French IBANs.
+Supported, but the local scheme itself identifies the bank by SWIFT/BIC code, so a BIC is required: ID, LK, MY, PH, SG, TH, VN. These are domestic rails (BI-FAST, SLIPS, DuitNow, Instapay, FAST and GIRO, PromptPay, NAPAS), not SWIFT transfers. To drop any of them, remove its code from `LOCAL_RAIL_COUNTRIES` and `LOCAL_RAIL_NEEDS_BIC` in `src/rails.ts`.
+
+`getCountryConfig` returns the old fallback layout for unsupported or unknown countries, but `validateBankDetails` rejects them, so it is not used for payouts.
+
+## Fields every country asks for
+
+Recipient name, bank name and address are required. Bank address and phone number are optional (Colombia requires a phone). Order: recipient name, account holder type (where used), bank name, bank address, the local rail fields, address, phone. Airwallex does not list address, phone or bank address as general bank requirements, so those are collected as a precaution.
+
+Some rails need more, taken from the local rail and beneficiary ID sections of the doc:
+
+| Country | Extra fields |
+| --- | --- |
+| AR | CUIT or CUIL (11 digits) |
+| BO | ID type (CI, CE or NIT) and ID number |
+| BR | Account holder type, then CPF (11 digits, individuals) or CNPJ (14 digits, businesses) |
+| CL | RUT |
+| CN | Account holder type. Individuals: Chinese national ID. Businesses: registration number, legal representative first and last name in Chinese, legal representative ID |
+| CO | Account holder type, ID type and number, email (individuals), phone (mobile for individuals, business phone for companies) |
+| PE, UY | ID type (national ID, foreign ID, passport or tax ID) and ID number, checked against the chosen type |
+| BD, PK | Account holder type, individuals only. PK also asks for a payment reason |
+
+Fields that only apply sometimes use `appliesWhen`, which hides them in the form and skips them in validation. The ID number format follows the chosen ID type through `patternWhen`.
 
 ## Scope and caveats
 
@@ -42,31 +63,26 @@ Validation catches typos only and cannot confirm an account exists. Rules are de
 - GB: no modulus check on sort code and account number, and the sort-code-plus-account IBAN is not cross-checked.
 - US: routing checksum only, no Fedwire/ACH directory lookup. Account type is limited to checking and savings.
 - Xero: only the AU flag exists here. The exact format Xero expects for AU bank details is not implemented.
-- JP: bank code (4 digits) and branch code (3 digits) lengths could not be confirmed from the sources I found. Account types follow Airwallex: checking (toza) and savings, where savings means an ordinary deposit account (futsu). There is no chochiku option because Airwallex has no matching value. Account numbers are 4 to 8 digits, with 4 to 6 digits left-padded with zeros to 7 (per bank guidance), so 7 or 8 digits are stored.
-- KR: bank code (3 digits) is confirmed but optional, since international transfers use SWIFT. Sources give 7 to 16 (Airwallex) and 11 to 16 (Worldpay), and ABN AMRO says there is no fixed format, Worldpay allows up to 20 for international wires, so 7 to 20 is accepted. Letters and numbers are accepted, as Airwallex describes the number as alphanumeric. A BIC is required.
 - ID: The optional 3-digit bank code was kept on the team's advice. Neither Airwallex nor Xendit uses numeric bank codes for Indonesia (or Thailand), so it is unverified against those sources. Xendit lists 7 to 17 digits for the major banks and Airwallex allows up to 22, so 7 to 22 is accepted. A BIC is required, as Airwallex requires one for local IDR payouts.
 - PH: Airwallex accepts 8 to 16 digits, so that is what is accepted, to avoid passing numbers that fail at payout. BIC is required because at least one provider requires it. No official BSP or PCHC source was found.
 - TH: ABN AMRO says there is no fixed format and Airwallex allows 7 to 12 digits for local payouts and 7 to 19 for SWIFT payouts, so 7 to 19 is accepted. Narrow it to 12 if you only pay locally. BIC is required.
 - JP, KR, ID, PH and TH formats come from payment provider and bank documentation, not the national payment authorities. Confirm against the receiving bank or your payout provider.
-- SG, MY, VN, TW, LA, LK, FJ, KH, GH, KE, NG, ZA: bank name, BIC (required) and account number, from Airwallex payout pages. Ranges use the widest figure across local and SWIFT payouts. Where the page gave no minimum (VN, LK, FJ, KH, GH) a minimum of 5 was assumed.
-- HK: bank code (3 digits) or BIC, plus 8 to 17 digit account number. The first 3 digits are usually the branch code, which is not checked.
 - IN: IFSC is accepted as 11 letters or numbers (Airwallex). The standard format of 4 letters, a zero, then 6 characters is not enforced, so it could be tightened.
-- BD: 9 digit routing number. No minimum account length was given, so 5 was assumed. NP: 5 character bank code (for example NP002) or a BIC.
 - MX: CLABE is 18 digits. The check digit (weights 3, 7, 1) was added from the standard CLABE algorithm and is not on the Airwallex page, so confirm with a few real CLABEs. AR: 22 digit CBU, no check digit. PE: 20 digit CCI plus account type. CL, CO: bank code, account number and type. CO ranges are per bank on Airwallex, and the overall 3 to 18 is used.
-- BR: bank code (3 digits), branch (4 to 7), account number (3 to 50, dots and dashes allowed, a minimum of 3 was assumed) and type, or an IBAN.
-- AR, CL, CO, PE, MX, BR, NP, IN and the others above: Airwallex also requires a beneficiary tax ID (CPF, CUIT, RUT and similar) for some local payouts. That is not a bank detail and is not collected here.
-- CN: 12-digit CNAPS code or a BIC, plus an 8 to 34 digit account number (Airwallex local CNY and SWIFT details). Airwallex's local CNY transfers also need declarant and order information and a Chinese-character account holder name, none of which is collected here. TW: 8 to 20 digits (SWIFT only). LA: up to 50 letters or numbers (SWIFT only).
 - Per-bank account formats (Bolivia, Colombia, Sweden, Uruguay) are not enforced. Bolivia accepts 5 to 15 digits, Uruguay 4 to 14.
-- Sweden, Denmark and Norway local (non-IBAN) payout fields are not collected. They use IBAN.
-- Beneficiary tax and ID fields (for example Albania NIPT, Azerbaijan TIN, Honduras RTN, Paraguay RUC) and Pakistan's payout reason are not bank details and are not collected here.
-- Egypt takes an IBAN only here. Airwallex also accepts an account number plus SWIFT code for non-EGP currencies.
 - Doc items still open: whether Albania's tax ID applies to all SWIFT payouts or only ALL, Montenegro's account name rule, Zambia's limit currency, and Botswana's note about Brazilian formats looking like a copy error.
-- Iraq, Libya, Sudan, Somalia, Yemen, Belarus and Russia are not in Airwallex's list and are excluded: they are left out of `getConfiguredCountries()`, `isCountrySupported()` returns false and `validateBankDetails` rejects them. Åland, Guadeloupe and Malta have IBAN registry layouts but are not in Airwallex's list. Confirm they should be offered.
+- KR: bank code (3 digits) and a 7 to 16 letter or number account number (Airwallex HOFINET). No BIC. This replaces the earlier rule that required a BIC.
+- HK: 3 digit bank code and an 8 to 17 digit account number (ACH). No BIC, and the FPS proxy ID routes (phone, email) are not offered.
+- CN: 12 digit CNAPS code and an 8 to 34 digit account number. The account name must be in Chinese characters, which is not enforced on the recipient name. Local CNY transfers also need declarant and order information, which is not collected here.
+- BD: 9 digit routing number, individuals only. NP: 5 character bank code. Account lengths: no minimum was given, so 5 was assumed.
+- BR: bank code (3 digits), branch (4 to 7), account number (3 to 50, dots and dashes allowed, a minimum of 3 was assumed), type, and CPF or CNPJ. The IBAN alternative was removed because the local rail does not use one. PIX keys are not offered.
+- Local rails that Airwallex also offers through a proxy (PayID, PayNow, DuitNow ID, Interac, PIX keys, FPS proxy IDs) or as bill payments are not offered. Only bank details are collected.
+- Sweden, Denmark and Norway have local non-IBAN fields (bank code plus account number) that are not collected. They take an IBAN.
+- Colombia's account number length varies by bank and the ID formats follow the Airwallex doc. Those, plus the Peru, Uruguay and Bolivia ID formats, have not been checked against national sources.
+- The doc's own open items are still open: Albania's tax ID wording (now moot, Albania is SWIFT only), Montenegro's account name rule, Zambia's limit currency and Botswana's Brazil note.
+- The French territories Guadeloupe, Réunion, Saint Barthélemy, Saint Martin and French Guiana, Åland, Gibraltar, the Channel Islands and the Isle of Man are listed by the doc as SWIFT only, so they are not supported, even though the doc notes that FR, FI and GB IBANs may include accounts there. Martinique, Mayotte and Saint Pierre and Miquelon are supported because the doc lists them with SEPA.
+- Iraq, Libya, Sudan, Somalia, Yemen, Belarus and Russia are excluded for a different reason (not in the doc's list) and get the message "Payouts to this country are not supported."
 - Fallback and IBAN country display names use `Intl.DisplayNames` (en-AU), so names depend on the runtime's ICU data.
-
-## Countries to add later
-
-MM, BN, PG, WS, TO, VU, BO, EC, UY.
 
 ## Development
 
@@ -88,7 +104,7 @@ Open http://localhost:3000, type a country name or code, and the fields appear w
 
 ## Currency local rails
 
-For Fabulate's own accounts, `getBankFieldsForCurrency(currency)` returns the local rail layout for one of USD, AUD, SGD, CAD, EUR, GBP and THB. Each layout starts with Recipient name and Bank name, then the local identifiers, then Address.
+For Fabulate's own accounts, `getBankFieldsForCurrency(currency)` returns the local rail layout for one of USD, AUD, SGD, CAD, EUR, GBP and THB. Each layout uses the same common fields as the countries: recipient name, bank name, bank address (optional), the local identifiers, address and phone (optional).
 
 | Currency | Rail | Local identifiers |
 | --- | --- | --- |

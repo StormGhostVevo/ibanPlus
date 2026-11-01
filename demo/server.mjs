@@ -11,6 +11,7 @@ import {
   getConfiguredCountries,
   getCountryConfig,
   getCurrencyConfig,
+  getUnsupportedReason,
   maskBankDetailsForCurrency,
   validateBankDetailsForCurrency,
   isCountrySupported,
@@ -59,7 +60,7 @@ const server = createServer(async (req, res) => {
         name: `${config.currency} local rail (${config.rail})`,
         supported: true,
         xeroSyncable: config.xeroSyncable,
-        fields: config.fields.map((f) => ({ ...f, pattern: f.pattern?.source })),
+        fields: config.fields.map((f) => ({ ...f, pattern: f.pattern?.source, patternWhen: undefined })),
       });
     }
     if (match) {
@@ -69,9 +70,12 @@ const server = createServer(async (req, res) => {
         country: code,
         name: config.name,
         supported: isCountrySupported(code),
+        reason: getUnsupportedReason(code),
         xeroSyncable: isXeroSyncable(code),
         // RegExp does not survive JSON, so send the source for display.
-        fields: getBankFields(code).map((f) => ({ ...f, pattern: f.pattern?.source })),
+        fields: isCountrySupported(code)
+          ? getBankFields(code).map((f) => ({ ...f, pattern: f.pattern?.source, patternWhen: undefined }))
+          : [],
       });
     }
 
