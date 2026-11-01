@@ -42,6 +42,10 @@ export function validateFields(fields: FieldConfig[], values: BankValues, where:
   }
 
   for (const field of fields) {
+    if (field.appliesWhen && !field.appliesWhen.in.includes(normalised[field.appliesWhen.field] ?? '')) {
+      normalised[field.key] = '';
+      continue;
+    }
     const value = normalised[field.key];
 
     if (value === '') {
@@ -51,7 +55,10 @@ export function validateFields(fields: FieldConfig[], values: BankValues, where:
       continue;
     }
 
-    const failsPattern = field.pattern !== undefined && !field.pattern.test(value);
+    const pattern = field.patternWhen
+      ? (field.patternWhen.patterns[normalised[field.patternWhen.field] ?? ''] ?? field.pattern)
+      : field.pattern;
+    const failsPattern = pattern !== undefined && !pattern.test(value);
     const failsValidator = field.validate !== undefined && !validators[field.validate](value);
     if (failsPattern || failsValidator) {
       errors[field.key] = field.errorMessage;

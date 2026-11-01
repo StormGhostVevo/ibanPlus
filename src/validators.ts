@@ -53,6 +53,8 @@ export function normaliseValue(value: string, how: Normaliser): string {
       const digits = value.replace(/[\s-]/g, '');
       return /^\d{4,6}$/.test(digits) ? digits.padStart(7, '0') : digits;
     }
+    case 'alnum':
+      return value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
     case 'upper':
       return value.replace(/\s/g, '').toUpperCase();
     case 'iban':

@@ -1,7 +1,7 @@
 export type InputMode = 'numeric' | 'text';
 
 /** How a value is cleaned before validation and storage. */
-export type Normaliser = 'digits' | 'digitsPad7' | 'upper' | 'iban' | 'bic' | 'trim' | 'none';
+export type Normaliser = 'digits' | 'alnum' | 'digitsPad7' | 'upper' | 'iban' | 'bic' | 'trim' | 'none';
 
 /** Names of the custom validators in validators.ts. */
 export type ValidatorName = 'abaRouting' | 'clabe' | 'iban' | 'ibanChecksum' | 'bic';
@@ -39,6 +39,17 @@ export interface FieldConfig {
   ibanCountry?: string;
   /** For IBAN fields that accept several countries (for example SEPA): allowed two-letter prefixes. */
   ibanCountries?: string[];
+  /**
+   * The field only applies when another field has one of these values, for example business
+   * registration details when the holder type is "business". Fields that do not apply are skipped
+   * by validation and come back empty in `normalised`.
+   */
+  appliesWhen?: { field: string; in: string[] };
+  /**
+   * Picks the pattern from another field's value, for example the ID number format for the chosen
+   * ID type. Falls back to `pattern` when the other field has no entry.
+   */
+  patternWhen?: { field: string; patterns: Record<string, RegExp> };
   /** Sensitive fields are masked by maskBankDetails. */
   sensitive: boolean;
 }

@@ -23,7 +23,7 @@ describe('currency local rails', () => {
     for (const c of SUPPORTED_CURRENCIES) {
       const k = keys(c);
       expect(k.slice(0, 2)).toEqual(['recipientName', 'bankName']);
-      expect(k.at(-1)).toBe('address');
+      expect(k[k.length - 1]).toBe('address');
       for (const f of getBankFieldsForCurrency(c)) expect(f.placeholder).toBeTruthy();
     }
   });
