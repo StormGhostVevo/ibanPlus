@@ -1123,8 +1123,15 @@ const FALLBACK_RAW: CountryConfig = {
   ],
 };
 
-/** Not offered: not in Airwallex's payout list. Excluded from the country list and rejected by validation. */
-const UNSUPPORTED = new Set(['BY', 'IQ', 'LY', 'RU', 'SD', 'SO', 'YE']);
+/**
+ * Not offered. BY, IQ, LY, RU, SD, SO and YE are not in Airwallex's payout list. The Americas
+ * outside the US and Canada have local rails but are left out on purpose (their layouts stay above).
+ * Excluded from the country list and rejected by validation.
+ */
+const UNSUPPORTED = new Set([
+  'BY', 'IQ', 'LY', 'RU', 'SD', 'SO', 'YE',
+  'AR', 'BO', 'BR', 'CL', 'CO', 'MX', 'PE', 'UY', 'PM', 'MQ',
+]);
 
 /** True when the country can be paid over a local rail. SWIFT-only countries are not supported. */
 export function isCountrySupported(country: string): boolean {

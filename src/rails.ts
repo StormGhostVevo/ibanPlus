@@ -3,12 +3,16 @@
  * (26/10/2026). A country is local when it has at least one real local scheme. Rows whose scheme is
  * "n/a" (local currency paid over SWIFT, for example XOF, XAF, KES, NGN and ZAR) do not count.
  * Everything else in the doc's 205 countries is SWIFT only and is not supported.
+ *
+ * Countries in the Americas other than the US and Canada (AR, BO, BR, CL, CO, MX, PE, UY, and the
+ * territories MQ and PM) have local rails in the doc but are left out on purpose. Their layouts
+ * are still in countries.ts. To offer one again, add its code here and take it out of UNSUPPORTED.
  */
 export const LOCAL_RAIL_COUNTRIES = new Set([
-  'AE', 'AR', 'AT', 'AU', 'BD', 'BE', 'BG', 'BH', 'BO', 'BR', 'CA', 'CH', 'CL', 'CN', 'CO', 'CY', 'CZ',
+  'AE', 'AT', 'AU', 'BD', 'BE', 'BG', 'BH', 'CA', 'CH', 'CN', 'CY', 'CZ',
   'DE', 'DK', 'EE', 'ES', 'FI', 'FR', 'GB', 'GR', 'HK', 'HR', 'HU', 'IE', 'IL', 'IN', 'IS', 'IT', 'JP',
-  'KR', 'LI', 'LT', 'LU', 'LV', 'MA', 'MC', 'MQ', 'MX', 'NL', 'NO', 'NP', 'NZ', 'PE', 'PK', 'PL', 'PM',
-  'PT', 'RO', 'SE', 'SI', 'SK', 'SM', 'TR', 'US', 'UY', 'YT', 'ID', 'LK', 'MY', 'PH', 'SG', 'TH', 'VN',
+  'KR', 'LI', 'LT', 'LU', 'LV', 'MA', 'MC', 'NL', 'NO', 'NP', 'NZ', 'PK', 'PL',
+  'PT', 'RO', 'SE', 'SI', 'SK', 'SM', 'TR', 'US', 'YT', 'ID', 'LK', 'MY', 'PH', 'SG', 'TH', 'VN',
 ]);
 
 /**

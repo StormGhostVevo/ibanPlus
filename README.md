@@ -24,32 +24,28 @@ Run `validateBankDetails` on both the client and the server. Changing country: c
 
 ## Countries
 
-Only countries that can be paid over a local rail are supported: 68 of the 205 countries in Airwallex's payout requirements (doc dated 26/10/2026). The other 137 can only be paid by international SWIFT transfer, so the library does not offer them. `getConfiguredCountries()` leaves them out, `isCountrySupported()` returns false and `validateBankDetails` rejects them with "This country can only be paid by international (SWIFT) transfer, which is not supported." The full list is in `docs/SWIFT_ONLY.md`. A country counts as local when the doc lists at least one real local scheme. Rows with scheme "n/a" (local currency paid over SWIFT, such as XOF, XAF, KES, NGN and ZAR) do not count.
+Only countries that can be paid over a local rail are supported: 58 countries. Of the 205 in Airwallex's payout requirements (doc dated 26/10/2026), 137 can only be paid by international SWIFT transfer and 10 more have local rails but are left out on purpose (see below). `getConfiguredCountries()` leaves them out, `isCountrySupported()` returns false and `validateBankDetails` rejects them with "This country can only be paid by international (SWIFT) transfer, which is not supported." The full list is in `docs/SWIFT_ONLY.md`. A country counts as local when the doc lists at least one real local scheme. Rows with scheme "n/a" (local currency paid over SWIFT, such as XOF, XAF, KES, NGN and ZAR) do not count.
 
-Supported, with no SWIFT code asked for: AE, AR, AT, AU, BD, BE, BG, BH, BO, BR, CA, CH, CL, CN, CO, CY, CZ, DE, DK, EE, ES, FI, FR, GB, GR, HK, HR, HU, IE, IL, IN, IS, IT, JP, KR, LI, LT, LU, LV, MA, MC, MQ, MX, NL, NO, NP, NZ, PE, PK, PL, PM, PT, RO, SE, SI, SK, SM, TR, US, UY, YT. The SEPA and other IBAN countries ask for an IBAN only.
+Supported, with no SWIFT code asked for: AE, AT, AU, BD, BE, BG, BH, CA, CH, CN, CY, CZ, DE, DK, EE, ES, FI, FR, GB, GR, HK, HR, HU, IE, IL, IN, IS, IT, JP, KR, LI, LT, LU, LV, MA, MC, NL, NO, NP, NZ, PK, PL, PT, RO, SE, SI, SK, SM, TR, US, YT. The SEPA and other IBAN countries ask for an IBAN only.
 
 Supported, but the local scheme itself identifies the bank by SWIFT/BIC code, so a BIC is required: ID, LK, MY, PH, SG, TH, VN. These are domestic rails (BI-FAST, SLIPS, DuitNow, Instapay, FAST and GIRO, PromptPay, NAPAS), not SWIFT transfers. To drop any of them, remove its code from `LOCAL_RAIL_COUNTRIES` and `LOCAL_RAIL_NEEDS_BIC` in `src/rails.ts`.
+
+Left out on purpose: the Americas other than the US and Canada. Argentina, Bolivia, Brazil, Chile, Colombia, Mexico, Peru and Uruguay have local rails in the doc, as do the territories Martinique and Saint Pierre and Miquelon. They are rejected with "Payouts to this country are not supported." Their layouts (including the tax ID and ID type fields) are still in `src/countries.ts`. To offer one again, add its code to `LOCAL_RAIL_COUNTRIES` in `src/rails.ts` and remove it from `UNSUPPORTED`.
 
 `getCountryConfig` returns the old fallback layout for unsupported or unknown countries, but `validateBankDetails` rejects them, so it is not used for payouts.
 
 ## Fields every country asks for
 
-Recipient name, bank name and address are required. Bank address and phone number are optional (Colombia requires a phone). Order: recipient name, account holder type (where used), bank name, bank address, the local rail fields, address, phone. Airwallex does not list address, phone or bank address as general bank requirements, so those are collected as a precaution.
+Recipient name, bank name and address are required. Bank address and phone number are optional. Order: recipient name, account holder type (where used), bank name, bank address, the local rail fields, address, phone. Airwallex does not list address, phone or bank address as general bank requirements, so those are collected as a precaution.
 
 Some rails need more, taken from the local rail and beneficiary ID sections of the doc:
 
 | Country | Extra fields |
 | --- | --- |
-| AR | CUIT or CUIL (11 digits) |
-| BO | ID type (CI, CE or NIT) and ID number |
-| BR | Account holder type, then CPF (11 digits, individuals) or CNPJ (14 digits, businesses) |
-| CL | RUT |
 | CN | Account holder type. Individuals: Chinese national ID. Businesses: registration number, legal representative first and last name in Chinese, legal representative ID |
-| CO | Account holder type, ID type and number, email (individuals), phone (mobile for individuals, business phone for companies) |
-| PE, UY | ID type (national ID, foreign ID, passport or tax ID) and ID number, checked against the chosen type |
 | BD, PK | Account holder type, individuals only. PK also asks for a payment reason |
 
-Fields that only apply sometimes use `appliesWhen`, which hides them in the form and skips them in validation. The ID number format follows the chosen ID type through `patternWhen`.
+Fields that only apply sometimes use `appliesWhen`, which hides them in the form and skips them in validation. The ID number format can follow another field, such as an ID type, through `patternWhen`. No offered country uses it now.
 
 ## Scope and caveats
 
@@ -68,17 +64,14 @@ Validation catches typos only and cannot confirm an account exists. Rules are de
 - TH: ABN AMRO says there is no fixed format and Airwallex allows 7 to 12 digits for local payouts and 7 to 19 for SWIFT payouts, so 7 to 19 is accepted. Narrow it to 12 if you only pay locally. BIC is required.
 - JP, KR, ID, PH and TH formats come from payment provider and bank documentation, not the national payment authorities. Confirm against the receiving bank or your payout provider.
 - IN: IFSC is accepted as 11 letters or numbers (Airwallex). The standard format of 4 letters, a zero, then 6 characters is not enforced, so it could be tightened.
-- MX: CLABE is 18 digits. The check digit (weights 3, 7, 1) was added from the standard CLABE algorithm and is not on the Airwallex page, so confirm with a few real CLABEs. AR: 22 digit CBU, no check digit. PE: 20 digit CCI plus account type. CL, CO: bank code, account number and type. CO ranges are per bank on Airwallex, and the overall 3 to 18 is used.
-- Per-bank account formats (Bolivia, Colombia, Sweden, Uruguay) are not enforced. Bolivia accepts 5 to 15 digits, Uruguay 4 to 14.
+- Per-bank account formats (for example Sweden) are not enforced.
 - Doc items still open: whether Albania's tax ID applies to all SWIFT payouts or only ALL, Montenegro's account name rule, Zambia's limit currency, and Botswana's note about Brazilian formats looking like a copy error.
 - KR: bank code (3 digits) and a 7 to 16 letter or number account number (Airwallex HOFINET). No BIC. This replaces the earlier rule that required a BIC.
 - HK: 3 digit bank code and an 8 to 17 digit account number (ACH). No BIC, and the FPS proxy ID routes (phone, email) are not offered.
 - CN: 12 digit CNAPS code and an 8 to 34 digit account number. The account name must be in Chinese characters, which is not enforced on the recipient name. Local CNY transfers also need declarant and order information, which is not collected here.
 - BD: 9 digit routing number, individuals only. NP: 5 character bank code. Account lengths: no minimum was given, so 5 was assumed.
-- BR: bank code (3 digits), branch (4 to 7), account number (3 to 50, dots and dashes allowed, a minimum of 3 was assumed), type, and CPF or CNPJ. The IBAN alternative was removed because the local rail does not use one. PIX keys are not offered.
 - Local rails that Airwallex also offers through a proxy (PayID, PayNow, DuitNow ID, Interac, PIX keys, FPS proxy IDs) or as bill payments are not offered. Only bank details are collected.
 - Sweden, Denmark and Norway have local non-IBAN fields (bank code plus account number) that are not collected. They take an IBAN.
-- Colombia's account number length varies by bank and the ID formats follow the Airwallex doc. Those, plus the Peru, Uruguay and Bolivia ID formats, have not been checked against national sources.
 - The doc's own open items are still open: Albania's tax ID wording (now moot, Albania is SWIFT only), Montenegro's account name rule, Zambia's limit currency and Botswana's Brazil note.
 - The French territories Guadeloupe, Réunion, Saint Barthélemy, Saint Martin and French Guiana, Åland, Gibraltar, the Channel Islands and the Isle of Man are listed by the doc as SWIFT only, so they are not supported, even though the doc notes that FR, FI and GB IBANs may include accounts there. Martinique, Mayotte and Saint Pierre and Miquelon are supported because the doc lists them with SEPA.
 - Iraq, Libya, Sudan, Somalia, Yemen, Belarus and Russia are excluded for a different reason (not in the doc's list) and get the message "Payouts to this country are not supported."

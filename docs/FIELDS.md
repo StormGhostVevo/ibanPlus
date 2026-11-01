@@ -9,28 +9,22 @@ Every key a form or database column may need. `*` is the fallback layout.
 | Key | Label(s) | Input | Used by |
 | --- | --- | --- | --- |
 | `accountBase` | Account base number | numeric | NZ |
-| `accountNumber` | Account number | numeric / text | 24 countries |
-| `accountType` | Account type | text | BR, CL, CO, JP, PE, US, UY |
-| `address` | Address | text | 68 countries |
+| `accountNumber` | Account number | numeric / text | 19 countries |
+| `accountType` | Account type | text | JP, US |
+| `address` | Address | text | 58 countries |
 | `bank` | Bank | numeric | NZ |
-| `bankAddress` | Bank address | text | 68 countries |
-| `bankBranch` | Branch code | numeric | UY |
-| `bankCode` | Bank code | numeric / text | BO, BR, CL, CO, HK, ID, JP, KR, NP, TH, UY |
-| `bankName` | Bank name | text | 69 countries |
+| `bankAddress` | Bank address | text | 58 countries |
+| `bankCode` | Bank code | numeric / text | HK, ID, JP, KR, NP, TH |
+| `bankName` | Bank name | text | 59 countries |
 | `bic` | BIC / SWIFT code | text | ID, LK, MY, PH, SG, TH, VN, * |
-| `branch` | Branch (agência) / Branch | text / numeric | BR, NZ |
+| `branch` | Branch | numeric | NZ |
 | `branchCode` | Branch code | numeric | JP |
 | `bsb` | BSB | numeric | AU |
 | `businessRegistrationNumber` | Business registration number | text | CN |
-| `cbu` | CBU | numeric | AR |
-| `cci` | CCI | numeric | PE |
-| `clabe` | CLABE | numeric | MX |
 | `cnaps` | CNAPS code | numeric | CN |
-| `email` | Email | text | CO |
-| `holderType` | Account holder type | text | BD, BR, CN, CO, PK |
-| `iban` | IBAN / IBAN (alternative) | text | 42 countries |
-| `idNumber` | ID number / Chinese national ID number | text | BO, CN, CO, PE, UY |
-| `idType` | ID type | text | BO, CO, PE, UY |
+| `holderType` | Account holder type | text | BD, CN, PK |
+| `iban` | IBAN / IBAN (alternative) | text | 40 countries |
+| `idNumber` | Chinese national ID number | text | CN |
 | `ifsc` | IFSC code | text | IN |
 | `institutionNumber` | Institution number | numeric | CA |
 | `legalRepFirstName` | Legal representative first name (Chinese) | text | CN |
@@ -38,13 +32,12 @@ Every key a form or database column may need. `*` is the fallback layout.
 | `legalRepLastName` | Legal representative last name (Chinese) | text | CN |
 | `otherDetails` | Other bank details | text | * |
 | `paymentReason` | Payment reason | text | PK |
-| `phone` | Phone number / Mobile number or business phone | text | 68 countries |
-| `recipientName` | Recipient name | text | 68 countries |
+| `phone` | Phone number | text | 58 countries |
+| `recipientName` | Recipient name | text | 58 countries |
 | `rib` | RIB | numeric | MA |
 | `routingNumber` | Routing number / ABA routing number | numeric | BD, US |
 | `sortCode` | Sort code | numeric | GB |
 | `suffix` | Suffix | numeric | NZ |
-| `taxId` | CUIT or CUIL / CPF or CNPJ / RUT | text | AR, BR, CL |
 | `transitNumber` | Transit number | numeric | CA |
 
 ## By country
@@ -69,18 +62,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | AE00 1234 5678 9012 3456 789 | yes | text | 42 |  |
-| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
-
-### Argentina (AR)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
-| `cbu` | CBU | 1234567890123456789012 | yes | numeric | 22 |  |
-| `taxId` | CUIT or CUIL | 20123456789 | yes | text | 13 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
 | `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
@@ -153,36 +134,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
 | `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
-### Bolivia (BO)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
-| `bankCode` | Bank code | 12 | yes | numeric | 2 |  |
-| `accountNumber` | Account number | 12345678 | yes | numeric | 15 |  |
-| `idType` | ID type | Select account type | yes | text | 12 | ci, ce, nit |
-| `idNumber` | ID number | 1234567 | yes | text | 100 |  |
-| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
-
-### Brazil (BR)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
-| `holderType` | Account holder type | Select account type | yes | text | 10 | individual, business |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
-| `bankCode` | Bank code | 341 | yes | numeric | 3 |  |
-| `branch` | Branch (agência) | 1234 | yes | text | 7 |  |
-| `accountNumber` | Account number | 12345-6 | yes | text | 50 |  |
-| `accountType` | Account type | Select account type | yes | text | 10 | checking, savings |
-| `taxId` | CPF or CNPJ | 12345678909 | yes | text | 18 |  |
-| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
-
 ### Canada (CA)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
@@ -207,20 +158,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
 | `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
-### Chile (CL)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
-| `bankCode` | Bank code | 123 | yes | numeric | 3 |  |
-| `accountNumber` | Account number | 12345678 | yes | numeric | 45 |  |
-| `accountType` | Account type | Select account type | yes | text | 10 | checking, savings, vista |
-| `taxId` | RUT | 12345678K | yes | text | 12 |  |
-| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
-
 ### China (CN)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
@@ -238,23 +175,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `legalRepId` | Legal representative ID number | 110101199003078888 | yes | text | 18 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
 | `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
-
-### Colombia (CO)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
-| `holderType` | Account holder type | Select account type | yes | text | 10 | individual, business |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
-| `bankCode` | Bank code | 007 | yes | numeric | 3 |  |
-| `accountNumber` | Account number | 12345678 | yes | numeric | 18 |  |
-| `accountType` | Account type | Select account type | yes | text | 10 | checking, savings |
-| `idType` | ID type | Select account type | yes | text | 12 | cc, ce, nit, passport |
-| `idNumber` | ID number | 1234567890 | yes | text | 100 |  |
-| `email` | Email | name@example.com | yes | text | 100 |  |
-| `phone` | Mobile number or business phone | +57 300 000 0000 | yes | text | 25 |  |
-| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
 
 ### Cyprus (CY)
 
@@ -575,28 +495,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
 | `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
-### Martinique (MQ)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
-| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
-| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
-
-### Mexico (MX)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
-| `clabe` | CLABE | 123456789012345678 | yes | numeric | 18 |  |
-| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
-
 ### Malaysia (MY)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
@@ -657,20 +555,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
 | `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
-### Peru (PE)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
-| `cci` | CCI | 12345678901234567890 | yes | numeric | 20 |  |
-| `accountType` | Account type | Select account type | yes | text | 10 | checking, savings, maestra |
-| `idType` | ID type | Select account type | yes | text | 12 | dni, ce, passport, ruc |
-| `idNumber` | ID number | 12345678 | yes | text | 100 |  |
-| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
-
 ### Philippines (PH)
 
 | Key | Label | Placeholder | Required | Input | Max | Options |
@@ -704,17 +588,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | PL00 1234 5678 9012 3456 7890 1234 | yes | text | 42 |  |
-| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
-
-### St Pierre and Miquelon (PM)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
-| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
 | `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
@@ -830,22 +703,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `routingNumber` | ABA routing number | 123456789 | yes | numeric | 9 |  |
 | `accountNumber` | Account number | 12345678 | yes | numeric | 17 |  |
 | `accountType` | Account type | Select account type | yes | text | 8 | checking, savings |
-| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
-
-### Uruguay (UY)
-
-| Key | Label | Placeholder | Required | Input | Max | Options |
-| --- | --- | --- | --- | --- | --- | --- |
-| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
-| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
-| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
-| `bankCode` | Bank code | 001 | yes | numeric | 3 |  |
-| `accountNumber` | Account number | 12345678 | yes | numeric | 14 |  |
-| `accountType` | Account type | Select account type | yes | text | 10 | checking, savings |
-| `bankBranch` | Branch code | 1234 | optional | numeric | 4 |  |
-| `idType` | ID type | Select account type | yes | text | 12 | ci, de, passport, rut |
-| `idNumber` | ID number | 12345678 | yes | text | 100 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
 | `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
