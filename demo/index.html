@@ -44,13 +44,12 @@
 <body>
 <main>
   <h1>Bank fields demo</h1>
-  <p class="sub">Choose a country, or a currency such as AUD, to see the fields the library returns for it.</p>
+  <p class="sub">Choose a country or currency to see the fields the library returns for it.</p>
 
   <div class="card">
     <div class="field">
-      <label for="country">Country</label>
-      <input id="country" list="countries" placeholder="Start typing, for example Australia, JP or AUD" autocomplete="off">
-      <datalist id="countries"></datalist>
+      <label for="country">Country or currency</label>
+      <select id="country"></select>
       <div class="badges" id="badges"></div>
     </div>
     <form id="form" novalidate></form>
@@ -67,26 +66,23 @@ let current = null;
 
 async function init() {
   countries = await (await fetch('/api/countries')).json();
-  $('countries').innerHTML = countries
-    .map((c) => `<option value="${esc(c.name)} (${c.code})"></option>`).join('');
+  const opt = (c) => `<option value="${c.code}">${esc(c.name)} (${c.code})</option>`;
+  $('country').innerHTML = '<option value="">Choose a country or currency</option>' +
+    `<optgroup label="Currencies (local rail)">${countries.filter((c) => c.currency).map(opt).join('')}</optgroup>` +
+    `<optgroup label="Countries">${countries.filter((c) => !c.currency).map(opt).join('')}</optgroup>`;
   const first = new URLSearchParams(location.search).get('country');
-  if (first) { $('country').value = first; load(first); }
-}
-
-function resolveCode(text) {
-  const t = text.trim();
-  const paren = t.match(/\(([A-Za-z]{2,3})\)$/);
-  if (paren) return paren[1].toUpperCase();
-  if (/^[A-Za-z]{2,3}$/.test(t)) {
-    const code = t.toUpperCase();
-    return code;
+  if (first) {
+    const code = first.trim().toUpperCase();
+    // Codes that are not listed (for example SWIFT-only countries) still load, to show why.
+    if (![...$('country').options].some((o) => o.value === code)) {
+      $('country').insertAdjacentHTML('beforeend', `<option value="${esc(code)}">${esc(code)}</option>`);
+    }
+    $('country').value = code;
+    load(code);
   }
-  const byName = countries.find((c) => c.name.toLowerCase() === t.toLowerCase());
-  return byName ? byName.code : null;
 }
 
-async function load(text) {
-  const code = resolveCode(text);
+async function load(code) {
   $('result').innerHTML = '';
   if (!code) { render(null); return; }
   const res = await fetch(`/api/fields/${code}`);
@@ -145,9 +141,7 @@ $('form').addEventListener('submit', async (e) => {
     : 'Please fix the highlighted fields.';
 });
 
-$('country').addEventListener('input', (e) => {
-  if (resolveCode(e.target.value)) load(e.target.value);
-});
+$('country').addEventListener('change', (e) => load(e.target.value));
 init();
 </script>
 </body>
