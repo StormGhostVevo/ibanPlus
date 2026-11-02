@@ -42,21 +42,6 @@ export const addressField = (): FieldConfig => ({
   sensitive: false,
 });
 
-export const phoneField = (overrides: Partial<FieldConfig> = {}): FieldConfig => ({
-  key: 'phone',
-  label: 'Phone number',
-  helpText: 'Optional. Include the country code, for example +61 400 000 000.',
-  placeholder: '+61 400 000 000',
-  required: false,
-  pattern: /^\+?[0-9][0-9 ()-]{5,19}$/,
-  errorMessage: 'Enter a phone number with the country code, using digits, spaces, dashes or brackets.',
-  normalise: 'trim',
-  inputMode: 'text',
-  maxLength: 25,
-  sensitive: false,
-  ...overrides,
-});
-
 export const emailField = (overrides: Partial<FieldConfig> = {}): FieldConfig => ({
   key: 'email',
   label: 'Email',

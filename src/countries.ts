@@ -1,5 +1,5 @@
 import { getCountrySpecifications } from 'ibantools';
-import { addressField, bankAddressField, emailField, phoneField, recipientNameField } from './common';
+import { addressField, bankAddressField, emailField, recipientNameField } from './common';
 import { isLocalRailCountry } from './rails';
 import type { CountryConfig, FieldConfig, FieldOption } from './types';
 
@@ -525,7 +525,7 @@ const KH = accountPlusBic('KH', 'Cambodia', { min: 5, max: 50 });
 const TW = accountPlusBic('TW', 'Taiwan', { min: 8, max: 20, digitsOnly: true });
 const LA = accountPlusBic('LA', 'Laos', { min: 5, max: 50 });
 const GH = accountPlusBic('GH', 'Ghana', { min: 5, max: 50 });
-const KE = accountPlusBic('KE', 'Kenya', { min: 8, max: 50 });
+const KE = accountPlusBic('KE', 'Kenya', { min: 8, max: 20 });
 const NG = accountPlusBic('NG', 'Nigeria', { min: 7, max: 17 });
 
 const regionNames = new Intl.DisplayNames(['en-AU'], { type: 'region' });
@@ -540,14 +540,14 @@ const ACCOUNT_PLUS_BIC: [string, number, number, boolean?][] = [
   ...['DZ', 'AS', 'AO', 'AI', 'AG', 'AM', 'AW', 'BS', 'GD', 'BB', 'BZ', 'BM', 'BT', 'BN', 'CV', 'KY', 'CK',
     'CW', 'DJ', 'DM', 'EC', 'ET', 'FK', 'PF', 'GQ', 'GN', 'GY', 'HN', 'JM', 'KI', 'KG', 'LR', 'MO',
     'MV', 'MH', 'FM', 'MS', 'MP', 'PW', 'PA', 'PG', 'PR', 'SH', 'KN', 'VC', 'WS', 'SL', 'SB', 'SR',
-    'TJ', 'TZ', 'TO', 'TT', 'TC', 'TV', 'UG', 'UZ', 'VU', 'ZW', 'ZM', 'PY', 'SZ',
+    'TJ', 'TZ', 'TO', 'TT', 'TC', 'TV', 'UG', 'UZ', 'VU', 'ZW', 'SZ',
     // Registry IBAN countries that Airwallex takes as account number plus SWIFT code
     'OM', 'MN', 'NI', 'SV', 'UA', 'ME'].map((c): [string, number, number] => [c, 5, 50]),
   // Up to 35 letters or numbers
-  ...['LS', 'MW', 'RW', 'GM'].map((c): [string, number, number] => [c, 5, 35]),
-  ['NA', 8, 50],
+  ...['LS', 'MW', 'RW', 'GM', 'ZM'].map((c): [string, number, number] => [c, 5, 35]),
+  ['NA', 8, 13],
   // Fixed length, letters or numbers (West and Central Africa)
-  ...['BJ', 'BF', 'GW', 'NE', 'SN', 'TG'].map((c): [string, number, number] => [c, 24, 24]),
+  ...['BJ', 'BF', 'GW', 'NE', 'SN', 'TG', 'CI'].map((c): [string, number, number] => [c, 24, 24]),
   ...['CM', 'CF', 'TD', 'GA', 'CG'].map((c): [string, number, number] => [c, 23, 23]),
 ];
 
@@ -855,7 +855,7 @@ const ZA: CountryConfig = {
   fields: [
     bankNameField(),
     bicField({ required: true, helpText: SWIFT_HELP }),
-    accountNumberField('South African', { min: 7, max: 17 }),
+    accountNumberField('South African', { min: 7, max: 13, digitsOnly: true }),
     accountTypeField(CHECKING_SAVINGS, 'Confirm with your bank if unsure.'),
   ],
 };
@@ -991,13 +991,6 @@ const CO: CountryConfig = {
       { value: 'passport', label: 'Passport', pattern: /^[A-Z0-9]{1,12}$/, hint: 'up to 12 letters or numbers', example: 'A1234567' },
     ]),
     emailField({ appliesWhen: { field: 'holderType', in: ['individual'] } }),
-    phoneField({
-      label: 'Mobile number or business phone',
-      helpText: 'Mobile number for individuals, business phone for companies. Include the country code.',
-      placeholder: '+57 300 000 0000',
-      required: true,
-      errorMessage: 'Enter a phone number with the country code, using digits, spaces, dashes or brackets.',
-    }),
   ],
 };
 
@@ -1053,6 +1046,18 @@ const BR: CountryConfig = {
   ],
 };
 
+const PY: CountryConfig = {
+  ...accountPlusBic('PY', 'Paraguay', { min: 5, max: 35 }),
+  fields: [
+    ...accountPlusBic('PY', 'Paraguay', { min: 5, max: 35 }).fields,
+    ...idFields([
+      { value: 'dni', label: 'DNI (national ID)', pattern: /^(\d{8}|[A-Z0-9]{9})$/, hint: '8 digits, or 9 letters or numbers', example: '12345678' },
+      { value: 'ce', label: 'CE (foreign ID)', pattern: /^[A-Z0-9]{4,12}$/, hint: '4 to 12 letters or numbers', example: 'A12345678' },
+      { value: 'ruc', label: 'RUC (tax ID)', pattern: /^\d{11}$/, hint: '11 digits', example: '12345678901' },
+    ]),
+  ],
+};
+
 const PK: CountryConfig = {
   country: 'PK',
   name: 'Pakistan',
@@ -1085,7 +1090,7 @@ const SPECIFIC: CountryConfig[] = [
   AU, US, GB, NZ, CA, JP, KR, ID, PH, TH,
   SG, MY, VN, HK, IN, LK, FJ, KH, BD, NP, CN, TW, LA,
   MX, BR, AR, PE, CL, CO, ZA, NG, KE, GH,
-  BW, BO, UY, MA, CR, PK, ...IBAN_LIKE,
+  BW, BO, UY, MA, CR, PK, PY, ...IBAN_LIKE,
   ...ACCOUNT_PLUS_BIC.filter(([c]) => !['NP'].includes(c)).map(([c, min, max, digitsOnly]) =>
     accountPlusBic(c, regionName(c), { min, max, digitsOnly }),
   ),
@@ -1123,15 +1128,8 @@ const FALLBACK_RAW: CountryConfig = {
   ],
 };
 
-/**
- * Not offered. BY, IQ, LY, RU, SD, SO and YE are not in Airwallex's payout list. The Americas
- * outside the US and Canada have local rails but are left out on purpose (their layouts stay above).
- * Excluded from the country list and rejected by validation.
- */
-const UNSUPPORTED = new Set([
-  'BY', 'IQ', 'LY', 'RU', 'SD', 'SO', 'YE',
-  'AR', 'BO', 'BR', 'CL', 'CO', 'MX', 'PE', 'UY', 'PM', 'MQ',
-]);
+/** Not offered: not in Airwallex's payout list. Excluded from the country list and rejected by validation. */
+const UNSUPPORTED = new Set(['BY', 'IQ', 'LY', 'RU', 'SD', 'SO', 'YE']);
 
 /** True when the country can be paid over a local rail. SWIFT-only countries are not supported. */
 export function isCountrySupported(country: string): boolean {
@@ -1240,13 +1238,12 @@ export function withPlaceholders(config: CountryConfig): CountryConfig {
 
 export const FALLBACK_CONFIG: CountryConfig = withPlaceholders(FALLBACK_RAW);
 
-/** Recipient name and bank name first, then the rail fields, then address and phone. */
+/** Recipient name and bank name first, then the rail fields, then address. */
 function withCommonFields(config: CountryConfig): CountryConfig {
   const bankName = config.fields.find((f) => f.key === 'bankName') ?? bankNameField();
   const rest = config.fields.filter((f) => f.key !== 'bankName');
   const holder = rest.filter((f) => f.key === 'holderType');
   const rail = rest.filter((f) => f.key !== 'holderType');
-  const hasPhone = rail.some((f) => f.key === 'phone');
   return {
     ...config,
     fields: [
@@ -1256,7 +1253,6 @@ function withCommonFields(config: CountryConfig): CountryConfig {
       bankAddressField(),
       ...rail,
       addressField(),
-      ...(hasPhone ? [] : [phoneField()]),
     ],
   };
 }
@@ -1266,7 +1262,7 @@ export function getCountryConfig(country: string): CountryConfig {
   const code = country.toUpperCase();
   const config = configs.get(code);
   if (!config || !isCountrySupported(code)) return { ...FALLBACK_CONFIG, country: code };
-  return withPlaceholders(withCommonFields(config));
+  return { ...withPlaceholders(withCommonFields(config)), rail: 'local' };
 }
 
 /**

@@ -61,6 +61,8 @@ export interface CountryConfig {
   fields: FieldConfig[];
   /** True when details can be synced to Xero as an AU bank account. */
   xeroSyncable: boolean;
+  /** Set to 'local' on supported countries: they are paid over a local rail, never SWIFT. */
+  rail?: 'local';
 }
 
 /** Currencies that have a local rail layout. */

@@ -1,4 +1,4 @@
-import { addressField, bankAddressField, phoneField, recipientNameField } from './common';
+import { addressField, bankAddressField, recipientNameField } from './common';
 import { accountNumberField, bankNameField, bicField, digitsField, getRailFields, ibanField, withPlaceholders } from './countries';
 import type { CountryConfig, CurrencyCode, CurrencyConfig, FieldConfig } from './types';
 
@@ -8,14 +8,13 @@ export function isCurrencySupported(currency: string): boolean {
   return (SUPPORTED_CURRENCIES as string[]).includes(currency.toUpperCase());
 }
 
-/** Recipient name first, bank name next, the local rail identifiers, then the address and phone. */
+/** Recipient name first, bank name next, the local rail identifiers, then the address. */
 const withCommonFields = (rail: FieldConfig[]): FieldConfig[] => [
   recipientNameField(),
   bankNameField(),
   bankAddressField(),
   ...rail,
   addressField(),
-  phoneField(),
 ];
 
 /** Local rail fields of a country, leaving out any IBAN alternative. */

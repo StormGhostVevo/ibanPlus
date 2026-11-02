@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   getBankFields,
   getConfiguredCountries,
+  getCountryConfig,
   getUnsupportedReason,
   isCountrySupported,
   isValidAbaRouting,
@@ -64,7 +65,7 @@ describe('checksums', () => {
 describe('support rule', () => {
   it('supports exactly the local rail countries, and lists them all', () => {
     expect([...LOCAL_RAIL_COUNTRIES].sort()).toEqual(getConfiguredCountries());
-    expect(getConfiguredCountries()).toHaveLength(58);
+    expect(getConfiguredCountries()).toHaveLength(82);
   });
 
   it('puts every country in the payout doc on one side or the other', () => {
@@ -75,7 +76,7 @@ describe('support rule', () => {
   });
 
   it('rejects SWIFT-only countries and says why', () => {
-    for (const c of ['KE', 'NG', 'ZA', 'FJ', 'TW', 'AL', 'SA', 'EG', 'GH', 'BJ', 'MG', 'GI', 'MT']) {
+    for (const c of ['FJ', 'TW', 'AL', 'SA', 'EG', 'GH', 'GI', 'RW', 'NG', 'MG', 'BF', 'CM', 'CF', 'TD', 'GQ', 'GA', 'GW', 'CG', 'SN']) {
       expect(isCountrySupported(c)).toBe(false);
       expect(getConfiguredCountries()).not.toContain(c);
       expect(ok(c, { iban: 'DE89370400440532013000' }).errors.country).toMatch(/SWIFT/);
@@ -90,7 +91,9 @@ describe('support rule', () => {
   });
 
   it('only the local rails that identify the bank by BIC ask for one', () => {
-    expect([...LOCAL_RAIL_NEEDS_BIC].sort()).toEqual(['ID', 'LK', 'MY', 'PH', 'SG', 'TH', 'VN']);
+    expect([...LOCAL_RAIL_NEEDS_BIC].sort()).toEqual([
+      'BJ', 'BW', 'CI', 'GM', 'ID', 'KE', 'LK', 'LS', 'MW', 'MY', 'NA', 'NE', 'PH', 'PY', 'SG', 'TG', 'TH', 'VN', 'ZA', 'ZM',
+    ]);
     for (const c of getConfiguredCountries()) {
       const hasBic = getBankFields(c).some((f) => f.key === 'bic');
       expect(hasBic).toBe(LOCAL_RAIL_NEEDS_BIC.has(c));
@@ -99,26 +102,22 @@ describe('support rule', () => {
 });
 
 describe('common fields', () => {
-  it('every supported country starts with recipient name and bank name and ends with address and phone', () => {
+  it('every supported country starts with recipient name and bank name and ends with address', () => {
     for (const c of getConfiguredCountries()) {
       const keys = getBankFields(c).map((f) => f.key);
       const nameAt = keys.indexOf('recipientName');
       expect(nameAt).toBe(0);
       expect(keys).toContain('bankName');
-      expect(keys).toContain('address');
-      expect(keys).toContain('phone');
+      expect(keys[keys.length - 1]).toBe('address');
       expect(keys).toContain('bankAddress');
+      expect(keys).not.toContain('phone');
+      expect(getCountryConfig(c).rail).toBe('local');
     }
   });
 
-  it('requires recipient name, bank name and address, but not phone or bank address', () => {
+  it('requires recipient name, bank name and address, but not bank address', () => {
     const r = validateBankDetails('AU', { bsb: '123456', accountNumber: '12345678' });
     expect(Object.keys(r.errors).sort()).toEqual(['address', 'bankName', 'recipientName']);
-  });
-
-  it('checks the phone format when given', () => {
-    expect(ok('AU', { bsb: '123456', accountNumber: '12345678', phone: '+61 400 000 000' }).valid).toBe(true);
-    expect(ok('AU', { bsb: '123456', accountNumber: '12345678', phone: 'call me' }).errors.phone).toBeDefined();
   });
 });
 
@@ -235,6 +234,9 @@ describe('IBAN countries', () => {
     ['BH', 'BH67BMAG00001299123456'],
     ['TR', 'TR330006100519786457841326'],
     ['IL', 'IL620108000000099999999'],
+    ['MT', 'MT84MALT011000012345MTLCAST001S'],
+    ['MQ', 'FR1420041010050500013M02606'],
+    ['PM', 'FR1420041010050500013M02606'],
     ['YT', 'FR1420041010050500013M02606'],
   ])('%s accepts a valid IBAN and no BIC is asked for', (country, iban) => {
     expect(ok(country, { iban }).valid).toBe(true);
@@ -248,19 +250,89 @@ describe('IBAN countries', () => {
   });
 });
 
-describe('Morocco and the Americas', () => {
+describe('Africa and Morocco', () => {
   it('MA needs a 24 digit RIB', () => {
     expect(ok('MA', { rib: '1'.repeat(24) }).valid).toBe(true);
     expect(ok('MA', { rib: '1'.repeat(23) }).errors.rib).toBeDefined();
   });
 
-  it('only the US and Canada are offered in the Americas', () => {
-    const americas = ['US', 'CA', 'AR', 'BO', 'BR', 'CL', 'CO', 'MX', 'PE', 'UY', 'PM', 'MQ', 'EC', 'PA', 'CR', 'GT', 'PY', 'VE'];
-    expect(americas.filter(isCountrySupported)).toEqual(['US', 'CA']);
-    for (const c of ['AR', 'BO', 'BR', 'CL', 'CO', 'MX', 'PE', 'UY', 'PM', 'MQ']) {
-      expect(getConfiguredCountries()).not.toContain(c);
-      expect(ok(c, {}).errors.country).toMatch(/not supported/);
-    }
+  it.each([
+    ['BJ', '1'.repeat(24), '1'.repeat(23), '1'.repeat(25)],
+    ['NE', '1'.repeat(24), '1'.repeat(23), '1'.repeat(25)],
+    ['TG', '1'.repeat(24), '1'.repeat(23), '1'.repeat(25)],
+    ['CI', '1'.repeat(24), '1'.repeat(23), '1'.repeat(25)],
+    ['KE', '12345678', '1234567', '1'.repeat(21)],
+    ['NA', '12345678', '1234567', '1'.repeat(14)],
+    ['GM', '1234567890', '1234', '1'.repeat(36)],
+    ['LS', '1234567890', '1234', '1'.repeat(36)],
+    ['MW', '1234567890', '1234', '1'.repeat(36)],
+    ['ZM', '1234567890', '1234', '1'.repeat(36)],
+    ['BW', '1234567890', '1234', '1'.repeat(34)],
+    ['ZA', '1234567890', '123456', '1'.repeat(14)],
+  ])('%s local rail takes a BIC and an account number of the right length', (country, valid, short, long) => {
+    const base = { bic: 'DEUTDEFF' };
+    expect(ok(country, { ...base, accountNumber: valid, accountType: 'checking' }).valid).toBe(true);
+    expect(ok(country, { ...base, accountNumber: short, accountType: 'checking' }).errors.accountNumber).toBeDefined();
+    expect(ok(country, { ...base, accountNumber: long, accountType: 'checking' }).errors.accountNumber).toBeDefined();
+    expect(ok(country, { accountNumber: valid, accountType: 'checking' }).errors.bic).toBeDefined();
+  });
+
+  it('ZA needs an account type', () => {
+    expect(ok('ZA', { bic: 'DEUTDEFF', accountNumber: '1234567890' }).errors.accountType).toBeDefined();
+  });
+});
+
+describe('the Americas', () => {
+  it('MX checks the CLABE', () => {
+    expect(ok('MX', { clabe: clabe('01218000011835678') }).valid).toBe(true);
+    expect(ok('MX', { clabe: '012180000118356780' }).errors.clabe).toBeDefined();
+  });
+
+  it('AR needs a CBU and a CUIT or CUIL', () => {
+    const v = { cbu: '1'.repeat(22), taxId: '20-12345678-9' };
+    expect(ok('AR', v).valid).toBe(true);
+    expect(ok('AR', v).normalised.taxId).toBe('20123456789');
+    expect(errorKeys('AR', { cbu: '1'.repeat(22) })).toEqual(['taxId']);
+  });
+
+  it('BR needs a CPF for individuals and a CNPJ for businesses', () => {
+    const v = { bankCode: '341', branch: '1234', accountNumber: '12345-6', accountType: 'checking' };
+    expect(ok('BR', { ...v, holderType: 'individual', taxId: '123.456.789-09' }).valid).toBe(true);
+    expect(ok('BR', { ...v, holderType: 'business', taxId: '12.345.678/0001-95' }).valid).toBe(true);
+    expect(ok('BR', { ...v, holderType: 'business', taxId: '12345678909' }).errors.taxId).toBeDefined();
+    expect(ok('BR', { ...v, holderType: 'individual', taxId: '12345678000195' }).errors.taxId).toBeDefined();
+    expect(getBankFields('BR').map((f) => f.key)).not.toContain('iban');
+  });
+
+  it('CL needs a RUT', () => {
+    const v = { bankCode: '12', accountNumber: '12345678', accountType: 'vista' };
+    expect(ok('CL', { ...v, taxId: '12.345.678-K' }).valid).toBe(true);
+    expect(ok('CL', { ...v, taxId: '123' }).errors.taxId).toBeDefined();
+  });
+
+  it('CO needs an ID, and an email for individuals', () => {
+    const v = { bankCode: '007', accountNumber: '1234567890', accountType: 'savings' };
+    const person = { ...v, holderType: 'individual', idType: 'cc', idNumber: '1234567890', email: 'a@example.com' };
+    expect(ok('CO', person).valid).toBe(true);
+    expect(ok('CO', { ...person, email: '' }).errors.email).toBeDefined();
+    expect(ok('CO', { ...v, holderType: 'business', idType: 'nit', idNumber: '1234567890' }).valid).toBe(true);
+    expect(ok('CO', { ...person, idType: 'nit', idNumber: '123' }).errors.idNumber).toBeDefined();
+  });
+
+  it('PE, UY, BO and PY check the ID number against the chosen ID type', () => {
+    const pe = { cci: '1'.repeat(20), accountType: 'maestra' };
+    expect(ok('PE', { ...pe, idType: 'dni', idNumber: '12345678' }).valid).toBe(true);
+    expect(ok('PE', { ...pe, idType: 'ruc', idNumber: '12345678' }).errors.idNumber).toBeDefined();
+    const uy = { bankCode: '001', accountNumber: '1234567', accountType: 'savings' };
+    expect(ok('UY', { ...uy, idType: 'rut', idNumber: '123456789012' }).valid).toBe(true);
+    expect(ok('UY', { ...uy, idType: 'rut', idNumber: '12345678' }).errors.idNumber).toBeDefined();
+    const bo = { bankCode: '1', accountNumber: '1234567890' };
+    expect(ok('BO', { ...bo, idType: 'ce', idNumber: 'E-1234567' }).valid).toBe(true);
+    expect(ok('BO', { ...bo, idType: 'ci', idNumber: 'E-1234567' }).errors.idNumber).toBeDefined();
+    const py = { bic: 'BASAPYPX', accountNumber: '1234567890' };
+    expect(ok('PY', { ...py, idType: 'ruc', idNumber: '12345678901' }).valid).toBe(true);
+    expect(ok('PY', { ...py, idType: 'ruc', idNumber: '123' }).errors.idNumber).toBeDefined();
+    expect(ok('PY', py).errors.idType).toBeDefined();
   });
 });
 

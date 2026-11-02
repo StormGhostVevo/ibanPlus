@@ -19,23 +19,23 @@ describe('currency local rails', () => {
     expect(() => getCurrencyConfig('JPY')).toThrow(/Unsupported currency/);
   });
 
-  it('puts recipient name and bank name first and address and phone last on every currency', () => {
+  it('puts recipient name and bank name first and address last on every currency', () => {
     for (const c of SUPPORTED_CURRENCIES) {
       const k = keys(c);
       expect(k.slice(0, 3)).toEqual(['recipientName', 'bankName', 'bankAddress']);
-      expect(k.slice(-2)).toEqual(['address', 'phone']);
+      expect(k[k.length - 1]).toBe('address');
       for (const f of getBankFieldsForCurrency(c)) expect(f.placeholder).toBeTruthy();
     }
   });
 
   it('uses local identifiers', () => {
-    expect(keys('USD')).toEqual(['recipientName', 'bankName', 'bankAddress', 'routingNumber', 'accountNumber', 'accountType', 'address', 'phone']);
-    expect(keys('AUD')).toEqual(['recipientName', 'bankName', 'bankAddress', 'bsb', 'accountNumber', 'address', 'phone']);
-    expect(keys('CAD')).toEqual(['recipientName', 'bankName', 'bankAddress', 'institutionNumber', 'transitNumber', 'accountNumber', 'address', 'phone']);
-    expect(keys('GBP')).toEqual(['recipientName', 'bankName', 'bankAddress', 'sortCode', 'accountNumber', 'address', 'phone']);
-    expect(keys('SGD')).toEqual(['recipientName', 'bankName', 'bankAddress', 'bic', 'accountNumber', 'address', 'phone']);
-    expect(keys('THB')).toEqual(['recipientName', 'bankName', 'bankAddress', 'bic', 'bankCode', 'accountNumber', 'address', 'phone']);
-    expect(keys('EUR')).toEqual(['recipientName', 'bankName', 'bankAddress', 'iban', 'bic', 'address', 'phone']);
+    expect(keys('USD')).toEqual(['recipientName', 'bankName', 'bankAddress', 'routingNumber', 'accountNumber', 'accountType', 'address']);
+    expect(keys('AUD')).toEqual(['recipientName', 'bankName', 'bankAddress', 'bsb', 'accountNumber', 'address']);
+    expect(keys('CAD')).toEqual(['recipientName', 'bankName', 'bankAddress', 'institutionNumber', 'transitNumber', 'accountNumber', 'address']);
+    expect(keys('GBP')).toEqual(['recipientName', 'bankName', 'bankAddress', 'sortCode', 'accountNumber', 'address']);
+    expect(keys('SGD')).toEqual(['recipientName', 'bankName', 'bankAddress', 'bic', 'accountNumber', 'address']);
+    expect(keys('THB')).toEqual(['recipientName', 'bankName', 'bankAddress', 'bic', 'bankCode', 'accountNumber', 'address']);
+    expect(keys('EUR')).toEqual(['recipientName', 'bankName', 'bankAddress', 'iban', 'bic', 'address']);
   });
 
   it('validates USD with the ABA checksum and treats account type as optional', () => {
