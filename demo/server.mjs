@@ -59,6 +59,7 @@ const server = createServer(async (req, res) => {
         country: config.currency,
         name: `${config.currency} local rail (${config.rail})`,
         supported: true,
+        rail: 'local',
         xeroSyncable: config.xeroSyncable,
         fields: config.fields.map((f) => ({ ...f, pattern: f.pattern?.source, patternWhen: undefined })),
       });
@@ -71,6 +72,7 @@ const server = createServer(async (req, res) => {
         name: config.name,
         supported: isCountrySupported(code),
         reason: getUnsupportedReason(code),
+        rail: config.rail ?? null,
         xeroSyncable: isXeroSyncable(code),
         // RegExp does not survive JSON, so send the source for display.
         fields: isCountrySupported(code)

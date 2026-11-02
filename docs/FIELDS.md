@@ -9,22 +9,28 @@ Every key a form or database column may need. `*` is the fallback layout.
 | Key | Label(s) | Input | Used by |
 | --- | --- | --- | --- |
 | `accountBase` | Account base number | numeric | NZ |
-| `accountNumber` | Account number | numeric / text | 19 countries |
-| `accountType` | Account type | text | JP, US |
-| `address` | Address | text | 58 countries |
+| `accountNumber` | Account number | numeric / text | 37 countries |
+| `accountType` | Account type | text | BR, CL, CO, JP, PE, US, UY, ZA |
+| `address` | Address | text | 82 countries |
 | `bank` | Bank | numeric | NZ |
-| `bankAddress` | Bank address | text | 58 countries |
-| `bankCode` | Bank code | numeric / text | HK, ID, JP, KR, NP, TH |
-| `bankName` | Bank name | text | 59 countries |
-| `bic` | BIC / SWIFT code | text | ID, LK, MY, PH, SG, TH, VN, * |
-| `branch` | Branch | numeric | NZ |
+| `bankAddress` | Bank address | text | 82 countries |
+| `bankBranch` | Branch code | numeric | BW, UY |
+| `bankCode` | Bank code | numeric / text | BO, BR, CL, CO, HK, ID, JP, KR, NP, TH, UY |
+| `bankName` | Bank name | text | 83 countries |
+| `bic` | BIC / SWIFT code | text | 21 countries |
+| `branch` | Branch (agência) / Branch | text / numeric | BR, NZ |
 | `branchCode` | Branch code | numeric | JP |
 | `bsb` | BSB | numeric | AU |
 | `businessRegistrationNumber` | Business registration number | text | CN |
+| `cbu` | CBU | numeric | AR |
+| `cci` | CCI | numeric | PE |
+| `clabe` | CLABE | numeric | MX |
 | `cnaps` | CNAPS code | numeric | CN |
-| `holderType` | Account holder type | text | BD, CN, PK |
-| `iban` | IBAN / IBAN (alternative) | text | 40 countries |
-| `idNumber` | Chinese national ID number | text | CN |
+| `email` | Email | text | CO |
+| `holderType` | Account holder type | text | BD, BR, CN, CO, PK |
+| `iban` | IBAN / IBAN (alternative) | text | 43 countries |
+| `idNumber` | ID number / Chinese national ID number | text | BO, CN, CO, PE, PY, UY |
+| `idType` | ID type | text | BO, CO, PE, PY, UY |
 | `ifsc` | IFSC code | text | IN |
 | `institutionNumber` | Institution number | numeric | CA |
 | `legalRepFirstName` | Legal representative first name (Chinese) | text | CN |
@@ -32,12 +38,12 @@ Every key a form or database column may need. `*` is the fallback layout.
 | `legalRepLastName` | Legal representative last name (Chinese) | text | CN |
 | `otherDetails` | Other bank details | text | * |
 | `paymentReason` | Payment reason | text | PK |
-| `phone` | Phone number | text | 58 countries |
-| `recipientName` | Recipient name | text | 58 countries |
+| `recipientName` | Recipient name | text | 82 countries |
 | `rib` | RIB | numeric | MA |
 | `routingNumber` | Routing number / ABA routing number | numeric | BD, US |
 | `sortCode` | Sort code | numeric | GB |
 | `suffix` | Suffix | numeric | NZ |
+| `taxId` | CUIT or CUIL / CPF or CNPJ / RUT | text | AR, BR, CL |
 | `transitNumber` | Transit number | numeric | CA |
 
 ## By country
@@ -63,7 +69,17 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | AE00 1234 5678 9012 3456 789 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
+
+### Argentina (AR)
+
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `cbu` | CBU | 1234567890123456789012 | yes | numeric | 22 |  |
+| `taxId` | CUIT or CUIL | 20123456789 | yes | text | 13 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
 
 ### Austria (AT)
 
@@ -74,7 +90,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | AT00 1234 5678 9012 3456 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Australia (AU)
 
@@ -86,7 +101,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bsb` | BSB | 123-456 | yes | numeric | 7 |  |
 | `accountNumber` | Account number | 12345678 | yes | numeric | 10 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Bangladesh (BD)
 
@@ -99,7 +113,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `routingNumber` | Routing number | 123456789 | yes | numeric | 9 |  |
 | `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Belgium (BE)
 
@@ -110,7 +123,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | BE00 1234 5678 9012 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Bulgaria (BG)
 
@@ -121,7 +133,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | BG00 1234 5678 9012 3456 78 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Bahrain (BH)
 
@@ -132,7 +143,57 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | BH00 1234 5678 9012 3456 78 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
+
+### Benin (BJ)
+
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 123456789012345678901234 | yes | text | 24 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+
+### Bolivia (BO)
+
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `bankCode` | Bank code | 12 | yes | numeric | 2 |  |
+| `accountNumber` | Account number | 12345678 | yes | numeric | 15 |  |
+| `idType` | ID type | Select account type | yes | text | 12 | ci, ce, nit |
+| `idNumber` | ID number | 1234567 | yes | text | 100 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+
+### Brazil (BR)
+
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `holderType` | Account holder type | Select account type | yes | text | 10 | individual, business |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `bankCode` | Bank code | 341 | yes | numeric | 3 |  |
+| `branch` | Branch (agência) | 1234 | yes | text | 7 |  |
+| `accountNumber` | Account number | 12345-6 | yes | text | 50 |  |
+| `accountType` | Account type | Select account type | yes | text | 10 | checking, savings |
+| `taxId` | CPF or CNPJ | 12345678909 | yes | text | 18 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+
+### Botswana (BW)
+
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 33 |  |
+| `bankBranch` | Branch code | 123456 | optional | numeric | 6 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
 
 ### Canada (CA)
 
@@ -145,7 +206,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `transitNumber` | Transit number | 12345 | yes | numeric | 5 |  |
 | `accountNumber` | Account number | 12345678 | yes | numeric | 21 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Switzerland (CH)
 
@@ -156,7 +216,30 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | CH00 1234 5678 9012 3456 7 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
+
+### Côte d’Ivoire (CI)
+
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 123456789012345678901234 | yes | text | 24 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+
+### Chile (CL)
+
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `bankCode` | Bank code | 123 | yes | numeric | 3 |  |
+| `accountNumber` | Account number | 12345678 | yes | numeric | 45 |  |
+| `accountType` | Account type | Select account type | yes | text | 10 | checking, savings, vista |
+| `taxId` | RUT | 12345678K | yes | text | 12 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
 
 ### China (CN)
 
@@ -174,7 +257,22 @@ Field order is the order to render. "Required" means required unless one of the 
 | `legalRepLastName` | Legal representative last name (Chinese) | 王 | yes | text | 15 |  |
 | `legalRepId` | Legal representative ID number | 110101199003078888 | yes | text | 18 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
+
+### Colombia (CO)
+
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `holderType` | Account holder type | Select account type | yes | text | 10 | individual, business |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `bankCode` | Bank code | 007 | yes | numeric | 3 |  |
+| `accountNumber` | Account number | 12345678 | yes | numeric | 18 |  |
+| `accountType` | Account type | Select account type | yes | text | 10 | checking, savings |
+| `idType` | ID type | Select account type | yes | text | 12 | cc, ce, nit, passport |
+| `idNumber` | ID number | 1234567890 | yes | text | 100 |  |
+| `email` | Email | name@example.com | yes | text | 100 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
 
 ### Cyprus (CY)
 
@@ -185,7 +283,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | CY00 1234 5678 9012 3456 7890 1234 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Czechia (CZ)
 
@@ -196,7 +293,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | CZ00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Germany (DE)
 
@@ -207,7 +303,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | DE00 1234 5678 9012 3456 78 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Denmark (DK)
 
@@ -218,7 +313,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | DK00 1234 5678 9012 34 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Estonia (EE)
 
@@ -229,7 +323,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | EE00 1234 5678 9012 3456 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Spain (ES)
 
@@ -240,7 +333,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | ES00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Finland (FI)
 
@@ -251,7 +343,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | FI00 1234 5678 9012 34 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### France (FR)
 
@@ -262,7 +353,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### United Kingdom (GB)
 
@@ -275,7 +365,17 @@ Field order is the order to render. "Required" means required unless one of the 
 | `accountNumber` | Account number | 12345678 | unless iban | numeric | 8 |  |
 | `iban` | IBAN (alternative) | GB00 1234 5678 9012 3456 78 | unless sortCode or accountNumber | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
+
+### Gambia (GM)
+
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 35 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
 
 ### Greece (GR)
 
@@ -286,7 +386,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | GR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Hong Kong (HK)
 
@@ -298,7 +397,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankCode` | Bank code | 024 | yes | numeric | 3 |  |
 | `accountNumber` | Account number | 12345678 | yes | numeric | 17 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Croatia (HR)
 
@@ -309,7 +407,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | HR00 1234 5678 9012 3456 7 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Hungary (HU)
 
@@ -320,7 +417,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | HU00 1234 5678 9012 3456 7890 1234 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Indonesia (ID)
 
@@ -333,7 +429,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
 | `accountNumber` | Account number | 12345678 | yes | numeric | 22 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Ireland (IE)
 
@@ -344,7 +439,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | IE00 1234 5678 9012 3456 78 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Israel (IL)
 
@@ -355,7 +449,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | IL00 1234 5678 9012 3456 789 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### India (IN)
 
@@ -367,7 +460,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `ifsc` | IFSC code | ABCD0123456 | yes | text | 11 |  |
 | `accountNumber` | Account number | 12345678 | yes | text | 20 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Iceland (IS)
 
@@ -378,7 +470,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | IS00 1234 5678 9012 3456 7890 12 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Italy (IT)
 
@@ -389,7 +480,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | IT00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Japan (JP)
 
@@ -403,7 +493,17 @@ Field order is the order to render. "Required" means required unless one of the 
 | `accountType` | Account type | Select account type | yes | text | 8 | savings, checking |
 | `accountNumber` | Account number | 1234567 | yes | numeric | 8 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
+
+### Kenya (KE)
+
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 20 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
 
 ### South Korea (KR)
 
@@ -415,7 +515,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankCode` | Bank code | 123 | yes | numeric | 3 |  |
 | `accountNumber` | Account number | 12345678 | yes | text | 16 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Liechtenstein (LI)
 
@@ -426,7 +525,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | LI00 1234 5678 9012 3456 7 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Sri Lanka (LK)
 
@@ -438,7 +536,17 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
 | `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
+
+### Lesotho (LS)
+
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 35 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
 
 ### Lithuania (LT)
 
@@ -449,7 +557,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | LT00 1234 5678 9012 3456 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Luxembourg (LU)
 
@@ -460,7 +567,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | LU00 1234 5678 9012 3456 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Latvia (LV)
 
@@ -471,7 +577,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | LV00 1234 5678 9012 3456 7 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Morocco (MA)
 
@@ -482,7 +587,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `rib` | RIB | 123456789012345678901234 | yes | numeric | 24 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Monaco (MC)
 
@@ -493,7 +597,47 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | MC00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
+
+### Martinique (MQ)
+
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+
+### Malta (MT)
+
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `iban` | IBAN | MT00 1234 5678 9012 3456 7890 1234 567 | yes | text | 42 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+
+### Malawi (MW)
+
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 35 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+
+### Mexico (MX)
+
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `clabe` | CLABE | 123456789012345678 | yes | numeric | 18 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
 
 ### Malaysia (MY)
 
@@ -505,7 +649,28 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
 | `accountNumber` | Account number | 12345678 | yes | numeric | 19 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
+
+### Namibia (NA)
+
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 13 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+
+### Niger (NE)
+
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 123456789012345678901234 | yes | text | 24 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
 
 ### Netherlands (NL)
 
@@ -516,7 +681,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | NL00 1234 5678 9012 34 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Norway (NO)
 
@@ -527,7 +691,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | NO00 1234 5678 901 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Nepal (NP)
 
@@ -539,7 +702,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankCode` | Bank code | NP002 | yes | text | 5 |  |
 | `accountNumber` | Account number | 12345678 | yes | text | 50 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### New Zealand (NZ)
 
@@ -553,7 +715,19 @@ Field order is the order to render. "Required" means required unless one of the 
 | `accountBase` | Account base number | 1234567 | yes | numeric | 8 |  |
 | `suffix` | Suffix | 00 | yes | numeric | 3 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
+
+### Peru (PE)
+
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `cci` | CCI | 12345678901234567890 | yes | numeric | 20 |  |
+| `accountType` | Account type | Select account type | yes | text | 10 | checking, savings, maestra |
+| `idType` | ID type | Select account type | yes | text | 12 | dni, ce, passport, ruc |
+| `idNumber` | ID number | 12345678 | yes | text | 100 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
 
 ### Philippines (PH)
 
@@ -565,7 +739,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
 | `accountNumber` | Account number | 12345678 | yes | numeric | 16 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Pakistan (PK)
 
@@ -578,7 +751,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `iban` | IBAN | PK00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
 | `paymentReason` | Payment reason | Select account type | yes | text | 20 | technical_services, other_services, pension |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Poland (PL)
 
@@ -589,7 +761,16 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | PL00 1234 5678 9012 3456 7890 1234 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
+
+### St Pierre and Miquelon (PM)
+
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
 
 ### Portugal (PT)
 
@@ -600,7 +781,19 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | PT00 1234 5678 9012 3456 7890 1 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
+
+### Paraguay (PY)
+
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 35 |  |
+| `idType` | ID type | Select account type | yes | text | 12 | dni, ce, ruc |
+| `idNumber` | ID number | 12345678 | yes | text | 100 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
 
 ### Romania (RO)
 
@@ -611,7 +804,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | RO00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Sweden (SE)
 
@@ -622,7 +814,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | SE00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Singapore (SG)
 
@@ -634,7 +825,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
 | `accountNumber` | Account number | 12345678 | yes | text | 23 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Slovenia (SI)
 
@@ -645,7 +835,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | SI00 1234 5678 9012 345 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Slovakia (SK)
 
@@ -656,7 +845,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | SK00 1234 5678 9012 3456 7890 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### San Marino (SM)
 
@@ -667,7 +855,17 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | SM00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
+
+### Togo (TG)
+
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 123456789012345678901234 | yes | text | 24 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
 
 ### Thailand (TH)
 
@@ -680,7 +878,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankCode` | Bank code | 123 | optional | numeric | 3 |  |
 | `accountNumber` | Account number | 12345678 | yes | numeric | 19 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Türkiye (TR)
 
@@ -691,7 +888,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | TR00 1234 5678 9012 3456 7890 12 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### United States (US)
 
@@ -704,7 +900,21 @@ Field order is the order to render. "Required" means required unless one of the 
 | `accountNumber` | Account number | 12345678 | yes | numeric | 17 |  |
 | `accountType` | Account type | Select account type | yes | text | 8 | checking, savings |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
+
+### Uruguay (UY)
+
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `bankCode` | Bank code | 001 | yes | numeric | 3 |  |
+| `accountNumber` | Account number | 12345678 | yes | numeric | 14 |  |
+| `accountType` | Account type | Select account type | yes | text | 10 | checking, savings |
+| `bankBranch` | Branch code | 1234 | optional | numeric | 4 |  |
+| `idType` | ID type | Select account type | yes | text | 12 | ci, de, passport, rut |
+| `idNumber` | ID number | 12345678 | yes | text | 100 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
 
 ### Vietnam (VN)
 
@@ -716,7 +926,6 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
 | `accountNumber` | Account number | 12345678 | yes | text | 20 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
 
 ### Mayotte (YT)
 
@@ -727,4 +936,26 @@ Field order is the order to render. "Required" means required unless one of the 
 | `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
 | `iban` | IBAN | FR00 1234 5678 9012 3456 7890 123 | yes | text | 42 |  |
 | `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
-| `phone` | Phone number | +61 400 000 000 | optional | text | 25 |  |
+
+### South Africa (ZA)
+
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | numeric | 13 |  |
+| `accountType` | Account type | Select account type | yes | text | 10 | checking, savings |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |
+
+### Zambia (ZM)
+
+| Key | Label | Placeholder | Required | Input | Max | Options |
+| --- | --- | --- | --- | --- | --- | --- |
+| `recipientName` | Recipient name | Full name or company name | yes | text | 140 |  |
+| `bankName` | Bank name | Name of your bank | yes | text | 100 |  |
+| `bankAddress` | Bank address | 1 Example Street, City, Country | optional | text | 200 |  |
+| `bic` | BIC / SWIFT code | AAAABBCC | yes | text | 11 |  |
+| `accountNumber` | Account number | 12345678 | yes | text | 35 |  |
+| `address` | Address | Unit 1, 123 Example Street, City, State, 1234, Country | yes | text | 200 |  |

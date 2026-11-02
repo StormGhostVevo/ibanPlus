@@ -95,6 +95,7 @@ function render(cfg) {
   if (!cfg) { form.innerHTML = ''; $('badges').innerHTML = ''; $('json').textContent = ''; return; }
 
   const flags = [`${cfg.name} (${cfg.country})`, cfg.xeroSyncable ? 'Syncs to Xero' : 'Not synced to Xero'];
+  if (cfg.rail === 'local') flags.unshift('Local rail');
   if (!cfg.supported) flags.push('Payouts not supported');
   $('badges').innerHTML = flags.map((f) => `<span class="badge">${esc(f)}</span>`).join('');
   $('json').textContent = JSON.stringify(cfg.fields, null, 2);

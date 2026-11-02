@@ -24,28 +24,36 @@ Run `validateBankDetails` on both the client and the server. Changing country: c
 
 ## Countries
 
-Only countries that can be paid over a local rail are supported: 58 countries. Of the 205 in Airwallex's payout requirements (doc dated 26/10/2026), 137 can only be paid by international SWIFT transfer and 10 more have local rails but are left out on purpose (see below). `getConfiguredCountries()` leaves them out, `isCountrySupported()` returns false and `validateBankDetails` rejects them with "This country can only be paid by international (SWIFT) transfer, which is not supported." The full list is in `docs/SWIFT_ONLY.md`. A country counts as local when the doc lists at least one real local scheme. Rows with scheme "n/a" (local currency paid over SWIFT, such as XOF, XAF, KES, NGN and ZAR) do not count.
+82 countries, all paid over a local rail (`getCountryConfig(country).rail` is `'local'`). The list comes from Airwallex's "Local payout coverage" table. Countries the table marks with ** (Burkina Faso, Cameroon, Central African Republic, Chad, Equatorial Guinea, Gabon, Guinea-Bissau, Madagascar, Nigeria, Republic of the Congo and Senegal) are left out on purpose. Every other country can only be paid by international SWIFT transfer, which is not supported. `getConfiguredCountries()` leaves them out, `isCountrySupported()` returns false and `validateBankDetails` rejects them with "This country can only be paid by international (SWIFT) transfer, which is not supported." The list is in `docs/SWIFT_ONLY.md`.
 
-Supported, with no SWIFT code asked for: AE, AT, AU, BD, BE, BG, BH, CA, CH, CN, CY, CZ, DE, DK, EE, ES, FI, FR, GB, GR, HK, HR, HU, IE, IL, IN, IS, IT, JP, KR, LI, LT, LU, LV, MA, MC, NL, NO, NP, NZ, PK, PL, PT, RO, SE, SI, SK, SM, TR, US, YT. The SEPA and other IBAN countries ask for an IBAN only.
+No SWIFT code asked for (62): AE, AR, AT, AU, BD, BE, BG, BH, BO, BR, CA, CH, CL, CN, CO, CY, CZ, DE, DK, EE, ES, FI, FR, GB, GR, HK, HR, HU, IE, IL, IN, IS, IT, JP, KR, LI, LT, LU, LV, MA, MC, MQ, MT, MX, NL, NO, NP, NZ, PE, PK, PL, PM, PT, RO, SE, SI, SK, SM, TR, US, UY, YT. The SEPA and other IBAN countries ask for an IBAN only.
 
-Supported, but the local scheme itself identifies the bank by SWIFT/BIC code, so a BIC is required: ID, LK, MY, PH, SG, TH, VN. These are domestic rails (BI-FAST, SLIPS, DuitNow, Instapay, FAST and GIRO, PromptPay, NAPAS), not SWIFT transfers. To drop any of them, remove its code from `LOCAL_RAIL_COUNTRIES` and `LOCAL_RAIL_NEEDS_BIC` in `src/rails.ts`.
+BIC required (20): ID, LK, MY, PH, SG, TH, VN, PY, and Benin, Botswana, Côte d'Ivoire, Gambia, Kenya, Lesotho, Malawi, Namibia, Niger, South Africa, Togo and Zambia. The scheme is domestic (for example BI-FAST, FAST, PromptPay, or a local currency payout), but the payout identifies the bank by SWIFT/BIC code. To drop any of them, remove its code from `LOCAL_RAIL_COUNTRIES` and `LOCAL_RAIL_NEEDS_BIC` in `src/rails.ts`.
 
-Left out on purpose: the Americas other than the US and Canada. Argentina, Bolivia, Brazil, Chile, Colombia, Mexico, Peru and Uruguay have local rails in the doc, as do the territories Martinique and Saint Pierre and Miquelon. They are rejected with "Payouts to this country are not supported." Their layouts (including the tax ID and ID type fields) are still in `src/countries.ts`. To offer one again, add its code to `LOCAL_RAIL_COUNTRIES` in `src/rails.ts` and remove it from `UNSUPPORTED`.
+West African accounts (Benin, Niger, Togo, Côte d'Ivoire) are exact lengths (24 characters). Côte d'Ivoire is not in the payout requirements doc, so 24 is assumed from the other XOF countries. Kenya is 8 to 20 characters, Namibia 8 to 13, South Africa 7 to 13 digits, and Botswana, Gambia, Lesotho, Malawi, Zambia and Paraguay up to 33 or 35.
 
 `getCountryConfig` returns the old fallback layout for unsupported or unknown countries, but `validateBankDetails` rejects them, so it is not used for payouts.
 
 ## Fields every country asks for
 
-Recipient name, bank name and address are required. Bank address and phone number are optional. Order: recipient name, account holder type (where used), bank name, bank address, the local rail fields, address, phone. Airwallex does not list address, phone or bank address as general bank requirements, so those are collected as a precaution.
+Recipient name, bank name and address are required. Bank address is optional. There is no phone number field. Order: recipient name, account holder type (where used), bank name, bank address, the local rail fields, address. Airwallex does not list address or bank address as general bank requirements, so they are collected as a precaution.
 
 Some rails need more, taken from the local rail and beneficiary ID sections of the doc:
 
 | Country | Extra fields |
 | --- | --- |
+| AR | CUIT or CUIL (11 digits) |
+| BO | ID type (CI, CE or NIT) and ID number |
+| BR | Account holder type, then CPF (11 digits, individuals) or CNPJ (14 digits, businesses) |
+| CL | RUT |
 | CN | Account holder type. Individuals: Chinese national ID. Businesses: registration number, legal representative first and last name in Chinese, legal representative ID |
+| CO | Account holder type, ID type and number, email (individuals) |
+| PE, PY, UY | ID type (national ID, foreign ID, passport or tax ID) and ID number, checked against the chosen type |
 | BD, PK | Account holder type, individuals only. PK also asks for a payment reason |
 
-Fields that only apply sometimes use `appliesWhen`, which hides them in the form and skips them in validation. The ID number format can follow another field, such as an ID type, through `patternWhen`. No offered country uses it now.
+Fields that only apply sometimes use `appliesWhen`, which hides them in the form and skips them in validation. The ID number format follows the chosen ID type through `patternWhen`.
+
+Colombia: Airwallex's local COP payouts also ask for a phone number (mobile for individuals, business phone for companies). It is not collected here, so Colombian payouts may be rejected or queried.
 
 ## Scope and caveats
 
@@ -73,7 +81,8 @@ Validation catches typos only and cannot confirm an account exists. Rules are de
 - Local rails that Airwallex also offers through a proxy (PayID, PayNow, DuitNow ID, Interac, PIX keys, FPS proxy IDs) or as bill payments are not offered. Only bank details are collected.
 - Sweden, Denmark and Norway have local non-IBAN fields (bank code plus account number) that are not collected. They take an IBAN.
 - The doc's own open items are still open: Albania's tax ID wording (now moot, Albania is SWIFT only), Montenegro's account name rule, Zambia's limit currency and Botswana's Brazil note.
-- The French territories Guadeloupe, Réunion, Saint Barthélemy, Saint Martin and French Guiana, Åland, Gibraltar, the Channel Islands and the Isle of Man are listed by the doc as SWIFT only, so they are not supported, even though the doc notes that FR, FI and GB IBANs may include accounts there. Martinique, Mayotte and Saint Pierre and Miquelon are supported because the doc lists them with SEPA.
+- Malta, Côte d'Ivoire and Paraguay are in Airwallex's local payout table but not in the 205 country payout requirements doc, so their layouts are the least checked. Paraguay's ID formats and Côte d'Ivoire's account length are unverified.
+- Åland, Guadeloupe, Réunion, Saint Barthélemy, Saint Martin, French Guiana, Gibraltar, the Channel Islands and the Isle of Man are not in the table (the footnotes say FR, FI, GB, PT and ES IBANs may include accounts there), so they are not offered separately.
 - Iraq, Libya, Sudan, Somalia, Yemen, Belarus and Russia are excluded for a different reason (not in the doc's list) and get the message "Payouts to this country are not supported."
 - Fallback and IBAN country display names use `Intl.DisplayNames` (en-AU), so names depend on the runtime's ICU data.
 
@@ -97,7 +106,7 @@ Open http://localhost:3000, type a country name or code, and the fields appear w
 
 ## Currency local rails
 
-For Fabulate's own accounts, `getBankFieldsForCurrency(currency)` returns the local rail layout for one of USD, AUD, SGD, CAD, EUR, GBP and THB. Each layout uses the same common fields as the countries: recipient name, bank name, bank address (optional), the local identifiers, address and phone (optional).
+For Fabulate's own accounts, `getBankFieldsForCurrency(currency)` returns the local rail layout for one of USD, AUD, SGD, CAD, EUR, GBP and THB. Each layout uses the same common fields as the countries: recipient name, bank name, bank address (optional), the local identifiers, address.
 
 | Currency | Rail | Local identifiers |
 | --- | --- | --- |
